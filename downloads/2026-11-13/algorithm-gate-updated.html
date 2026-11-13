@@ -192,6 +192,27 @@ function targetedZones(game, type, width, height, warning, life) {
   }
 }
 
+// Roots and web threads grow from the support occupied when the warning is
+// created. They are not projectiles and do not pass through a roof from above.
+function supportFor(game, hero) {
+  const surface=hero?.grounded&&hero.standingOn&&!hero.standingOn.disabled?hero.standingOn:null;
+  return surface&&surface.type!=='moving'?surface.y:game.bossArena.y;
+}
+function supportZones(game,type,width,height,warning,life) {
+  for(const hero of game.players.filter(p=>game.inArena(p))) {
+    const y=supportFor(game,hero);
+    const x=clamp(hero.x+hero.w/2-width/2,game.bossArena.left+20,game.bossArena.right-width-20);
+    if(game.bossZones.some(z=>z.type===type&&Math.abs(z.x-x)<width*.6&&Math.abs(z.y+z.h-y)<8))continue;
+    game.bossZones.push({x,y:y-height,w:width,h:height,warning,life,type,damage:1,origin:'support'});
+  }
+}
+function bubbleLob(game) {
+  const target=targetFor(game);if(!target)return;
+  const boss=game.boss,x=boss.x+boss.w/2,y=boss.y+4,flight=1.25,gravity=460;
+  const tx=target.x+target.w/2,ty=target.y+target.h/2;
+  game.projectiles.push({x,y,vx:(tx-x)/flight,vy:(ty-y-.5*gravity*flight*flight)/flight,
+    gravity,r:10,life:2.8,type:'bubble',owner:'boss',targetX:tx,targetY:ty});
+}
 function sequenceFor(boss) {
   const hot = boss.stage > 1, speed = 1 + boss.level * .025 + (hot ? .1 : 0);
   const wind = (cue, duration = .85) => ({ phase: 'windup', duration: Math.max(.8, duration - boss.level * .008), cue });
@@ -200,16 +221,16 @@ function sequenceFor(boss) {
   let plan;
   switch (boss.kind) {
     case 'warden':
-      plan = [wind('THORN CHARGE'), charge(), wind('THORN WAVE — JUMP', .9), { phase: 'shock', duration: hot ? .9 : .55, repeat: hot, cue: 'THORN WAVE' }];
+      plan = [wind('THORN CHARGE'), charge(), wind('THORN WAVE — JUMP', .9), { phase: 'shock', duration: hot ? .9 : .55, repeat: hot, cue: 'THORN WAVE' }, wind('ROOTS SEEK YOUR PERCH', .9), {phase:'roots',duration:1.85,cue:'ROOTS — LEAVE THE MARKER'}];
       break;
     case 'moth':
       plan = [wind('LANTERNS AWAKEN'), fanStep(1.75, 3), wind('DIVING — MAKE SPACE', .72), { phase: 'swoop', duration: .9, cue: 'DODGE THE DIVE' }];
       break;
     case 'prism':
-      plan = [wind('DOUBLE SHOCKWAVE'), { phase: 'shock', duration: .95, repeat: true, cue: 'JUMP BOTH WAVES' }, fanStep(1.15, 5)];
+      plan = [wind('DOUBLE SHOCKWAVE'), { phase: 'shock', duration: .95, repeat: true, cue: 'JUMP BOTH WAVES' }, fanStep(3.2, 5)];
       break;
     case 'crab':
-      plan = [wind('TIDE RISING — FIND HIGH GROUND', 1.05), { phase: 'flood', duration: 3.1, cue: 'ABOVE THE TIDE' }, fanStep(1.1, 3)];
+      plan = [wind('TIDE RISING — FIND HIGH GROUND', 1.05), { phase: 'flood', duration: 3.1, cue: 'HIGH GROUND — DODGE BUBBLES' }, fanStep(1.1, 3)];
       break;
     case 'gear':
       plan = [wind('GEARS TURNING'), { phase: 'orbit', duration: 1.9, cue: 'BETWEEN THE GEARS' }, wind('GEAR RUSH', .72), charge(.75)];
@@ -218,13 +239,13 @@ function sequenceFor(boss) {
       plan = [wind('FIRE LANES MARKED'), { phase: 'fire', duration: 1.6, cue: 'LEAVE THE FIRE MARKERS' }, wind('LEAPING SLAM', .72), { phase: 'leap', duration: 1, cue: 'CLEAR THE LANDING' }, wind('SLAM WAVE — JUMP', .85), { phase: 'shock', duration: .65, cue: 'JUMP THE SLAM WAVE' }];
       break;
     case 'stag':
-      plan = [wind('ICICLES ABOVE'), { phase: 'icicles', duration: 2.25, cue: 'MOVE FROM THE ICE MARKERS' }, wind('ANTLER CHARGE', .7), charge(.85)];
+      plan = [wind('ICICLES ABOVE'), { phase: 'icicles', duration: 2.25, cue: 'MOVE FROM THE ICE MARKERS' }, wind('ANTLER CHARGE', .7), charge(.85), wind('LEAPING TO YOUR LEDGE', .9), {phase:'leap',duration:1.1,cue:'LEAVE THE LANDING MARKER'}];
       break;
     case 'owl':
       plan = [wind('LIGHTNING GATHERS'), { phase: 'storm', duration: 2.4, cue: 'LEAVE THE LIGHTNING MARKERS' }, fanStep(1, 5), wind('DIVING — MAKE SPACE', .9), { phase: 'swoop', duration: .95, cue: 'DODGE THE DIVE' }];
       break;
     case 'weaver':
-      plan = [wind('WATCH THE GLOWING REAL MASK'), { phase: 'echo', duration: 2.7, cue: 'TRACK THE TRUE WEAVER' }, { phase: 'barrage', duration: 1.2, count: 5 + (hot ? 2 : 0), speed: 260, interval: .45, type: 'orb', cue: 'BETWEEN THE ECHOES' }];
+      plan = [wind('WATCH THE GLOWING REAL MASK'), { phase: 'echo', duration: 2.7, cue: 'TRACK THE TRUE WEAVER' }, { phase: 'barrage', duration: 1.2, count: 5 + (hot ? 2 : 0), speed: 260, interval: .45, type: 'orb', cue: 'BETWEEN THE ECHOES' }, wind('THREADS SEEK YOUR PERCH', .9), {phase:'weave',duration:1.9,cue:'THREADS — LEAVE THE MARKER'}];
       break;
     default:
       if (boss.stage === 1) plan = [wind('CROWN CHARGE'), charge(.75), wind('DOUBLE SHOCKWAVE — JUMP', .9), { phase: 'shock', duration: .9, repeat: true, cue: 'JUMP BOTH CROWN WAVES' }, fanStep(1, 5)];
@@ -239,7 +260,7 @@ function beginAction(game, action) {
   const boss = game.boss, arena = game.bossArena, target = targetFor(game);
   boss.phase = action.phase; boss.timer = action.duration; boss.duration = action.duration;
   boss.elapsed = 0; boss.cue = action.cue; boss.attackName = action.cue;
-  boss.action = action; boss.shotTimer = .05; boss.secondWave = false;
+  boss.action = action; boss.shotTimer = .05; boss.secondWave = false;boss.aimedOrbit=false;
   boss.telegraphs = [];
   if (action.phase === 'windup') {
     boss.dir = !target || target.x < boss.x ? -1 : 1;
@@ -247,6 +268,7 @@ function beginAction(game, action) {
     // themselves with their own footprints, not a misleading horizontal rush.
     const next = boss.sequence[boss.sequenceIndex];
     if (next?.phase === 'charge') {
+      boss.y=arena.y-boss.h;
       const endX = clamp(boss.x + boss.dir * next.speed * next.duration,
         arena.left + 25, arena.right - boss.w - 25);
       boss.telegraphs = [{x: Math.min(boss.x, endX), y: arena.y - boss.h,
@@ -259,10 +281,13 @@ function beginAction(game, action) {
       // during the attack would promise a safe destination then punish it.
       boss.lockedLanding = clamp((target?.x ?? arena.left + 150) - boss.w / 2,
         arena.left + 35, arena.right - boss.w - 35);
-      boss.telegraphs = [{x: boss.lockedLanding, y: arena.y - 8,
+      boss.lockedLandingY=supportFor(game,target)-boss.h;
+      boss.telegraphs = [{x: boss.lockedLanding, y: boss.lockedLandingY+boss.h-8,
         w: boss.w, h: 8, type: 'landing'}];
     }
     game.emit?.('telegraph');
+  } else if(action.phase==='roots'||action.phase==='weave') {
+    supportZones(game,action.phase==='roots'?'thorn':'web',action.phase==='roots'?86:96,action.phase==='roots'?90:105,action.phase==='roots'?1.05:1.1,.6);
   } else if (action.phase === 'shock') {
     waves(game, 330 + boss.level * 11);
   } else if (action.phase === 'flood') {
@@ -275,9 +300,10 @@ function beginAction(game, action) {
     }
   } else if (action.phase === 'swoop' || action.phase === 'leap') {
     boss.fromX = boss.x; boss.toX = boss.lockedLanding ?? clamp((target?.x ?? arena.left + 150) - boss.w / 2, arena.left + 35, arena.right - boss.w - 35);
-    boss.lockedLanding = null;
+    boss.toY=boss.lockedLandingY??supportFor(game,target)-boss.h;
+    boss.lockedLanding = null;boss.lockedLandingY=null;
     boss.fromY = boss.y;
-    boss.telegraphs = [{ x: boss.toX, y: arena.y - 8, w: boss.w, h: 8, type: 'landing' }];
+    boss.telegraphs = [{ x: boss.toX, y: boss.toY+boss.h-8, w: boss.w, h: 8, type: 'landing' }];
   } else if (action.phase === 'exposed') {
     boss.y = arena.y - boss.h; boss.decoys = [];
     // An opening is a real recovery window: no late lightning, flood or echo
@@ -321,15 +347,17 @@ function updateBoss(game, dt) {
   if (phase === 'charge') {
     boss.x = clamp(boss.x + boss.dir * (action.speed || 500) * dt, arena.left + 25, arena.right - boss.w - 25);
   } else if (phase === 'barrage') {
-    if (boss.kind === 'moth' || boss.kind === 'owl') boss.y = arena.y - boss.h - 155 + Math.sin(boss.elapsed * 3) * 13;
+    if (['moth','owl','prism','sovereign','weaver'].includes(boss.kind)) boss.y = arena.y - boss.h - (boss.kind==='prism'?245:boss.kind==='moth'?180:boss.kind==='owl'?220:155) + Math.sin(boss.elapsed * 3) * 13;
     boss.shotTimer -= dt;
     if (boss.shotTimer <= 0) { boss.shotTimer += action.interval || .5; fan(game, action.count || 3, action.speed || 230, .18, action.type || 'orb'); }
   } else if (phase === 'shock') {
     if (action.repeat && !boss.secondWave && boss.elapsed >= .42) { boss.secondWave = true; waves(game, 350 + boss.level * 11); }
   } else if (phase === 'flood') {
     boss.shotTimer -= dt;
-    if (boss.shotTimer <= 0) {boss.shotTimer += .75; fan(game, boss.stage > 1 ? 5 : 3, 175, .22);}
+    if (boss.shotTimer <= 0) {boss.shotTimer += boss.stage>1?.8:1.05; bubbleLob(game);}
   } else if (phase === 'orbit') {
+    boss.y=arena.y-boss.h-120+Math.sin(boss.elapsed*3)*12;
+    if(boss.elapsed>.9&&!boss.aimedOrbit){boss.aimedOrbit=true;fan(game,3,195,.15,'gear');}
     boss.shotTimer -= dt;
     if (boss.shotTimer <= 0) {
       boss.shotTimer += .62;
@@ -339,8 +367,7 @@ function updateBoss(game, dt) {
   } else if (phase === 'swoop' || phase === 'leap') {
     const progress = clamp(boss.elapsed / boss.duration, 0, 1);
     boss.x = boss.fromX + (boss.toX - boss.fromX) * progress;
-    const hover = phase === 'swoop' ? (1 - progress) * 155 : 0;
-    boss.y = arena.y - boss.h - Math.sin(progress * Math.PI) * (phase === 'leap' ? 190 : 90) - hover;
+    boss.y=boss.fromY+(boss.toY-boss.fromY)*progress-Math.sin(progress*Math.PI)*(phase==='leap'?165:90);
   } else if (phase === 'icicles' || phase === 'storm') {
     if (phase === 'storm') boss.y = arena.y - boss.h - 155 + Math.sin(boss.elapsed * 3) * 10;
     boss.shotTimer -= dt;
@@ -353,11 +380,11 @@ function updateBoss(game, dt) {
     if (boss.shotTimer <= 0) {
       boss.shotTimer += .78;
       const side = Math.floor(boss.elapsed / .78 + boss.cycle) % 2;
-      const left = arena.left + 80, right = arena.right - boss.w - 80;
-      boss.x = side ? left : right; boss.y = arena.y - boss.h - 15;
-      boss.decoys = [{ x: side ? right : left, y: boss.y, alpha: .3 }];
+      const left = arena.left + 235, right = arena.left + 455;
+      boss.x = side ? left : right; boss.y = arena.y - boss.h - (side?145:15);
+      boss.decoys = [{ x: side ? right : left, y: arena.y-boss.h-(side?15:145), alpha: .3 }];
       fan(game, boss.stage > 1 ? 5 : 3, 230, .22);
-      fan(game, 3, 185, .25, 'orb', { x: boss.decoys[0].x + boss.w / 2, y: boss.y + 50 });
+      fan(game, 3, 185, .25, 'orb', { x: boss.decoys[0].x + boss.w / 2, y: boss.decoys[0].y + 50 });
     }
   } else if (phase === 'eclipse') {
     boss.shotTimer -= dt;
@@ -371,6 +398,7 @@ function updateBoss(game, dt) {
 
 return {createBoss,updateBoss,bossVulnerable};
 })();
+
 
 const __levels = (() => {
 /** Hand-built traversal routes. Coordinates are world pixels; route y is feet. */
@@ -698,26 +726,70 @@ const TRAVERSAL = [
   b:[[2690,1090],[2900,960],[3110,830],[3320,700],[3540,830],[3760,960],[3980,830],[4200,700],[4410,830],[4600,900],[4740,900]],
   c:[[5320,1030],[5540,1160],[5760,1290],[5980,1420],[6200,1550],[6410,1420],[6620,1290],[6830,1160],[7010,1290],[7060,1280],[7090,1280],[7120,1280],[7150,1280]],feature:'vault'},
 ];
+// Individual landing lengths are authored alongside the route's altitude score.
+// Long run-ups, brief stepping stones and broad rests alternate within chapters.
+const LANDING_LENGTHS = [
+ [[190,118,164,228,132,176,108,212,146,198,124,172],[172,112,222,138,186,116,205,144,234,128,182],[156,218,122,178,108,226,144,192,116,232,152,188,138]],
+ [[174,128,222,148,198,238,112,180,142,216,124,168],[214,146,118,154,190,132,224,164,108,236,178],[188,124,216,152,232,114,180,138,222,160,116,198,146]],
+ [[192,134,118,138,126,120,204,232,112,194,152,218],[138,212,116,228,158,186,124,240,146,202,174],[224,132,184,112,236,152,208,124,190,144,218,162,116]],
+ [[224,126,192,148,136,118,142,230,156,208,124,176],[156,222,128,196,112,236,166,204,138,226,178],[210,136,232,118,186,152,218,124,198,164,112,228,146]],
+ [[218,126,184,242,134,206,112,232,148,192,124,176],[182,132,224,116,208,154,238,126,194,162,216],[124,226,148,204,112,236,168,190,134,218,156,182,118]],
+ [[206,132,118,138,126,194,112,234,154,216,128,184],[232,128,186,148,218,114,204,162,238,134,194],[196,126,138,118,132,224,148,208,112,236,164,188,124]],
+ [[182,126,218,152,196,112,234,148,208,124,226,162],[138,226,116,202,154,238,128,184,166,214,142],[218,132,192,112,236,158,204,124,228,148,186,164,116]],
+ [[234,128,196,138,118,152,224,164,208,126,242,176],[218,132,186,114,232,158,204,124,226,146,192],[148,228,124,196,164,236,112,208,138,182,156,222,118]],
+ [[194,124,232,148,208,116,226,154,184,132,214,168],[224,134,188,116,238,152,204,128,218,164,182],[206,126,138,118,132,228,148,194,112,236,162,218,124]],
+ [[226,132,198,116,238,158,212,124,184,148,232,168],[192,128,236,152,214,116,228,164,186,138,242],[132,234,148,208,116,226,162,194,124,238,154,182,112]],
+];
+
 function traversalChapter(level) {
  const score=TRAVERSAL[level],ps=[stone(0,score.start,400,'ground')],walls=[],signs=[];
  const add=(points,section)=>points.forEach(([x,y],i)=>{
    const kind=(section===1&&[1,5,8].includes(i)&&[2,4,8].includes(level))?'moving':
     ((i+section+level)%6===0&&i>2?'crumble':'stone');
-   const w=kind==='moving'?165:(level<3?145:135);
-   let p=kind==='moving'?lift(x,y,w,0,5.2,65):kind==='crumble'?crumble(x,y,w):stone(x,y,w);
+   const w=LANDING_LENGTHS[level][section][i];
+   let p=kind==='moving'?lift(x,y,w,0,4.7+(level%3)*.35,45+(i%3)*12):kind==='crumble'?crumble(x,y,w):stone(x,y,w);
    ps.push(p);
  });
  add(score.a,0);ps.push(stone(2090,score.g[0],470,'ground'));
  add(score.b,1);ps.push(stone(4590,score.g[1],760,'ground'));
  add(score.c,2);ps.push(stone(7060,score.g[2],1200,'ground'));
  const gates=score.g.map((y,i)=>({x:[2400,4900,7200][i],y,solved:false,barrierTop:0}));
- // The final approach and refuge are broad, permanent landings.
+ // Timed crossings have clear, permanent launch stones. A plume's inactive
+ // interval lasts over three seconds; its footprint is beyond the waiting edge.
  const hazards=[];
- for(let i=2;i<38;i++){
-   const p=ps[i];if(p.type==='ground'||p.type==='moving'||i===12||[3,4,5].includes(i)&&[2,5].includes(level))continue;
-   if((i+level)%7===0)hazards.push(saw(p.x+p.w-32,p.y-65,0,40,5.5-level*.13,i*.4));
-   else if((i+level)%9===0)hazards.push(flame(p.x+p.w-30,p.y,4.8-level*.1,i*.4));
+ const protectedShafts=new Set(level===2?[2,3,4,5,6]:level===5?[2,3,4,5,27,28,29,30]:level===8?[27,28,29,30]:[]);
+ const crossingSets=[[7,8,6,9,5,4],[15,19,21,16,18,17,20,14],[31,33,29,32,34,26,27,28]];
+ crossingSets.forEach((candidates,section)=>{
+   const count=section===1&&level>=4?2:1,chosen=[];
+   for(const from of candidates){
+     if(chosen.length>=count)break;
+     const a=ps[from],b=ps[from+1];
+     if(protectedShafts.has(from)||protectedShafts.has(from+1)||a.type==='moving'||a.type==='crumble'||b.type==='moving'||b.type==='ground'||a.x<650||a.x>=1840&&a.x<2560||a.x>=4340&&a.x+a.w<5400)continue;
+     const gap=b.x-(a.x+a.w);if(gap<48||Math.abs(a.y-b.y)>165||chosen.some(i=>Math.abs(i-from)<2))continue;
+     const id=`timing-${level}-${section}-${chosen.length}`,blade=(level+section+chosen.length)%3===1;
+     const width=Math.min(blade?44:58,gap-18),cx=a.x+a.w+gap/2-width/2;
+     if(blade){
+       const h=saw(cx,Math.min(a.y,b.y)-90,0,155,4.5+(level%3)*.35,(level+section)*.55);
+       Object.assign(h,{id,timingChallenge:true,fromPlatform:from,toPlatform:from+1,launchX:a.x+a.w*.48});hazards.push(h);
+     }else{
+       const period=4.9+(level%3)*.3,top=Math.min(a.y,b.y)-260,bottom=Math.max(a.y,b.y)+24;
+       hazards.push({id,type:'flame',x:cx,y:top,w:width,h:bottom-top,period,activeDuration:1.15+level*.025,phase:period*.55+(section*.19),timedActive:false,warningDuration:.8,
+         timingChallenge:true,fromPlatform:from,toPlatform:from+1,launchX:a.x+a.w*.48});
+     }
+     const crossing=hazards[hazards.length-1];crossing.fixtureKind='spectral-crossing';crossing.runeLinks=[{x:a.x+a.w-6,y:a.y},{x:b.x+6,y:b.y}];
+     signs.push({supportIndex:from,relatedHazard:id,x:a.x+a.w*.45,y:a.y-95,text:blade?'Watch the blade rise. Jump through after it passes.':'Wait on this stone. Jump across when the plume fades.'});
+     chosen.push(from);
+   }
+ });
+ // Additional edge vents and orbiting blades vary the rhythm between crossings.
+ // Spawn, puzzle floors, shaft mouths and approach checkpoints remain clear.
+ for(let i=4;i<38;i++){
+   const p=ps[i];if(p.type==='ground'||p.type==='moving'||protectedShafts.has(i)||i===12||p.x<650||p.x+p.w>=7040||p.x>=1840&&p.x<2560||p.x>=4340&&p.x<5350)continue;
+   if(hazards.some(h=>Math.abs(h.fromPlatform-i)<=1))continue;
+   if((i+level)%6===0)hazards.push(saw(p.x+p.w-25,p.y-70,0,75,5.2-level*.09,i*.4));
+   else if((i+level)%7===0&&p.w>=155){const h=flame(p.x+p.w-28,p.y,4.6+(level%3)*.2,i*.37);h.activeDuration=1.2;h.warningDuration=.75;hazards.push(h);}
  }
+
  const pickups=[],branchIndices=[];
  // Branches arc above the primary route then reconnect before the next seal.
  const forkSpecs={0:[15,18],3:[16,20],4:[17,20],7:[16,20],8:[6,10],9:[16,20]};
@@ -726,7 +798,7 @@ function traversalChapter(level) {
    const count=4;
    for(let i=1;i<=count;i++){
      const t=i/(count+1),x=a.x+(b.x-a.x)*t,y=a.y+(b.y-a.y)*t-170*Math.sin(Math.PI*t);
-     branchIndices.push(ps.length);const ledge=stone(x,y,135);ps.push(ledge);
+     branchIndices.push(ps.length);const ledge=stone(x,y,[112,176,138,206][(i+level)%4]);ps.push(ledge);
      if(i===2)pickups.push({x:x+65,y:y-43,type:'heart',taken:false});
    }
    signs.push({x:a.x+40,y:a.y-105,text:'Upper branch: a lifebloom; paths meet again'});
@@ -792,35 +864,114 @@ function sweepRect(x,y,dx,dy,r,rect,mx=0,my=0) {
   }
   return enter>=0&&enter<=1?enter:Infinity;
 }
+// Route advice is attached to real stone: signposts on landings, or plaques
+// inset into the arena floor. It uses the foreground world transform, not parallax.
+function placeRouteSigns(data) {
+  const original=data.signs||[],placed=[],platforms=data.platforms||[],walls=data.walls||[];
+  const stable=p=>p&&!p.hiddenRoom&&!['moving','crumble','counterweight'].includes(p.type);
+  const solid=[...platforms,...walls].filter(p=>!p.hiddenRoom);
+  const intersect=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
+  const intersectionArea=(a,b)=>Math.max(0,Math.min(a.x+a.w,b.x+b.w)-Math.max(a.x,b.x))*Math.max(0,Math.min(a.y+a.h,b.y+b.h)-Math.max(a.y,b.y));
+  const nearest=(x,y,list=platforms.filter(stable))=>list.slice().sort((a,b)=>{
+    const score=p=>Math.abs(p.y-y)+Math.max(0,p.x-x,x-(p.x+p.w))*.8;
+    return score(a)-score(b);
+  })[0];
+  const lineCount=text=>{let count=1,line='';for(const word of String(text||'').split(/\s+/)){if((line+' '+word).trim().length>34){count++;line=word;}else line+=(line?' ':'')+word;}return count;};
+  const startFloor=platforms[0],startNotes=original.filter(r=>r.x<400&&Math.abs(r.y-startFloor.y)<220);
+  const routeName=startNotes.find(r=>!r.text.includes('W /')&&!r.text.includes('jump twice'))?.text;
+  let notes=original.filter(r=>!startNotes.includes(r)&&!r.text.includes('Well before the boundary'));
+  notes.unshift({x:220,y:startFloor.y-100,title:routeName,text:'W / ↑: jump twice. S / ↓: drop through ledges.',supportIndex:0,startTip:true});
+  const reserved=[...(data.puzzles||[]).map(q=>({x:q.x-555,y:q.y-350,w:535,h:69})),
+    ...(data.gates||[]).map(g=>({x:g.x-58,y:g.y-194,w:116,h:194}))];
+  // The well already has its own name and instructions. Keep route plaques clear.
+  if(data.bossArena)reserved.push({x:data.bossArena.left-110,y:data.bossArena.y-122,w:220,h:142});
+  for(const r of notes){
+    let support=Number.isInteger(r.supportIndex)?platforms[r.supportIndex]:null;
+    const arenaTip=r.arenaHint||data.bossArena&&r.x>=data.bossArena.left;
+    if(arenaTip){
+      const a=data.bossArena;
+      support=platforms.find(p=>p.type==='ground'&&p.y===a.y&&p.x<=a.left&&p.x+p.w>=a.right)||nearest(a.left+190,a.y);
+      const maxWidth=300,height=20+lineCount(r.text)*14;
+      const x=Math.min(support.x+support.w-maxWidth/2-12,Math.max(support.x+maxWidth/2+12,a.left+205));
+      placed.push({...r,x,y:support.y+19,maxWidth,h:height,w:maxWidth,anchorX:x,anchorY:support.y,support,style:'inset',clearanceRect:{x:x-maxWidth/2,y:support.y+19,w:maxWidth,h:height}});
+      continue;
+    }
+    if(!support&&r.text.includes('Covered gallery')){
+      const roof=walls.filter(w=>w.w>w.h*4&&w.h<=32).sort((a,b)=>Math.abs(a.x+Math.min(a.w/2,140)-r.x)-Math.abs(b.x+Math.min(b.w/2,140)-r.x))[0];
+      if(roof)support=roof;
+    }
+    if(!support&&r.text.includes('Hold toward')){
+      const shaft=(data.wallRoutes||[]).slice().sort((a,b)=>Math.abs((a.left+a.right)/2-r.x)-Math.abs((b.left+b.right)/2-r.x))[0];
+      if(shaft){const entry=shaft.bottom-150;support=nearest(shaft.left-65,entry+120,platforms.filter(p=>stable(p)&&p.x<shaft.left-40&&p.x+p.w<=shaft.left+80&&p.y>=entry-30&&p.y<entry+280));}
+    }
+    if(!support&&r.text.includes('Drop passage'))support=nearest(r.x,r.y+80);
+    if(!support)support=nearest(r.x,r.y+105);
+    if(!support)continue;
+    const maxWidth=r.startTip?260:244,height=20+lineCount(r.text)*14+(r.title?lineCount(r.title)*13+8:0);
+    let anchorX=Math.max(support.x+12,Math.min(support.x+support.w-12,r.x));
+    if(r.supportIndex!==undefined&&!r.startTip)anchorX=support.x+support.w*.48;
+    if(support.w<50)anchorX=support.x+support.w/2;
+    const preferredX=r.startTip?220:anchorX;
+    let best=null;
+    for(const lift of [98,142,186,230,72,274])for(const offset of [0,-80,80,-145,145]){
+      const x=Math.max(maxWidth/2+16,Math.min(data.width-maxWidth/2-16,preferredX+offset)),y=support.y-lift-height;
+      const box={x:x-maxWidth/2,y,w:maxWidth,h:height};
+      if(y<20)continue;
+      const conflicts=[...solid,...reserved,...placed.filter(q=>q.style!=='inset').map(q=>q.clearanceRect)].filter(o=>intersect(box,o));
+      const score=conflicts.reduce((n,o)=>n+10000+intersectionArea(box,o),0)+Math.abs(offset)*.2+Math.abs(lift-98)*.35;
+      if(!best||score<best.score)best={x,y,box,score,conflicts:conflicts.length};
+    }
+    if(!best)continue;
+    const tip={...r,x:best.x,y:best.y,w:maxWidth,h:height,maxWidth,anchorX,anchorY:support.y,support,style:'post',clearanceRect:best.box,clearanceConflicts:best.conflicts};
+    placed.push(tip);
+  }
+  data.signs=placed;
+}
+
 // Arena layouts are authored in local coordinates, independent of route height.
 function configureArena(game,level) {
   const a=game.bossArena,y=a.y,L=a.left;
   game.platforms=game.platforms.filter(p=>p.type==='ground'||p.x+p.w<=L||p.x>=a.right);
+  // Each guardian's shelves preserve an attack lane and offer a different
+  // tactical shelter. Heights are feet above the arena floor, widths are stone.
   const layouts=[
-    [[100,100,150],[380,52,95],[570,145,145]],
-    [[65,175,140],[255,72,105],[440,215,130],[625,100,100]],
-    [[100,55,100],[290,165,155],[530,55,125],[610,260,110]],
-    [[55,85,165],[285,150,160],[545,95,160]],
-    [[75,65,100],[235,190,135],[420,95,115],[590,235,130]],
-    [[55,140,130],[235,48,90],[405,220,125],[610,100,110]],
-    [[90,95,150],[275,235,140],[475,65,110],[615,180,100]],
-    [[50,210,130],[245,100,155],[450,250,130],[615,55,110]],
-    [[90,60,120],[285,170,135],[510,65,120]],
-    [[50,100,130],[225,240,115],[390,55,105],[555,170,160]],
+    [[60,112,110],[270,170,185],[570,128,135]], // Warden: clear bramble lane below.
+    [[80,140,105],[290,70,175],[585,205,145]], // Moth: shelter below, exposed tops.
+    [[70,110,150],[360,185,105],[530,95,200]], // Prism: ground waves, high aimed fan.
+    [[55,85,165],[300,140,190],[580,95,125]], // Tide: reachable refuges, bubble arcs.
+    [[80,85,115],[265,155,165],[555,115,180]], // Gear: moving central crossing.
+    [[50,125,180],[310,205,115],[560,110,140]], // Cinder: high brittle fire escape.
+    [[65,100,155],[300,220,105],[550,135,185]], // Stag: ice roofs, marked ledge leap.
+    [[60,180,150],[310,90,110],[515,245,210]], // Owl: broken storm shelter at right.
+    [[70,100,145],[320,180,115],[555,120,145]], // Weaver: asymmetry, two cast heights.
+    [[45,110,145],[255,235,100],[435,85,120],[590,165,130]],
   ];
   layouts[level].forEach(([offset,height,w],i)=>{
-    const moving=(level===4&&i===1)||(level===9&&i===3);
-    const brittle=level===5&&i===2||level===7&&i===2;
+    const moving=level===4&&i===1||level===9&&i===3;
+    const brittle=level===5&&i===1||level===7&&i===2;
     game.platforms.push({x:L+offset,y:y-height,w,h:24,type:moving?'moving':brittle?'crumble':'stone',
-      ...(moving?{baseX:L+offset,baseY:y-height,rangeX:level===4?40:0,rangeY:level===9?35:0,period:5,phase:0}:{}),
+      ...(moving?{baseX:L+offset,baseY:y-height,rangeX:level===4?55:0,rangeY:level===9?30:0,period:5,phase:0}:{}),
       ...(brittle?{crumbleProgress:0,disabled:0}:{}),arenaCover:true});
   });
-  // Low solid plinths offer real shelter from floor-level shots; walk over them
-  // with a single jump. They never extend into the safe well strip.
-  const low=[[220,55],[470,40],[385,65],[465,50],[545,65],[350,52],[300,60],[505,50],[385,45],[310,65]][level];
-  game.walls.push({x:L+low[0],y:y-low[1],w:55+(level%3)*12,h:low[1],type:'wall',arenaCover:true});
-  game.signs.push({x:L+190,y:y-295,text:level===3?'High stone stays above the flood':'Stone blocks shots. Ice and lightning stop at roofs.'});
+  // Floor plinths are limited to encounters with attacks that threaten their
+  // sheltered sides. Warden/Prism/Cinder/Crown keep floor-wave lanes open.
+  const plinths={1:[475,42,64],3:[475,48,70],4:[450,50,64],6:[475,58,56],8:[455,45,68]};
+  if(plinths[level]){const [offset,height,w]=plinths[level];game.walls.push({x:L+offset,y:y-height,w,h:height,type:'wall',arenaCover:true});}
+  const tips=[
+    'Jump the ground brambles. Leave the root marker on your perch.',
+    'Stone shelters from fans; leave the marked dive landing.',
+    'Waves skim below shelves. The high fan reaches their tops.',
+    'Reach high stone before the flood; sidestep the bubble arcs.',
+    'Gears sweep from above. The moving shelf changes your cover.',
+    'Shelves escape fire; leave the marked leap. Jump the slam wave.',
+    'Roofs catch ice; move from the marked leap onto your ledge.',
+    'Roofed stone catches lightning; dives reach your chosen ledge.',
+    'Masks cast from two heights. Leave the thread marker; strike the glow.',
+    'Read each warning. Moving cover shelters some attacks, not every phase.',
+  ];
+  game.signs.push({x:L+190,y:y-295,text:tips[level],arenaHint:true});
 }
+
 function player(id, spawn) {
   return {id, x:spawn.x + id*48, y:spawn.y, w:28, h:44, vx:0, vy:0, dir:1, hp:5,
     dead:false, grounded:false, jumps:0, coyote:0, attack:0, cooldown:0, invuln:0,
@@ -833,6 +984,7 @@ class Game {
     level=clamp(Math.floor(Number(level)||0),0,LEVELS.length-1);
     Object.assign(this, createLevel(level));
     configureArena(this,level);
+    placeRouteSigns(this);
     this.level=level; this.mode='playing'; this.time=0; this.events=[]; this.shake=0;
     this.gatesSolved=0; this.kills=0; this.elapsed=0; this.deaths=0; this.revives=0;
     this.gateCooldown=0; this.gateQuestions={};
@@ -907,7 +1059,13 @@ class Game {
         const phase=this.time/(h.period||3)*Math.PI*2+(h.phase||0);
         h.x=h.baseX+Math.sin(phase)*(h.rangeX||0); h.y=h.baseY+Math.sin(phase)*(h.rangeY||0);
       }
-      if(h.type==='flame') h.timedActive=((this.time+(h.phase||0))%(h.period||3.5))<(h.activeDuration||1.4);
+      if(h.type==='flame') {
+        const period=h.period||3.5,phase=((this.time+(h.phase||0))%period+period)%period;
+        h.timedActive=phase<(h.activeDuration??1.4);
+        h.timeUntilActive=h.timedActive?0:period-phase;
+        h.warning=!h.timedActive&&h.timeUntilActive<=(h.warningDuration??.75);
+        h.cycleProgress=phase/period;
+      }
     }
   }
   step(dt,input=[{},{}]) {
@@ -1070,7 +1228,8 @@ class Game {
     const pending=this.projectiles;
     const remaining=pending.filter(o=>{
       if(this.projectiles!==pending)return false;
-      const dx=(o.vx||0)*dt,dy=(o.vy||0)*dt,r=o.r||0;
+      const gravity=o.gravity||0,dx=(o.vx||0)*dt,dy=(o.vy||0)*dt+.5*gravity*dt*dt,r=o.r||0;
+      o.vy=(o.vy||0)+gravity*dt;
       let coverTime=Infinity;
       for(const surface of geometry){
         const mx=surface.dx||0,my=surface.dy||0;
@@ -1359,6 +1518,9 @@ G.load=function(level=0){oldLoad.call(this,level);this.lightDrops=[];this.hidden
  for(const p of spots)if(p)this.enemies.push({x:p.x+16,y:p.y-28,w:32,h:28,hp:2,dir:1,min:p.x+5,max:p.x+p.w-37,speed:45,hit:0});
  const species=['beetle','cricket','moth','snail','armour'];
  this.enemies.forEach((e,i)=>{e.species=species[(i+this.level)%species.length];e.lightId=i;e.reward={beetle:6,cricket:8,moth:9,snail:10,armour:12}[e.species];e.aiSpeed=e.speed||45;e.speed=0;e.homeY=e.y;e.aiTime=i*.8;e.spitTimer=2+i*.3;e.warn=0;e.hp=e.species==='armour'?3:2;e.blockFlash=0;});
+ // Arrival floors are safe places to read controls. Remove the opening
+ // creature after assigning stable Light IDs to the remaining monsters.
+ this.enemies=this.enemies.filter(e=>Math.abs(e.x-this.spawn.x)>650||Math.abs(e.y-this.spawn.y)>240);
  // Lantern doors move among the chapter's stable route landings.
  // Chambers remain near their entrances so the shared camera can show a partner.
  const doorIndices=[0,13,25,9,33,16,6,21,10,25],door=this.platforms[doorIndices[this.level]];
@@ -1934,7 +2096,7 @@ function pressurePlate(c, plate, solved, p, time) {
   else path(c,[[x-3,plate.y-5],[x,plate.y-9],[x+3,plate.y-5]],null,on?p.light:'#cfab87',1);
 }
 function bossZone(c, r, p, time) {
-  const waiting=(r.warning||0)>0,colors={flood:'#91dbe8',fire:'#f6ae7d',lightning:'#edf3ab',ice:'#b7eafa'};
+  const waiting=(r.warning||0)>0,colors={flood:'#91dbe8',fire:'#f6ae7d',lightning:'#edf3ab',ice:'#b7eafa',thorn:'#b4d990',web:'#d9addd'};
   const color=colors[r.type]||p.light;
   c.save();c.beginPath();c.rect(r.x,r.y,r.w,r.h);c.clip();
   if(waiting){
@@ -1950,6 +2112,24 @@ function bossZone(c, r, p, time) {
   }else if(r.type==='fire'){
     const g=c.createLinearGradient(0,r.y,0,r.y+r.h);g.addColorStop(0,'#ffbd8500');g.addColorStop(.7,'#ed9777bb');g.addColorStop(1,'#ffe7ad');c.fillStyle=g;c.fillRect(r.x,r.y,r.w,r.h);
     for(let x=0;x<r.w;x+=19)path(c,[[r.x+x,r.y+r.h],[r.x+x+9,r.y+8+Math.sin(time*13+x)*12],[r.x+x+20,r.y+r.h]],'#fbd19f88');
+  }else if(r.type==='thorn'){
+    const base=r.y+r.h;
+    c.fillStyle='#95bd7624';c.fillRect(r.x,base-8,r.w,8);
+    c.strokeStyle='#b6d894';c.lineWidth=3;c.lineCap='round';
+    for(let j=0;j<Math.ceil(r.w/17);j++){
+      const xx=r.x+7+j*17,top=r.y+6+Math.sin(j*2.3+time*4)*4;
+      c.beginPath();c.moveTo(xx-6,base);c.bezierCurveTo(xx+10,base-r.h*.25,xx-13,base-r.h*.65,xx+2,top);c.stroke();
+      path(c,[[xx+1,top+17],[xx+12,top+10],[xx+4,top+24]],'#d4e1ac');
+      path(c,[[xx-1,base-19],[xx-12,base-28],[xx-4,base-11]],'#8aaa76');
+    }
+  }else if(r.type==='web'){
+    const base=r.y+r.h;
+    c.strokeStyle='#e5c6ecbb';c.lineWidth=1.4;c.shadowColor='#cfa1e2';c.shadowBlur=5;
+    for(let i=0;i<6;i++){
+      const xx=r.x+r.w*i/5;
+      c.beginPath();c.moveTo(xx,base);c.quadraticCurveTo(r.x+r.w/2,base-r.h*.5,xx,r.y+3);c.stroke();
+    }
+    c.beginPath();for(let i=0;i<4;i++){const yy=r.y+8+i*(r.h-8)/4;c.moveTo(r.x,yy);c.quadraticCurveTo(r.x+r.w*.5,yy+8,r.x+r.w,yy);}c.stroke();
   }else if(r.type==='ice'){
     for(let x=0;x<r.w;x+=25){const xx=r.x+x;path(c,[[xx,r.y],[xx+11,r.y+r.h],[Math.min(xx+23,r.x+r.w),r.y]],'#bde9edb0','#f3ffffbb',1);path(c,[[xx+11,r.y],[xx+11,r.y+r.h],[Math.min(xx+23,r.x+r.w),r.y]],'#669daf66');}
   }else{
@@ -2463,13 +2643,22 @@ function boss(c, b, p, time, level) {
   c.restore();
 }
 function hazard(c, h, p, time) {
+  // Spectral crossings are powered by runes set in the actual stone edges.
+  if(h.runeLinks?.length){
+    const tx=h.x+h.w/2,ty=h.type==='saw'?h.y+h.h/2:h.y+h.h-4;
+    c.save();c.strokeStyle=h.warning?'#e4bd8388':'#8db6a455';c.lineWidth=1;c.setLineDash([2,7]);
+    for(const a of h.runeLinks){c.beginPath();c.moveTo(a.x,a.y-4);c.quadraticCurveTo((a.x+tx)/2,Math.min(a.y,ty)-18,tx,ty);c.stroke();}
+    c.setLineDash([]);
+    for(const a of h.runeLinks){c.fillStyle=p.stone;c.fillRect(a.x-8,a.y-3,16,6);path(c,[[a.x,a.y-12],[a.x+4,a.y-7],[a.x,a.y-2],[a.x-4,a.y-7]],h.warning?'#eac58c':p.light);}
+    c.restore();
+  }
   if (h.type === 'saw') {
     const radius = Math.min(h.w, h.h) / 2, x = h.x + h.w / 2, y = h.y + h.h / 2;
     c.save();
     const anchorX = Number.isFinite(h.baseX) ? h.baseX + h.w / 2 : x;
     const anchorY = Number.isFinite(h.baseY) ? h.baseY + h.h / 2 : y;
     c.strokeStyle = '#6b8a8b88'; c.lineWidth = 2; c.setLineDash([4, 4]);
-    c.beginPath(); c.moveTo(anchorX, anchorY - 115); c.lineTo(x, y); c.stroke(); c.setLineDash([]);
+    if(!h.runeLinks?.length){c.beginPath();c.moveTo(anchorX,anchorY-115);c.lineTo(x,y);c.stroke();}c.setLineDash([]);
     glow(c, x, y, radius * 2.5, '#e5ac8c', .15);
     c.translate(x, y); c.rotate(time * 3.8);
     c.beginPath();
@@ -2487,9 +2676,8 @@ function hazard(c, h, p, time) {
   }
   if (h.type === 'flame') {
     const active = h.timedActive !== false, x = h.x + h.w / 2, base = h.y + h.h;
-    c.fillStyle = p.ink; c.fillRect(h.x - 5, base - 4, h.w + 10, 9);
-    c.strokeStyle = '#a88c77'; c.lineWidth = 2; c.beginPath(); c.moveTo(h.x - 3, base); c.lineTo(h.x + h.w + 3, base); c.stroke();
-    glow(c, x, base - 8, active ? h.h * .8 : 35, '#f0ad77', active ? .28 : .1);
+    if(h.fixtureKind!=='spectral-crossing'){c.fillStyle=p.ink;c.fillRect(h.x-5,base-4,h.w+10,9);c.strokeStyle='#a88c77';c.lineWidth=2;c.beginPath();c.moveTo(h.x-3,base);c.lineTo(h.x+h.w+3,base);c.stroke();}
+    glow(c,x,base-8,active?Math.min(105,h.h*.8):h.warning?52:28,'#f0ad77',active?.28:h.warning?.2:.07);
     if (active) {
       const flame = c.createLinearGradient(0, h.y, 0, base); flame.addColorStop(0, '#f5c88622'); flame.addColorStop(.45, '#e49f73c0'); flame.addColorStop(1, '#ffe7ac');
       c.fillStyle = flame;
@@ -2502,8 +2690,15 @@ function hazard(c, h, p, time) {
       c.lineTo(h.x + h.w, base); c.closePath(); c.fill();
       for (let i = 0; i < 7; i++) ellipse(c, x + Math.sin(time * 4 + i * 3) * h.w * .4, base - ((time * 80 + i * 19) % h.h), 1.1, 2.5, '#ffe5b4');
     } else {
-      c.strokeStyle = '#ddaf7a66'; c.lineWidth = 1; c.setLineDash([3, 6]); c.strokeRect(h.x, h.y, h.w, h.h); c.setLineDash([]);
-      for (let i = 0; i < 3; i++) ellipse(c, x - 8 + i * 8, base - 5 - Math.sin(time * 3 + i) * 2, 1.4, 2, '#edb67f');
+      c.strokeStyle=h.warning?'#ffd397bb':'#7da99a40';c.lineWidth=h.warning?1.6:1;c.setLineDash(h.warning?[5,4]:[2,10]);c.strokeRect(h.x,h.y,h.w,h.h);c.setLineDash([]);
+      for(let i=0;i<3;i++)ellipse(c,x-8+i*8,base-5-Math.sin(time*3+i)*2,1.4,h.warning?4:2,h.warning?'#ffd397':'#89b39c');
+      if(h.warning){c.fillStyle='#f3ba7830';c.fillRect(h.x,h.y,h.w,h.h);}
+
+    }
+    if(h.timingChallenge){
+      c.strokeStyle=active?'#eaa17a':h.warning?'#ffd397':'#9bd4b8';c.lineWidth=2;
+      c.beginPath();c.arc(x,base+15,7,-Math.PI/2,-Math.PI/2+Math.PI*2*(h.cycleProgress||0));c.stroke();
+      ellipse(c,x,base+15,1.5,1.5,c.strokeStyle);
     }
     return;
   }
@@ -2547,11 +2742,28 @@ function checkpoint(c, point, p, time) {
   if (active) { c.strokeStyle = `${color}77`; c.lineWidth = 1; c.beginPath(); c.moveTo(x - 7, y - 9); c.lineTo(x + 7, y - 9); c.stroke(); }
 }
 function sign(c, r, p) {
-  c.save(); c.translate(r.x, r.y); c.font = '10px "Segoe UI", sans-serif'; c.textAlign = 'center';
-  const width = Math.min(280, c.measureText(r.text || '').width + 26);
-  c.fillStyle = '#091c24d9'; c.fillRect(-width / 2, -22, width, 27); c.strokeStyle = `${p.moss}66`; c.lineWidth = 1; c.strokeRect(-width / 2, -22, width, 27);
-  c.fillStyle = '#c8d9c6'; c.fillText(r.text || '', 0, -5, width - 15); c.restore();
+  c.save();
+  const maxWidth=r.maxWidth||244,padding=12;
+  const wrap=(text,font)=>{c.font=font;const result=[];let line='';for(const word of String(text||'').split(/\s+/)){const next=(line+' '+word).trim();if(line&&c.measureText(next).width>maxWidth-padding*2){result.push(line);line=word;}else line=next;}if(line)result.push(line);return result;};
+  const title=wrap(r.title,'600 11px "Segoe UI", sans-serif'),body=wrap(r.text,'11px "Segoe UI", sans-serif');
+  let measured=0;c.font='600 11px "Segoe UI", sans-serif';for(const line of title)measured=Math.max(measured,c.measureText(line).width);c.font='11px "Segoe UI", sans-serif';for(const line of body)measured=Math.max(measured,c.measureText(line).width);
+  const width=Math.max(126,Math.min(maxWidth,Math.ceil(measured)+padding*2)),height=18+body.length*14+(title.length?title.length*13+7:0);
+  const x=r.x-width/2,y=r.y;
+  if(r.style!=='inset'&&Number.isFinite(r.anchorY)){
+    // A narrow post ties each plaque to the precise launch/landing surface.
+    c.strokeStyle=p.stone;c.lineWidth=5;c.lineCap='round';c.beginPath();c.moveTo(r.anchorX,r.anchorY);c.lineTo(r.anchorX,Math.max(y+height+8,r.anchorY-24));c.stroke();
+    c.strokeStyle=`${p.edge}bb`;c.lineWidth=1.3;c.beginPath();c.moveTo(r.anchorX,r.anchorY-2);c.lineTo(r.anchorX,y+height+3);if(Math.abs(r.anchorX-r.x)>2)c.lineTo(r.x,y+height);c.stroke();
+    ellipse(c,r.anchorX,r.anchorY,5,1.8,p.edge);
+  }
+  c.fillStyle=r.style==='inset'?`${p.ink}ee`:'#091c24ee';c.fillRect(x,y,width,height);
+  c.strokeStyle=r.style==='inset'?`${p.edge}cc`:`${p.moss}99`;c.lineWidth=1;c.strokeRect(x+.5,y+.5,width-1,height-1);
+  c.fillStyle=r.style==='inset'?p.edge:p.moss;c.fillRect(x+4,y+4,2,2);c.fillRect(x+width-6,y+4,2,2);
+  c.textAlign='center';c.textBaseline='top';let yy=y+9;
+  if(title.length){c.font='600 11px "Segoe UI", sans-serif';c.fillStyle=p.light;for(const line of title){c.fillText(line,r.x,yy);yy+=13;}yy+=7;}
+  c.font='11px "Segoe UI", sans-serif';c.fillStyle='#d3e1d0';for(const line of body){c.fillText(line,r.x,yy);yy+=14;}
+  c.restore();
 }
+
 function portal(c, exit, p, time, open) {
   if (!exit) return;
   c.save(); c.translate(exit.x, exit.y);
@@ -2633,6 +2845,10 @@ function render(c, state, time = 0) {
       const r = pr.r || 10, color = pr.type === 'shock' ? '#f0bf9c' : p.light;
       glow(c, pr.x, pr.y, r * 4, color, .3);
       if (pr.type === 'gear') { c.save(); c.translate(pr.x,pr.y); c.rotate(time*5); for(let i=0;i<10;i++){c.rotate(TAU/10);c.fillStyle='#e3c496';c.fillRect(r*.5,-2,r*.6,4);}ellipse(c,0,0,r*.7,r*.7,'#59656c');ellipse(c,0,0,r*.22,r*.22,'#f0d1a1');c.restore(); }
+      else if(pr.type==='bubble'){
+        ellipse(c,pr.x,pr.y,r,r,'#8cdbdf44');c.strokeStyle='#c8f4e6';c.lineWidth=1.5;c.beginPath();c.arc(pr.x,pr.y,r,0,TAU);c.stroke();
+        ellipse(c,pr.x-r*.28,pr.y-r*.35,r*.17,r*.1,'#effff2');
+      }
       else if (pr.type === 'ice') { path(c,[[pr.x,pr.y-r],[pr.x+r*.65,pr.y],[pr.x,pr.y+r],[pr.x-r*.65,pr.y]],'#c9eff3bb','#f1ffff',1); }
       else if (pr.type === 'shock') { c.beginPath(); c.ellipse(pr.x,pr.y+r,r,r*2,0,Math.PI,TAU); c.strokeStyle = color; c.lineWidth = 3; c.stroke(); }
       else { ellipse(c, pr.x, pr.y, r, r, `${color}55`); ellipse(c, pr.x, pr.y, r * .5, r * .5, color); }
