@@ -70,8 +70,8 @@
   <aside id="well-panel" class="well-panel" aria-label="Well of Algorithms" hidden>
     <button id="well-close" class="well-close" aria-label="Close well">×</button><div class="eyebrow">WELL OF ALGORITHMS</div>
     <h2 id="well-title">A little light returns.</h2><p class="well-hero" id="well-hero"></p><div id="well-heroes"></div>
-    <p class="well-note">The arena keeps moving. Only this hero is reading. Wrong answers and hints cost nothing.</p>
-    <div id="well-question"></div><form id="well-form"><label for="well-answer">Final number</label><p><input id="well-answer" autocomplete="off" inputmode="decimal" maxlength="40" required> <button type="submit">Earn one heart</button></p></form>
+    <p class="well-note">The arena keeps moving. Only this hero is reading. Each fresh correct answer restores one heart to each hero, up to five. Wrong answers and hints cost nothing.</p>
+    <div id="well-question"></div><form id="well-form"><label for="well-answer">Final number</label><p><input id="well-answer" autocomplete="off" inputmode="decimal" maxlength="40" required> <button type="submit">Restore hearts</button></p></form>
     <p id="well-feedback" class="well-feedback" role="status"></p><button id="well-hint-button">Hint</button><p id="well-hint" hidden></p>
     <button id="well-next" hidden>Another sip · fresh algorithm</button><button id="well-retry">Return to adventure</button>
   </aside>
@@ -80,7 +80,7 @@
     <button class="modal-close icon-button" data-close aria-label="Close instructions"><svg><use href="#i-close"/></svg></button>
     <div class="eyebrow">YOUR ADVENTURE STARTS HERE</div><h2 id="help-title">A kingdom built for two.</h2><p class="modal-intro">Stay close, be curious, and look out for each other.</p>
     <div class="control-grid"><div class="control-card"><span class="player-badge">PLAYER ONE · THE RAM</span><div class="key-layout"><kbd>W</kbd><div><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></div></div><p><strong>A / D</strong> to move · <strong>W</strong> to jump<br><strong>C</strong> to attack · <strong>S</strong> to use a gate / drop</p></div><div class="control-card amber"><span class="player-badge">PLAYER TWO · THE STAG</span><div class="key-layout"><kbd>↑</kbd><div><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd></div></div><p><strong>← / →</strong> to move · <strong>↑</strong> to jump<br><strong>.</strong> to attack · <strong>↓</strong> to use a gate / drop</p></div></div>
-    <div class="rules"><p><span>✧</span><span><strong>Climb, push, discover.</strong> Hold toward a wall and press jump to kick away. Push rune blocks by walking into them. Read each chamber’s clues: balance weights, reuse rune crates, reflect beams, or slide ice into stoppers. R resets the local unfinished stage for free.</span></p><p><svg><use href="#i-gate"/></svg><span><strong>Light the way.</strong> A touched lantern saves a shared respawn point. Falling costs a heart. S / ↓ drops through ledges; at a gate it opens the maths challenge instead. Hints and retries are free. At the well outside each arena, each fresh correct algorithm restores one heart. Boss defeats return you there with zero hearts.</span></p><p><svg><use href="#i-heart"/></svg><span><strong>One precious heart.</strong> In co-op, solve any gate to revive a fallen teammate with just ONE heart. In solo, you control the ram alone. Checkpoint lamps save safe landings. Monsters drop shared Light; B opens the upgrade shop. A bought Lantern reveals hidden doors near each chapter’s start.</span></p></div>
+    <div class="rules"><p><span>✧</span><span><strong>Climb, push, discover.</strong> Hold toward a wall and press jump to kick away. Push rune blocks by walking into them. Read each chamber’s clues: balance weights, reuse rune crates, reflect beams, or slide ice into stoppers. R resets the local unfinished stage for free.</span></p><p><svg><use href="#i-gate"/></svg><span><strong>Light the way.</strong> A touched lantern saves a shared respawn point. Falling costs a heart. S / ↓ drops through ledges; at a gate it opens the maths challenge instead. Hints and retries are free. At the well outside each arena, each fresh correct algorithm restores one heart to each hero, up to five. Boss defeats return you there with zero hearts.</span></p><p><svg><use href="#i-heart"/></svg><span><strong>One precious heart.</strong> In co-op, solve any gate to revive a fallen teammate with just ONE heart. In solo, you control the ram alone. Checkpoint lamps save safe landings. Monsters drop shared Light; B opens the upgrade shop. A bought Lantern reveals hidden doors near each chapter’s start.</span></p></div>
     <div class="modal-footer"><span>Reach the end together. Defeat the boss. Open a new chapter.</span><button class="button primary" data-close>Got it <svg><use href="#i-check"/></svg></button></div>
    </section>
    <section id="gate-modal" class="modal gate-modal" role="dialog" aria-modal="true" aria-labelledby="gate-title" hidden>
@@ -139,6 +139,14 @@ function createBoss(level, arena, playerCount = 2) {
 
 function bossVulnerable(boss) {
   return !!boss && boss.active && !boss.dead && boss.hp > 0 && boss.phase === 'exposed';
+}
+
+// Only the final descent onto a marked leap landing has body-impact damage.
+// Idle armour, windups, rushes and dives do not inflict passive touch damage.
+function bossSlamActive(boss) {
+  if(!boss||!boss.active||boss.dead||boss.hp<=0||boss.phase!=='leap'||!(boss.duration>0)||!Number.isFinite(boss.toY))return false;
+  const progress=boss.elapsed/boss.duration,remaining=boss.toY-boss.y;
+  return progress>=.88&&progress<=1&&remaining>=-4&&remaining<=24;
 }
 
 function targetFor(game) {
@@ -396,7 +404,7 @@ function updateBoss(game, dt) {
   if (boss.timer <= 0) advanceAction(game);
 }
 
-return {createBoss,updateBoss,bossVulnerable};
+return {createBoss,updateBoss,bossVulnerable,bossSlamActive};
 })();
 
 
@@ -875,7 +883,7 @@ return {createLevel};
 const __engine = (() => {
 const {createLevel}=__levels;
 const {CAMPAIGN}=__campaign;
-const {createBoss,updateBoss:stepBoss,bossVulnerable}=__bosses;
+const {createBoss,updateBoss:stepBoss,bossVulnerable,bossSlamActive}=__bosses;
 const LEVELS = CAMPAIGN;
 const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
 const overlap = (a, b) => a.x < b.x+b.w && a.x+a.w > b.x && a.y < b.y+b.h && a.y+a.h > b.y;
@@ -1032,7 +1040,7 @@ function prepareCheckpoints(game) {
 }
 function player(id, spawn) {
   return {id, x:spawn.x + id*48, y:spawn.y, w:28, h:44, vx:0, vy:0, dir:1, hp:5,
-    dead:false, grounded:false, jumps:0, coyote:0, attack:0, cooldown:0, invuln:0,
+    dead:false, arenaLocked:false, grounded:false, jumps:0, coyote:0, attack:0, cooldown:0, invuln:0,
     landing:0, walkPhase:0, swingAge:1, dropThrough:0, jumpBuffer:0, wallDir:0, lastWallDir:0, wallCoyote:0, wallLock:0, standingOn:null, checkpointIndex:-1,
     respawn:{x:spawn.x+id*48, y:spawn.y+44}, respawnSource:'spawn', routeCheckpoint:null, color:id?'#efbc81':'#8de2cf'};
 }
@@ -1065,7 +1073,19 @@ class Game {
         life:.45+Math.random()*.4,maxLife:.85,color,size:2+Math.random()*3});
     }
   }
-  inArena(p) {return !p.dead && !p.inHidden && p.hp>0 && !p.readingWell && p.x>=this.bossArena.left && p.x+p.w<=this.bossArena.right && Math.abs(p.y+p.h-this.bossArena.y)<400;}
+  inArena(p) {return !p.dead && !p.inHidden && p.hp>0 && !p.readingWell && p.x>=this.bossArena.left && p.x+p.w<=this.bossArena.right && (p.arenaLocked||Math.abs(p.y+p.h-this.bossArena.y)<400);}
+  constrainArena(p,previousX=p.x) {
+    if(!this.boss.active||this.boss.dead){p.arenaLocked=false;return;}
+    if(p.dead||p.hp<=0||p.inHidden||p.readingWell)return;
+    const a=this.bossArena;
+    // Co-op entry is one-way for each hero. A teammate still at the well
+    // stays there; entering with a restored heart commits them to this fight.
+    if(!p.arenaLocked&&(p.x>=a.left||previousX>=a.left)){p.arenaLocked=true;p.recovering=false;}
+    if(!p.arenaLocked)return;
+    const lo=a.left,hi=a.right-p.w;
+    if(p.x<lo){p.x=lo;if(p.vx<0)p.vx=0;}
+    if(p.x>hi){p.x=hi;if(p.vx>0)p.vx=0;}
+  }
   hurt(p,amount=1,sourceX=p.x,force=false) {
     if(p.dead || this.isRefuge?.(p) || (!force && p.invuln>0)) return;
     p.hp=Math.max(0,p.hp-amount); p.invuln=1.5; p.vy=-220; p.vx=(p.x<sourceX?-1:1)*180;
@@ -1073,7 +1093,14 @@ class Game {
     if(!p.hp) { p.dead=true; p.standingOn=null; this.deaths++; this.emit('death',{player:p.id}); this.burst(p.x+14,p.y+20,p.color,24); }
   }
   fall(p) {
+    const arenaFall=this.boss.active&&!this.boss.dead&&p.arenaLocked;
     this.hurt(p,1,p.x,true);
+    if(arenaFall&&p.hp>0&&!p.dead&&p.arenaLocked){
+      // A surviving arena fall costs the usual heart without becoming a route
+      // checkpoint escape. Knockout still uses the separate zero-heart well.
+      Object.assign(p,{x:this.bossArena.left+34+p.id*48,y:this.bossArena.y-p.h-4,vx:0,vy:0,invuln:1.5,jumps:0,standingOn:null,grounded:false,inHidden:false});
+      this.constrainArena(p);return;
+    }
     if(!p.dead){
       if(p.respawnSource==='lantern'&&p.routeCheckpoint&&!p.recovering){
         const spawns=this.checkpointSpawns(p.routeCheckpoint);
@@ -1253,6 +1280,7 @@ class Game {
       if(p.hp<=0 && this.well?.unlocked)p.x=Math.max(p.x,this.bossArena.left-230);
       if((p.hp<=0||p.readingWell)&&p.x+p.w>this.bossArena.left) {p.x=this.bossArena.left-p.w;p.vx=0;}
       if(other && !other.dead && Math.abs(p.x-other.x)>1100 && Math.abs(p.x-other.x)>Math.abs(oldX-other.x)) {p.x=oldX;p.vx=0;}
+      this.constrainArena(p,oldX);
       p.vy+=1450*dt;
       if(p.wallDir && direction===p.wallDir && p.vy>90)p.vy=90;
       p.y+=p.vy*dt;
@@ -1285,12 +1313,12 @@ class Game {
       else if(p.vy>0 && p.y>this.cameraY+720/this.zoom+240 && !this.platforms.some(pl=>!pl.disabled&&pl.y>p.y&&pl.y<p.y+200&&p.x+p.w>pl.x&&p.x<pl.x+pl.w)) this.fall(p);
       for(const e of this.enemies) if(!p.inHidden&&e.hp>0&&overlap(p,e)) this.hurt(p,1,e.x+e.w/2);
       for(const zone of this.bossZones)for(const region of this.zoneRegions(zone))if(this.inArena(p)&&zone.warning<=0&&overlap(p,region))this.hurt(p,zone.damage||1,zone.x+zone.w/2);
-      if(this.inArena(p)&&this.boss.active&&!this.boss.dead&&!bossVulnerable(this.boss)&&overlap(p,this.boss))this.hurt(p,1,this.boss.x+48);
+      if(this.inArena(p)&&bossSlamActive(this.boss)&&overlap(p,this.boss))this.hurt(p,1,this.boss.x+this.boss.w/2);
       if(this.boss.dead&&p.x>this.exit.x-55&&Math.abs(p.y+p.h-this.exit.y)<100) {this.mode='victory';this.emit('victory');return;}
     }
     for(const e of this.enemies) {if(e.hp<=0)continue;e.hit=Math.max(0,e.hit-dt);e.x+=e.dir*e.speed*dt;if(e.x<e.min){e.dir=1;e.x=e.min;}if(e.x>e.max){e.dir=-1;e.x=e.max;}}
     const live=this.players.filter(p=>!p.dead);
-    if(live.some(p=>!p.inHidden&&p.x>this.bossArena.left+20&&Math.abs(p.y+p.h-this.bossArena.y)<240)&&this.gates.every(g=>g.solved)&&!this.boss.active&&!this.boss.dead) {this.boss.active=true;this.emit('bossStart');}
+    if(live.some(p=>p.hp>0&&!p.readingWell&&!p.inHidden&&p.x>this.bossArena.left+20&&Math.abs(p.y+p.h-this.bossArena.y)<240)&&this.gates.every(g=>g.solved)&&!this.boss.active&&!this.boss.dead) {this.boss.active=true;for(const hero of this.players)this.constrainArena(hero);this.emit('bossStart');}
     this.updateBoss(dt);
     this.moveProjectiles(dt);
     this.particles=this.particles.filter(p=>{p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=150*dt;p.life-=dt;return p.life>0;});
@@ -1306,7 +1334,7 @@ class Game {
       const vulnerable=bossVulnerable(b);
       if(!vulnerable){this.emit('blocked');return;}
       b.hp--;b.hit=.2;this.shake=3;this.burst(b.x+b.w/2,b.y+b.h/2,p.color,10);this.emit('bossHit');
-      if(b.hp<=0){b.dead=true;b.active=false;b.phase='dead';b.telegraphs=[];b.decoys=[];b.sequence=[];b.action=null;this.projectiles=[];this.bossZones=[];this.burst(b.x+b.w/2,b.y+50,LEVELS[this.level].color,65);this.emit('bossDefeated');}
+      if(b.hp<=0){b.dead=true;b.active=false;for(const hero of this.players)hero.arenaLocked=false;b.phase='dead';b.telegraphs=[];b.decoys=[];b.sequence=[];b.action=null;this.projectiles=[];this.bossZones=[];this.burst(b.x+b.w/2,b.y+50,LEVELS[this.level].color,65);this.emit('bossDefeated');}
     }
   }
   updateCamera(dt) {
@@ -1904,9 +1932,9 @@ const __wells = (()=>{
  P.load=function(level){load.call(this,level);this.well={x:this.bossArena.left-60,y:this.bossArena.y,unlocked:false};this.wellSerial=0;this.usedWellQuestions=new Set();};
  P.wellNear=function(p){return this.well.unlocked&&!p.dead&&p.x<this.bossArena.left&&Math.abs(p.x+14-this.well.x)<80&&Math.abs(p.y+p.h-this.well.y)<100;};
  P.isRefuge=function(p){return this.well?.unlocked&&p.x+p.w<=this.bossArena.left&&p.x>this.bossArena.left-260&&Math.abs(p.y+p.h-this.well.y)<170;};
- P.resetBoss=function(){if(this.boss.dead)return;this.boss=__bosses.createBoss(this.level,this.bossArena,this.playerCount);this.projectiles=this.projectiles.filter(o=>o.source==='bug');this.bossZones=[];this.emit('bossReset');};
+ P.resetBoss=function(){if(this.boss.dead)return;for(const hero of this.players)hero.arenaLocked=false;this.boss=__bosses.createBoss(this.level,this.bossArena,this.playerCount);this.projectiles=this.projectiles.filter(o=>o.source==='bug');this.bossZones=[];this.emit('bossReset');};
  P.returnToWell=function(p){
-   Object.assign(p,{x:this.well.x-45+p.id*64,y:this.well.y-p.h,hp:0,dead:false,recovering:true,readingWell:false,inHidden:false,vx:0,vy:0,attack:0,cooldown:0,invuln:0,jumps:0,grounded:true,standingOn:null,wellQuestion:null});
+   Object.assign(p,{x:this.well.x-45+p.id*64,y:this.well.y-p.h,hp:0,dead:false,arenaLocked:false,recovering:true,readingWell:false,inHidden:false,vx:0,vy:0,attack:0,cooldown:0,invuln:0,jumps:0,grounded:true,standingOn:null,wellQuestion:null});
    p.respawn={x:p.x,y:this.well.y};p.respawnSource='well';
    this.emit('wellReturn',{player:p.id});
  };
@@ -1918,8 +1946,10 @@ const __wells = (()=>{
      if(!this.players.some(q=>this.inArena(q)))this.resetBoss();
    }
  };
+ // Shared healing never revives a route-dead hero: gate revival remains separate.
+ P.wellNeedsHealing=function(){return this.players.some(hero=>!hero.dead&&hero.hp<5);};
  P.nextWellQuestion=function(p){
-   if(!this.wellNear(p)||p.hp>=5)return null;
+   if(!this.wellNear(p)||!this.wellNeedsHealing())return null;
    // Reject duplicate algorithm content, not merely duplicate random seeds.
    for(let i=0;i<10000;i++){
      const q=__maths.createQuestion(this.level,`${Math.random()}-${++this.wellSerial}`);
@@ -1930,12 +1960,17 @@ const __wells = (()=>{
  };
  P.answerWell=function(p,raw,token){
    const q=p.wellQuestion;
-   if(!q||q.wellToken!==token||q.claimed||this.usedWellQuestions.has(q.wellKey)||!this.wellNear(p)||p.hp>=5||!__maths.evaluateAnswer(raw,q))return false;
+   if(!q||q.wellToken!==token||q.claimed||this.usedWellQuestions.has(q.wellKey)||!this.wellNear(p)||!this.wellNeedsHealing()||!__maths.evaluateAnswer(raw,q))return false;
    q.claimed=true;this.usedWellQuestions.add(q.wellKey);
    // Keep recent sips distinct without exhausting the finite Year 6 question pool.
    while(this.usedWellQuestions.size>20)this.usedWellQuestions.delete(this.usedWellQuestions.values().next().value);
-   p.hp=Math.min(5,p.hp+1);
-   this.burst(p.x+14,p.y+15,p.color,18);this.emit('wellHeart',{player:p.id,hp:p.hp});return true;
+   const recipients=[];
+   for(const hero of this.players)if(!hero.dead&&hero.hp<5){
+     hero.hp=Math.min(5,hero.hp+1);recipients.push({player:hero.id,hp:hero.hp});
+     this.burst(hero.x+hero.w/2,hero.y+15,hero.color,18);
+   }
+   q.wellRecipients=recipients;
+   this.emit('wellHeart',{player:p.id,hp:p.hp,recipients});return true;
  };
  P.step=function(dt,input){
    if(this.mode==='playing'){
@@ -1944,7 +1979,7 @@ const __wells = (()=>{
      }
      // The well strip is permanently free of route enemies and their shots.
      this.projectiles=this.projectiles.filter(o=>o.source==='bug'||(o.x-o.r>=this.bossArena.left&&o.x+o.r<=this.bossArena.right));
-     for(const p of this.players)if(this.inArena(p))p.recovering=false;
+     for(const p of this.players){this.constrainArena(p);if(this.inArena(p))p.recovering=false;}
      if(this.boss.active&&!this.players.some(p=>this.inArena(p)))this.resetBoss();
    }
    step.call(this,dt,input);
@@ -1957,9 +1992,9 @@ const __wells = (()=>{
    c.fillStyle=w.unlocked?'#a6e9dc':'#526b68';c.beginPath();c.ellipse(0,-17,25,7,0,0,Math.PI*2);c.fill();
    c.strokeStyle=p.edge;c.lineWidth=4;c.beginPath();c.moveTo(-40,0);c.lineTo(-40,-90);c.lineTo(40,-90);c.lineTo(40,0);c.stroke();
    c.fillStyle=p.light;c.font='12px Georgia';c.textAlign='center';c.fillText('WELL OF ALGORITHMS',0,-112);c.font='10px sans-serif';
-   c.fillText(w.unlocked?'S / ↓ · one fresh algorithm = one heart':'Opens when the three gates are solved',0,-97);
+   c.fillText(w.unlocked?(g.playerCount===2?'S / ↓ · one answer = one heart each':'S / ↓ · one answer = one heart'):'Opens when the three gates are solved',0,-97);
    c.strokeStyle='#b9e9d433';c.setLineDash([5,8]);c.beginPath();c.moveTo(g.bossArena.left-w.x,-155);c.lineTo(g.bossArena.left-w.x,0);c.stroke();c.setLineDash([]);
-   c.font='10px sans-serif';c.fillText('REFUGE',0,28);c.fillText('ARENA →',145,-26);c.restore();
+   c.font='10px sans-serif';c.fillText('REFUGE',0,28);if(g.boss.active)c.fillText('ONE-WAY ENTRY →',0,-70);else c.fillText('ARENA →',145,-26);c.restore();
    for(const hero of g.players)if(hero.recovering){c.save();c.fillStyle=hero.color;c.font='11px sans-serif';c.textAlign='center';c.fillText(`${hero.id?'STAG':'RAM'} · ${hero.hp}/5 ♥`,hero.x+14,hero.y-35);c.restore();}
  }
  return {draw};
@@ -3005,6 +3040,22 @@ function menuScene(c, p, time, playerCount = 2) {
   grass(c, 753, 609, 44, p, 15, time); grass(c, 1207, 609, 62, p, 19, time);
 }
 
+function arenaSeals(c,state,p,time) {
+  if(!state.boss?.active||state.boss.dead)return;
+  const a=state.bossArena,top=Math.min(a.y-560,(state.cameraY||0)-24),bottom=a.y+12;
+  c.save();
+  for(const [side,x] of [[-1,a.left],[1,a.right]]){
+    const glowBand=c.createLinearGradient(x-10,0,x+10,0);
+    glowBand.addColorStop(0,'#a4e4ce00');glowBand.addColorStop(.5,'#b8ead75c');glowBand.addColorStop(1,'#a4e4ce00');
+    c.fillStyle=glowBand;c.fillRect(x-10,top,20,bottom-top);
+    c.strokeStyle='#c0e8d6a0';c.lineWidth=1.5;c.beginPath();c.moveTo(x,top);c.lineTo(x,bottom);c.stroke();
+    c.strokeStyle='#a9d7c362';c.lineWidth=1;
+    for(let y=bottom-20;y>top;y-=48){const drift=Math.sin(time*1.7+y*.025)*2;c.beginPath();c.moveTo(x+side*5,y-7+drift);c.lineTo(x,y+drift);c.lineTo(x+side*5,y+7+drift);c.stroke();}
+    path(c,[[x,a.y-14],[x+6,a.y-7],[x,a.y],[x-6,a.y-7]],p.light);
+  }
+  c.restore();
+}
+
 function render(c, state, time = 0) {
   if (!c || !state) return;
   const level = Math.max(0, Math.min(9, state.level || 0)), p = PALETTES[level];
@@ -3032,6 +3083,7 @@ function render(c, state, time = 0) {
     (state.gates || []).forEach(g => gate(c, g, p, time));
     __puzzles.draw(c,state,p,time);__economy.draw(c,state,p,time);__wells.draw(c,state,p,time);
     portal(c, state.exit, p, time, !!state.boss?.dead);
+    arenaSeals(c,state,p,time);
     (state.enemies || []).forEach(e => { if (visible(e)) __economy.drawEnemy(c, e, p, time); });
     if (state.boss && !state.boss.dead) {
       for (const mark of state.boss.telegraphs || []) {
@@ -3147,7 +3199,7 @@ function closeWell(){if(wellPlayer!==null&&game.players[wellPlayer])game.players
 function openWell(id){
  const p=game.players[id];if(!p||!game.wellNear(p))return;
  closeWell();wellPlayer=id;p.readingWell=true;p.vx=0;p.attack=0;$('well-panel').hidden=false;
- $('well-title').textContent='One thought. One heart.';
+ $('well-title').textContent=game.playerCount===2?'One thought. Shared light.':'One thought. One heart.';
  $('well-heroes').replaceChildren(...game.players.filter(q=>game.wellNear(q)).map(q=>{const b=document.createElement('button');b.dataset.hero=q.id;b.textContent=(q.id?'Stag':'Ram')+' · '+q.hp+'/5';b.onclick=()=>openWell(q.id);return b;}));
  nextSip();
 }
@@ -3157,11 +3209,11 @@ function nextSip(){
  $('well-form').hidden=!wellQuestion;$('well-hint-button').hidden=!wellQuestion;
  $('well-question').replaceChildren();
  if(wellQuestion){const lead=document.createElement('p');lead.textContent='Start with '+wellQuestion.start;const ol=document.createElement('ol');for(const text of wellQuestion.steps){const li=document.createElement('li');li.textContent=text;ol.append(li);}$('well-question').append(lead,ol);$('well-answer').focus({preventScroll:true});}
- else $('well-question').textContent='Five hearts. Your light is full.';
+ else $('well-question').textContent=game.players.some(q=>q.dead)?'Living heroes have full hearts. A fallen teammate needs a gate revival.':game.playerCount===2?'Five hearts each. Both lights are full.':'Five hearts. Your light is full.';
  updateWellPanel();
 }
-function updateWellPanel(){if(wellPlayer===null)return;const p=game.players[wellPlayer];if(!p||!game.wellNear(p)||game.mode!=='playing'){closeWell();return;}$('well-hero').textContent=`${p.id?'STAG · PLAYER 2':'RAM · PLAYER 1'} receives the heart · ${p.hp}/5 ♥`;$('well-hero').style.color=p.color;for(const button of $('well-heroes').children){const q=game.players[Number(button.dataset.hero)];button.textContent=(q.id?'Stag':'Ram')+' · '+q.hp+'/5';}$('well-retry').textContent=p.hp?'Retry / leave with '+p.hp+' heart'+(p.hp===1?'':'s'):'Rest here · close the well';}
-$('well-form').onsubmit=e=>{e.preventDefault();if(wellPlayer===null||!wellQuestion||wellQuestion.claimed)return;const p=game.players[wellPlayer];if(game.answerWell(p,$('well-answer').value,wellQuestion.wellToken)){$('well-feedback').textContent=`${p.id?'Stag':'Ram'} + ONE heart. ${wellQuestion.explanation}`;$('well-form').hidden=true;$('well-hint-button').hidden=true;$('well-next').hidden=p.hp>=5;$('well-next').focus();}else{$('well-feedback').textContent='Try again — no heart lost. Follow each round in order.';$('well-answer').select();}};
+function updateWellPanel(){if(wellPlayer===null)return;const p=game.players[wellPlayer];if(!p||!game.wellNear(p)||game.mode!=='playing'){closeWell();return;}$('well-hero').textContent=(game.playerCount===2?'SHARED HEALING · ':'')+game.players.map(q=>`${q.id?'STAG':'RAM'} · ${q.hp}/5 ♥${q.dead?' · FALLEN':''}`).join(' / ');$('well-hero').style.color=p.color;for(const button of $('well-heroes').children){const q=game.players[Number(button.dataset.hero)];button.textContent=(q.id?'Stag':'Ram')+' · '+q.hp+'/5';}if(!wellQuestion||wellQuestion.claimed)$('well-next').hidden=!game.wellNeedsHealing();$('well-retry').textContent=p.hp?'Retry / leave with '+p.hp+' heart'+(p.hp===1?'':'s'):'Rest here · close the well';}
+$('well-form').onsubmit=e=>{e.preventDefault();if(wellPlayer===null||!wellQuestion||wellQuestion.claimed)return;const p=game.players[wellPlayer];if(game.answerWell(p,$('well-answer').value,wellQuestion.wellToken)){$('well-feedback').textContent=wellQuestion.wellRecipients.map(q=>`${q.player?'Stag':'Ram'} + ONE heart (${q.hp}/5)`).join(' · ')+'. '+wellQuestion.explanation;$('well-form').hidden=true;$('well-hint-button').hidden=true;$('well-next').hidden=!game.wellNeedsHealing();($('well-next').hidden?$('well-retry'):$('well-next')).focus();}else{$('well-feedback').textContent='Try again — no heart lost. Follow each round in order.';$('well-answer').select();}};
 $('well-hint-button').onclick=()=>{if(wellQuestion){$('well-hint').textContent=wellQuestion.hint;$('well-hint').hidden=false;}};
 $('well-close').onclick=$('well-retry').onclick=()=>{closeWell();canvas.focus({preventScroll:true});};$('well-next').onclick=nextSip;
 function refreshShop(){
@@ -3207,14 +3259,14 @@ function updateHud(){
  let tip=game.playerCount===1?'W jump / wall-jump · C attack · S gate / drop · R reset blocks':'W / ↑ jump / wall-jump · C / . attack · S / ↓ gate or drop';
  if(game.players.some(p=>p.dead))tip='One light remains. Find any gate and solve its algorithm to revive your teammate.';
  else if(b.dead)tip='The guardian has fallen. Head right to the glowing doorway.';
- else if(game.players.some(p=>p.recovering))tip='At the well: S / ↓ for a fresh algorithm. Each correct answer gives that hero ONE heart. Retry at any health.';
+ else if(game.players.some(p=>p.recovering))tip='At the well: S / ↓ for a fresh algorithm. Each correct answer gives each hero ONE heart, up to five. Retry at any health.';
  else if(b.active)tip=LEVELS[game.level].mechanic;
  else if(near>=0)tip='A moment to think. Press S or ↓ at the gate — the world will pause.';
  else if(game.players.length>1&&(Math.abs(game.players[0].x-game.players[1].x)>900||Math.abs(game.players[0].y-game.players[1].y)>570))tip='Stay together, little heroes. Wait for your teammate to catch up.';
  $('tip-text').textContent=tip;
  if(performance.now()>toastUntil)$('toast').classList.remove('visible');
 }
-function frame(now){const dt=lastFrame?Math.min((now-lastFrame)/1000,.035):.016;lastFrame=now;game.step(dt,inputs());pressed.clear();for(const event of game.events.splice(0)){audio.effect(event.type);if(event.type==='treasure')showToast('Hidden treasury found · +22 shared Light',4);if(event.type==='hiddenArea')showToast(event.entered?'The lantern reveals a hidden treasury. S / ↓ at the doorway to return.':'Back on the main route.',4);if(event.type==='well')openWell(event.player);if(event.type==='wellReturn'){showToast(`${event.player?'Stag':'Ram'} returns to the well with ZERO hearts. Press ${event.player?'↓':'S'} to earn a heart.`,7);}if(event.type==='wellUnlocked')showToast('Well unlocked outside the arena. S / ↓ for one heart per fresh algorithm.',5);if(event.type==='bossReset')showToast('The arena is empty. Guardian restored; hazards cleared. Your chapter progress is safe.',5);if(event.type==='wellHeart')showToast(`${event.player?'STAG':'RAM'} receives ONE heart · ${event.hp}/5`,3);if(event.type==='lightCollected')showToast(`Shared Light collected: +${event.amount}`,2);if(event.type==='gate')openGate(event.index);if(event.type==='death')showToast(`Player ${event.player+1} has fallen. A gate can bring them back with ONE heart.`,6);if(event.type==='gateSolved')showToast(event.revived?'Your teammate returns with ONE heart. Stay safe together.':'Gate opened. Your hearts feel a little lighter.');if(event.type==='lifebloom')showToast('A lifebloom restores one heart. A reward for the road less travelled.',4);if(event.type==='puzzleSolved')showToast('Puzzle completed. The stone seal opens.',4);if(event.type==='checkpoint')showToast(game.playerCount===2?'Lantern lit. Both heroes will respawn here after a fall.':'Lantern lit. A fall returns you here.',3);if(event.type==='bossStart')showToast(`${LEVELS[game.level].boss} awakens. ${LEVELS[game.level].mechanic}`,6);if(event.type==='bossDefeated')showToast('Guardian defeated! Follow the light to the doorway on the right.',5);if(event.type==='victory')showResult(true);if(event.type==='gameover')showResult(false);}
+function frame(now){const dt=lastFrame?Math.min((now-lastFrame)/1000,.035):.016;lastFrame=now;game.step(dt,inputs());pressed.clear();for(const event of game.events.splice(0)){audio.effect(event.type);if(event.type==='treasure')showToast('Hidden treasury found · +22 shared Light',4);if(event.type==='hiddenArea')showToast(event.entered?'The lantern reveals a hidden treasury. S / ↓ at the doorway to return.':'Back on the main route.',4);if(event.type==='well')openWell(event.player);if(event.type==='wellReturn'){showToast(`${event.player?'Stag':'Ram'} returns to the well with ZERO hearts. Press ${event.player?'↓':'S'} to earn a heart.`,7);}if(event.type==='wellUnlocked')showToast('Well unlocked outside the arena. S / ↓ for one heart each per fresh algorithm.',5);if(event.type==='bossReset')showToast('The arena is empty. Guardian restored; hazards cleared. Your chapter progress is safe.',5);if(event.type==='wellHeart')showToast(event.recipients.map(q=>`${q.player?'STAG':'RAM'} + ONE heart · ${q.hp}/5`).join(' / '),3);if(event.type==='lightCollected')showToast(`Shared Light collected: +${event.amount}`,2);if(event.type==='gate')openGate(event.index);if(event.type==='death')showToast(`Player ${event.player+1} has fallen. A gate can bring them back with ONE heart.`,6);if(event.type==='gateSolved')showToast(event.revived?'Your teammate returns with ONE heart. Stay safe together.':'Gate opened. Your hearts feel a little lighter.');if(event.type==='lifebloom')showToast('A lifebloom restores one heart. A reward for the road less travelled.',4);if(event.type==='puzzleSolved')showToast('Puzzle completed. The stone seal opens.',4);if(event.type==='checkpoint')showToast(game.playerCount===2?'Lantern lit. Both heroes will respawn here after a fall.':'Lantern lit. A fall returns you here.',3);if(event.type==='bossStart')showToast(`${LEVELS[game.level].boss} awakens. The arena seals behind each hero. ${LEVELS[game.level].mechanic}`,6);if(event.type==='bossDefeated')showToast('Guardian defeated! Follow the light to the doorway on the right.',5);if(event.type==='victory')showResult(true);if(event.type==='gameover')showResult(false);}
  updateWellPanel();
  render(ctx,game,reducedMotion?(game.mode==='playing'?game.time:0):now/1000);if(game.mode!=='menu')updateHud();requestAnimationFrame(frame);}
 chooseMode(selectedCount);updateChapterCards();requestAnimationFrame(frame);
