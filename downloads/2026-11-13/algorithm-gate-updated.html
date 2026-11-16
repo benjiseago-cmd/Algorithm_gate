@@ -80,7 +80,7 @@
     <button class="modal-close icon-button" data-close aria-label="Close instructions"><svg><use href="#i-close"/></svg></button>
     <div class="eyebrow">YOUR ADVENTURE STARTS HERE</div><h2 id="help-title">A kingdom built for two.</h2><p class="modal-intro">Stay close, be curious, and look out for each other.</p>
     <div class="control-grid"><div class="control-card"><span class="player-badge">PLAYER ONE · THE RAM</span><div class="key-layout"><kbd>W</kbd><div><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></div></div><p><strong>A / D</strong> to move · <strong>W</strong> to jump<br><strong>C</strong> to attack · <strong>S</strong> to use a gate / drop</p></div><div class="control-card amber"><span class="player-badge">PLAYER TWO · THE STAG</span><div class="key-layout"><kbd>↑</kbd><div><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd></div></div><p><strong>← / →</strong> to move · <strong>↑</strong> to jump<br><strong>.</strong> to attack · <strong>↓</strong> to use a gate / drop</p></div></div>
-    <div class="rules"><p><span>✧</span><span><strong>Climb, push, discover.</strong> Hold toward a wall and press jump to kick away. Push rune blocks by walking into them. Read each chamber’s clues: balance weights, reuse rune crates, reflect beams, or slide ice into stoppers. R resets the local unfinished stage for free.</span></p><p><svg><use href="#i-gate"/></svg><span><strong>Light the way.</strong> Lanterns save each hero’s position. Falling costs a heart. S / ↓ drops through ledges; at a gate it opens the maths challenge instead. Hints and retries are free. At the well outside each arena, each fresh correct algorithm restores one heart. Boss defeats return you there with zero hearts.</span></p><p><svg><use href="#i-heart"/></svg><span><strong>One precious heart.</strong> In co-op, solve any gate to revive a fallen teammate with just ONE heart. In solo, you control the ram alone. Checkpoint lamps save safe landings. Monsters drop shared Light; B opens the upgrade shop. A bought Lantern reveals hidden doors near each chapter’s start.</span></p></div>
+    <div class="rules"><p><span>✧</span><span><strong>Climb, push, discover.</strong> Hold toward a wall and press jump to kick away. Push rune blocks by walking into them. Read each chamber’s clues: balance weights, reuse rune crates, reflect beams, or slide ice into stoppers. R resets the local unfinished stage for free.</span></p><p><svg><use href="#i-gate"/></svg><span><strong>Light the way.</strong> A touched lantern saves a shared respawn point. Falling costs a heart. S / ↓ drops through ledges; at a gate it opens the maths challenge instead. Hints and retries are free. At the well outside each arena, each fresh correct algorithm restores one heart. Boss defeats return you there with zero hearts.</span></p><p><svg><use href="#i-heart"/></svg><span><strong>One precious heart.</strong> In co-op, solve any gate to revive a fallen teammate with just ONE heart. In solo, you control the ram alone. Checkpoint lamps save safe landings. Monsters drop shared Light; B opens the upgrade shop. A bought Lantern reveals hidden doors near each chapter’s start.</span></p></div>
     <div class="modal-footer"><span>Reach the end together. Defeat the boss. Open a new chapter.</span><button class="button primary" data-close>Got it <svg><use href="#i-check"/></svg></button></div>
    </section>
    <section id="gate-modal" class="modal gate-modal" role="dialog" aria-modal="true" aria-labelledby="gate-title" hidden>
@@ -347,7 +347,7 @@ function updateBoss(game, dt) {
   if (phase === 'charge') {
     boss.x = clamp(boss.x + boss.dir * (action.speed || 500) * dt, arena.left + 25, arena.right - boss.w - 25);
   } else if (phase === 'barrage') {
-    if (['moth','owl','prism','sovereign','weaver'].includes(boss.kind)) boss.y = arena.y - boss.h - (boss.kind==='prism'?245:boss.kind==='moth'?180:boss.kind==='owl'?220:155) + Math.sin(boss.elapsed * 3) * 13;
+    if (['moth','owl','prism','sovereign','weaver'].includes(boss.kind)) boss.y = arena.y - boss.h - (boss.kind==='prism'?245:boss.kind==='moth'?180:(boss.kind==='owl'||boss.kind==='sovereign')?220:155) + Math.sin(boss.elapsed * 3) * 13;
     boss.shotTimer -= dt;
     if (boss.shotTimer <= 0) { boss.shotTimer += action.interval || .5; fan(game, action.count || 3, action.speed || 230, .18, action.type || 'orb'); }
   } else if (phase === 'shock') {
@@ -972,11 +972,42 @@ function configureArena(game,level) {
   game.signs.push({x:L+190,y:y-295,text:tips[level],arenaHint:true});
 }
 
+// A landing needs one route lantern, even when several authored nodes overlap it.
+function prepareCheckpoints(game) {
+  const stable=game.platforms.filter(p=>!p.hiddenRoom&&!['moving','crumble','counterweight'].includes(p.type));
+  const groups=new Map();
+  for(const source of game.checkpoints){
+    const floors=stable.filter(p=>p.type==='ground'&&source.x>=p.x&&source.x<=p.x+p.w&&source.y>=p.y-1&&source.y<p.y+p.h);
+    const support=floors.sort((a,b)=>a.y-b.y)[0]||stable.find(p=>Math.abs(p.y-source.y)<2&&source.x>=p.x&&source.x<=p.x+p.w);
+    if(!support)continue;
+    const old=groups.get(support),progress=source.progress??source.platform??0;
+    if(!old)groups.set(support,{...source,y:support.y,support,progress});
+    else {old.progress=Math.max(old.progress,progress);old.active=old.active||source.active;}
+  }
+  const result=[];
+  for(const cp of groups.values()){
+    const gate=game.gates.find(g=>Math.abs(g.y-cp.support.y)<2&&g.x>=cp.support.x&&g.x<=cp.support.x+cp.support.w);
+    if(gate)cp.x=gate.x-115;
+    // A low overlapping ledge is the actual walkable surface, not the floor
+    // buried beneath it. Mount the lamp there and merge its older route node.
+    const upper=stable.filter(p=>p!==cp.support&&p.y<cp.y&&cp.y-p.y<=60&&cp.x>=p.x+12&&cp.x<=p.x+p.w-12).sort((a,b)=>a.y-b.y)[0];
+    if(upper){cp.support=upper;cp.y=upper.y;}
+    cp.x=clamp(cp.x,cp.support.x+12,cp.support.x+cp.support.w-12);
+    cp.platform=game.platforms.indexOf(cp.support);
+    const existing=result.find(p=>p.support===cp.support);
+    if(existing){
+      const progress=Math.max(existing.progress,cp.progress),active=existing.active||cp.active;
+      if(cp.progress>=existing.progress)Object.assign(existing,cp);
+      existing.progress=progress;existing.active=active;
+    }else result.push(cp);
+  }
+  game.checkpoints=result.sort((a,b)=>a.progress-b.progress);
+}
 function player(id, spawn) {
   return {id, x:spawn.x + id*48, y:spawn.y, w:28, h:44, vx:0, vy:0, dir:1, hp:5,
     dead:false, grounded:false, jumps:0, coyote:0, attack:0, cooldown:0, invuln:0,
-    landing:0, walkPhase:0, dropThrough:0, jumpBuffer:0, wallDir:0, lastWallDir:0, wallCoyote:0, wallLock:0, standingOn:null, checkpointIndex:-1,
-    respawn:{x:spawn.x+id*48, y:spawn.y+44}, color:id?'#efbc81':'#8de2cf'};
+    landing:0, walkPhase:0, swingAge:1, dropThrough:0, jumpBuffer:0, wallDir:0, lastWallDir:0, wallCoyote:0, wallLock:0, standingOn:null, checkpointIndex:-1,
+    respawn:{x:spawn.x+id*48, y:spawn.y+44}, respawnSource:'spawn', routeCheckpoint:null, color:id?'#efbc81':'#8de2cf'};
 }
 class Game {
   constructor(level=0,playerCount=2) { this.playerCount=playerCount===1?1:2; this.load(level); }
@@ -985,9 +1016,11 @@ class Game {
     Object.assign(this, createLevel(level));
     configureArena(this,level);
     placeRouteSigns(this);
+    prepareCheckpoints(this);
     this.level=level; this.mode='playing'; this.time=0; this.events=[]; this.shake=0;
     this.gatesSolved=0; this.kills=0; this.elapsed=0; this.deaths=0; this.revives=0;
     this.gateCooldown=0; this.gateQuestions={};
+    this.partyCheckpoint=null;this.partyCheckpointProgress=-1;
     this.players=Array.from({length:this.playerCount},(_,id)=>player(id,this.spawn));
     this.walls=this.walls||[]; this.blocks=this.blocks||[];this.puzzles=this.puzzles||[];this.puzzleBarriers=this.puzzleBarriers||[];
     this.blocks.forEach(b=>{b.startX??=b.x;b.startY??=b.y;b.vy=0;b.vx=0;b.dx=0;b.dy=0;});
@@ -1014,7 +1047,68 @@ class Game {
   }
   fall(p) {
     this.hurt(p,1,p.x,true);
-    if(!p.dead) Object.assign(p,{x:p.respawn.x,y:p.respawn.y-p.h-4,vx:0,vy:0,invuln:1.5,jumps:0,standingOn:null,grounded:false});
+    if(!p.dead){
+      if(p.respawnSource==='lantern'&&p.routeCheckpoint&&!p.recovering){
+        const spawns=this.checkpointSpawns(p.routeCheckpoint);
+        if(spawns)p.respawn={...spawns[p.id]};
+      }
+      Object.assign(p,{x:p.respawn.x,y:p.respawn.y-p.h-4,vx:0,vy:0,invuln:1.5,jumps:0,standingOn:null,grounded:false,inHidden:false});
+    }
+  }
+  checkpointSpawns(cp) {
+    const support=cp.support;
+    if(!support||support.disabled||support.hiddenRoom)return null;
+    const widths=this.players.map(p=>p.w),count=widths.length;
+    const spread=count===2?18:0,maxHalf=Math.max(...widths)/2;
+    let lo=support.x+maxHalf+spread+4,hi=support.x+support.w-maxHalf-spread-4;
+    // Stay on the lantern's side of every unopened seal. A free position on
+    // the other side of a wide chamber is not a valid respawn shortcut.
+    const seals=[...this.puzzleBarriers.filter(b=>!b.open),...this.gates.filter(g=>!g.solved).map(g=>({x:g.x-23,w:46}))];
+    for(const seal of seals){
+      if(cp.x<seal.x)hi=Math.min(hi,seal.x-maxHalf-spread-2);
+      else if(cp.x>seal.x+seal.w)lo=Math.max(lo,seal.x+seal.w+maxHalf+spread+2);
+      else return null;
+    }
+    if(lo>hi)return null;
+    const middle=clamp(cp.x,lo,hi),candidates=[middle,lo,hi];
+    for(let d=24;d<support.w;d+=24)candidates.push(clamp(middle-d,lo,hi),clamp(middle+d,lo,hi));
+    const overlaps=(a,b)=>a.x<b.x+b.w&&a.x+a.w>b.x&&a.y<b.y+b.h&&a.y+a.h>b.y;
+    const solids=[...this.walls,...this.blocks,...this.puzzleBarriers.filter(b=>!b.open),
+      ...this.platforms.filter(p=>p!==support&&!p.disabled&&p.y<cp.y-2),
+      ...this.gates.filter(g=>!g.solved).map(g=>({x:g.x-23,y:0,w:46,h:this.height}))].filter(r=>!r.hiddenRoom);
+    // Use every phase of a timed obstacle, so the respawn stays safe later too.
+    const danger=this.hazards.map(h=>h.type==='saw'?{x:(h.baseX??h.x)-Math.abs(h.rangeX||0),y:(h.baseY??h.y)-Math.abs(h.rangeY||0),w:h.w+2*Math.abs(h.rangeX||0),h:h.h+2*Math.abs(h.rangeY||0)}:h);
+    for(const center of candidates){
+      const spawns=this.players.map(p=>({x:center+(count===2?(p.id?spread:-spread):0)-p.w/2,y:cp.y}));
+      if(spawns.every((spawn,i)=>{
+        const hero=this.players[i],rect={x:spawn.x,y:spawn.y-hero.h-4,w:hero.w,h:hero.h+4};
+        return ![...solids,...danger,...this.enemies.filter(e=>e.hp>0)].some(r=>overlaps(rect,r));
+      }))return spawns;
+    }
+    return null;
+  }
+  activateCheckpoint(cp,actor) {
+    if(!this.checkpoints.includes(cp)||!actor||actor.dead||actor.hp<=0||actor.inHidden||actor.recovering||actor.readingWell)return false;
+    if(!actor.grounded||Math.abs(actor.x+actor.w/2-cp.x)>=72||Math.abs(actor.y+actor.h-cp.y)>=8)return false;
+    const progress=cp.progress??cp.platform??0;
+    if(progress<this.partyCheckpointProgress)return false;
+    if(progress===this.partyCheckpointProgress){
+      if(this.partyCheckpoint!==cp)return false;
+      const needsSync=this.players.some(p=>!p.recovering&&!p.readingWell&&p.respawnSource!=='well'&&(p.routeCheckpoint!==cp||p.respawnSource!=='lantern'||p.checkpointIndex!==progress));
+      if(!needsSync)return false;
+    }
+    if(this.gates.some(g=>!g.solved&&g.x<cp.x)||this.puzzleBarriers.some(b=>!b.open&&b.x+b.w<cp.x))return false;
+    const spawns=this.checkpointSpawns(cp);if(!spawns)return false;
+    this.partyCheckpoint=cp;this.partyCheckpointProgress=progress;
+    for(const hero of this.players){
+      hero.routeCheckpoint=cp;hero.checkpointIndex=progress;
+      // A teammate at the boss well keeps that separate recovery refuge.
+      if(!hero.recovering&&!hero.readingWell&&hero.respawnSource!=='well'){
+        hero.respawn={...spawns[hero.id]};hero.respawnSource='lantern';
+      }
+    }
+    if(!cp.active){cp.active=true;this.emit('checkpoint',{player:actor.id,shared:this.playerCount===2});this.burst(cp.x,cp.y-30,'#b9eed2',12);}
+    return true;
   }
   gateNear(p) {
     if(p.inHidden)return -1;
@@ -1030,7 +1124,7 @@ class Game {
         this.revives++; revived++;
       } else if(!p.recovering) { p.hp=Math.min(5,p.hp+2); p.invuln=1; }
       // Gate landings are broad, permanent safe platforms. Revival always belongs at this gate's height.
-      if(Math.abs(p.x-gate.x)<200) p.respawn={x:gate.x-75+p.id*50,y:gate.y};
+      if(Math.abs(p.x-gate.x)<200){p.respawn={x:gate.x-75+p.id*50,y:gate.y};p.respawnSource='gate';}
     }
     this.gateCooldown=1; this.burst(gate.x,gate.y-75,'#c9fff0',42); this.emit('gateSolved',{revived});
   }
@@ -1078,6 +1172,7 @@ class Game {
     this.updatePuzzles();
     this.updateBossZones(dt);
     for(const p of this.players) {
+      p.swingAge=Math.min(1,(p.swingAge??1)+dt);
       p.invuln=Math.max(0,p.invuln-dt); p.attack=Math.max(0,p.attack-dt); p.cooldown=Math.max(0,p.cooldown-dt);
       p.dropThrough=Math.max(0,p.dropThrough-dt); p.jumpBuffer=Math.max(0,p.jumpBuffer-dt);
       p.wallLock=Math.max(0,p.wallLock-dt);p.wallCoyote=Math.max(0,p.wallCoyote-dt);
@@ -1148,13 +1243,7 @@ class Game {
       if(p.vy<0)for(const ceiling of solids) {
         if(overlap(p,ceiling) && previousBottom-p.h>=ceiling.y+ceiling.h-5) {p.y=ceiling.y+ceiling.h;p.vy=0;}
       }
-      for(let index=0;index<this.checkpoints.length;index++) {
-        const cp=this.checkpoints[index];
-        if(!p.inHidden&&(cp.progress??index)>p.checkpointIndex && p.grounded && Math.abs(p.x+14-cp.x)<72 && Math.abs(p.y+p.h-cp.y)<8) {
-          p.checkpointIndex=cp.progress??index;p.respawn={x:cp.x-14+p.id*28,y:cp.y};
-          if(!cp.active) {cp.active=true;this.emit('checkpoint');this.burst(cp.x,cp.y-30,'#b9eed2',12);}
-        }
-      }
+      for(const cp of this.checkpoints)if(!p.inHidden&&p.grounded&&Math.abs(p.x+p.w/2-cp.x)<72&&Math.abs(p.y+p.h-cp.y)<8)this.activateCheckpoint(cp,p);
       for(const flower of this.pickups) {
         if(!p.inHidden&&!flower.taken && flower.type==='heart' && p.hp>0 && p.hp<5 && overlap(p,{x:flower.x-14,y:flower.y-18,w:28,h:36})) {
           flower.taken=true;p.hp++;this.burst(flower.x,flower.y,'#d7f2b0',18);this.emit('lifebloom',{player:p.id});
@@ -1181,7 +1270,7 @@ class Game {
     this.updateCamera(dt);
   }
   attack(p) {
-    p.attack=.23;p.cooldown=this.attackCooldown?.()??.38;this.emit('slash');
+    p.swingAge=0;p.attack=.23;p.cooldown=this.attackCooldown?.()??.38;this.emit('slash');
     if(p.hp<=0||p.dead||p.readingWell)return;
     const hitbox=this.attackBox?.(p)??{x:p.dir>0?p.x+p.w-5:p.x-64,y:p.y-7,w:69,h:62};
     for(const e of this.enemies) if(!p.inHidden&&e.hp>0&&overlap(hitbox,e)&&(this.canHitEnemy?.(p,e)??true)) {e.hp-=this.attackDamage?.(e)??1;e.hit=.2;e.x+=p.dir*15;this.burst(e.x+16,e.y+10,p.color,8);if(e.hp<=0){this.kills++;this.onEnemyKilled?.(e);this.emit('enemyDefeated');}}
@@ -1791,7 +1880,7 @@ const __wells = (()=>{
  P.resetBoss=function(){if(this.boss.dead)return;this.boss=__bosses.createBoss(this.level,this.bossArena,this.playerCount);this.projectiles=this.projectiles.filter(o=>o.source==='bug');this.bossZones=[];this.emit('bossReset');};
  P.returnToWell=function(p){
    Object.assign(p,{x:this.well.x-45+p.id*64,y:this.well.y-p.h,hp:0,dead:false,recovering:true,readingWell:false,inHidden:false,vx:0,vy:0,attack:0,cooldown:0,invuln:0,jumps:0,grounded:true,standingOn:null,wellQuestion:null});
-   p.respawn={x:p.x,y:this.well.y};
+   p.respawn={x:p.x,y:this.well.y};p.respawnSource='well';
    this.emit('wellReturn',{player:p.id});
  };
  P.hurt=function(p,...args){
@@ -2237,6 +2326,27 @@ function gate(c, gate, p, time) {
   c.fillStyle = p.face; c.fillRect(-53, 0, 106, 8); c.fillStyle = p.edge; c.fillRect(-48, 0, 96, 2);
   c.restore();
 }
+// A fixed-length branch turns out of the picture plane into its strike.
+// Quintic easing keeps the grip, elbow and twig continuous at each phase edge.
+function branchPose(p,time,index,bodyY=0,lean=0) {
+  const ease=t=>{t=Math.max(0,Math.min(1,t));return t*t*t*(t*(t*6-15)+10);};
+  const mix=(a,b,t)=>a+(b-a)*ease(t),idle=-.42+Math.sin(time*2.2+index)*.035;
+  let age=Number.isFinite(p.swingAge)?p.swingAge:1;
+  if(p.attack>0&&age>=.30)age=Math.max(0,.23-p.attack);
+  if(p.readingWell||p.hp===0)age=1;
+  let angle=idle,yaw=1.18,handX=9+lean,handY=-21+bodyY,energy=0;
+  if(age>=0&&age<.05){const t=age/.05;angle=mix(idle,-1.02,t);yaw=mix(1.18,1.03,t);handX=mix(9+lean,7,t);handY=mix(-21,-24,t)+bodyY;energy=ease(t)*.2;}
+  else if(age<.19){
+    const t=ease((age-.05)/.14);angle=-1.02+1.42*t;
+    const side=angle<0?angle/-1.02:angle/.4;
+    yaw=(angle<0?1.03:.95)*side*side;
+    handX=9-(angle<0?2:1)*side*side;
+    handY=-21-3*side*side+bodyY;
+    energy=Math.sin(Math.PI*Math.max(0,Math.min(1,(age-.05)/.14)));
+  }else if(age<.21){const t=(age-.19)/.02;angle=mix(.4,.48,t);yaw=mix(.95,1.12,t);handX=mix(8,8.5,t);handY=-24+bodyY;energy=.12*(1-ease(t));}
+  else if(age<.30){const t=(age-.21)/.09;angle=mix(.48,idle,t);yaw=mix(1.12,1.18,t);handX=mix(8.5,9+lean,t);handY=mix(-24,-21,t)+bodyY;}
+  return {angle,yaw,handX,handY,energy,age,projection:Math.cos(yaw),length:69};
+}
 function knight(c, player, time, index) {
   const p=player,w=p.w||28,h=p.h||42,color=p.color||(index?'#dfa674':'#80d5c0');
   const x=p.x+w/2,y=p.y+h;
@@ -2250,7 +2360,14 @@ function knight(c, player, time, index) {
   ellipse(c,x,y+2,19-(air?4:0),4,'#00000044');
   c.save();c.translate(x,y);c.scale((p.dir||1)*w/28,h/42);
   if(p.invuln>0&&Math.floor(time*15)%2===0)c.globalAlpha=.5;
-  // Two joints per leg: the planted foot stays low while the other swings past.
+  // This one silhouette is used both for cloth paint and leg occlusion.
+  // Masking avoids show-through even during the translucent damage blink.
+  const cloakOutline=()=>{
+    c.moveTo(-9+lean,-28+bodyY);c.quadraticCurveTo(-14-speed*3+lean,-17+bodyY,-17-wind+lean,-5+(rising?-3:0)+bodyY);
+    c.lineTo(-7-wind*.4+lean,-8+bodyY);c.lineTo(lean,-3+(falling?-3:0)+bodyY);c.lineTo(8+lean,-8+bodyY);c.lineTo(14-wind*.2+lean,-6+bodyY);c.quadraticCurveTo(8+lean,-18+bodyY,9+lean,-27+bodyY);c.closePath();
+  };
+  // The two-joint legs keep their existing planted and swinging poses, behind
+  // the garment. Only the portions outside its true moving hem are visible.
   const leg=(side,back)=>{
     let hip=side*3,kx=side*4,ky=-7,fx=side*5,fy=0;
     if(moving&&!air){const a=phase+(back?Math.PI:0),s=Math.sin(a);fx=s*10;fy=-Math.max(0,Math.cos(a))*6*speed;kx=fx*.45+4;ky=-7-Math.max(0,Math.cos(a))*3;}
@@ -2263,14 +2380,12 @@ function knight(c, player, time, index) {
     c.strokeStyle=back?'#50645e':'#81958a';c.lineWidth=1;c.beginPath();c.moveTo(kx,ky);c.lineTo(fx,fy-1);c.stroke();
     c.strokeStyle='#15262c';c.lineWidth=3;c.beginPath();c.moveTo(fx-1,fy);c.lineTo(fx+4,fy);c.stroke();
   };
-  leg(-1,true);
-  // A trailing cloak follows the shoulders and separates into soft folds.
-  c.save();c.translate(lean,bodyY);
-  c.beginPath();c.moveTo(-9,-28);c.quadraticCurveTo(-14-speed*3,-17,-17-wind,-5+(rising?-3:0));
-  c.lineTo(-7-wind*.4,-8);c.lineTo(0,-3+(falling?-3:0));c.lineTo(8,-8);c.lineTo(14-wind*.2,-6);c.quadraticCurveTo(8,-18,9,-27);c.closePath();
-  const cloak=c.createLinearGradient(-12,-25,9,0);cloak.addColorStop(0,color);cloak.addColorStop(1,index?'#76554f':'#2b716f');c.fillStyle=cloak;c.fill();
-  c.strokeStyle='#09212a88';c.lineWidth=1;c.beginPath();c.moveTo(-6,-23);c.quadraticCurveTo(-8-wind*.4,-16,-9-wind*.5,-9);c.moveTo(0,-24);c.lineTo(1-wind*.2,-7);c.stroke();c.restore();
-  leg(1,false);
+  c.save();c.beginPath();c.rect(-100,-120,240,180);cloakOutline();c.clip('evenodd');
+  leg(-1,true);leg(1,false);
+  c.restore();
+  c.beginPath();cloakOutline();
+  const cloak=c.createLinearGradient(-12+lean,-25+bodyY,9+lean,bodyY);cloak.addColorStop(0,color);cloak.addColorStop(1,index?'#76554f':'#2b716f');c.fillStyle=cloak;c.fill();
+  c.save();c.translate(lean,bodyY);c.strokeStyle='#09212a88';c.lineWidth=1;c.beginPath();c.moveTo(-6,-23);c.quadraticCurveTo(-8-wind*.4,-16,-9-wind*.5,-9);c.moveTo(0,-24);c.lineTo(1-wind*.2,-7);c.stroke();c.restore();
   const glance=!moving&&!air?Math.pow(Math.max(0,Math.sin(time*.68+index*1.3)),18)*.07:0;
   c.save();c.translate(lean,bodyY);c.rotate(glance+(rising?-.045:falling?.045:0));
   if(moving){
@@ -2350,24 +2465,34 @@ function knight(c, player, time, index) {
 
   }
   c.restore();
-  // The arm, quill and short trailing arcs share one pivot. Longreach stretches
-  // the entire visible sweep by exactly the same 1.2 factor as attackBox.
-  const attacking=p.attack>0,t=attacking?Math.max(0,Math.min(1,1-p.attack/.23)):0;
-  const swing=-1.28+2.6*(1-Math.pow(1-t,2)),idleAngle=-.42+Math.sin(time*2.2+index)*.035;
-  c.save();c.translate(attacking?9:9+lean,-21+bodyY);
-  if(attacking)c.scale(p.reachScale||1,1);
-  const a=attacking?swing:idleAngle,length=attacking?69:25;
-  c.strokeStyle='#536e6c';c.lineWidth=2;c.lineCap='round';c.beginPath();c.moveTo(-3,-1);c.quadraticCurveTo(9,Math.sin(a)*7,Math.cos(a)*15,Math.sin(a)*15);c.stroke();
-  if(attacking&&t>.09&&t<.92){
-    for(let i=0;i<2;i++){c.strokeStyle=i?'#d4f3df25':'#e7fff166';c.lineWidth=i?1:2;c.beginPath();c.arc(0,0,length-6-i*5,a-.35-i*.1,a-.04);c.stroke();}
+  // Bark and small forked twigs stay on the same 69px branch in every pose;
+  // yaw foreshortens it at rest instead of swapping to a shorter weapon.
+  const pose=branchPose(p,time,index,bodyY,lean),reach=p.reachScale||1;
+  c.save();c.translate(pose.handX,pose.handY);c.scale(reach,1);
+  c.strokeStyle='#4b6861';c.lineWidth=2.4;c.lineCap='round';
+  c.beginPath();c.moveTo(-8,-5);c.quadraticCurveTo(-5,pose.angle<-.5?-8:3,0,0);c.stroke();
+  if(pose.energy>.2){
+    const radius=61*pose.projection;
+    for(let i=0;i<2;i++){c.strokeStyle=i?'#d0e9c91b':'#d9efd646';c.lineWidth=i?.7:1.3;c.beginPath();c.arc(0,0,Math.max(8,radius-i*4),pose.angle-.22-i*.09,pose.angle-.035);c.stroke();}
   }
-  c.rotate(a);
-  c.strokeStyle='#9ebdb3';c.lineWidth=1;c.beginPath();c.moveTo(10,0);c.lineTo(length,0);c.stroke();
-  path(c,[[14,0],[length,-5],[length-8,0],[length-16,5],[17,2]],'#c9e1d6','#6b9692',.7);
-  c.strokeStyle='#6a9488';c.lineWidth=.6;c.beginPath();c.moveTo(22,0);c.lineTo(length-4,-3);c.moveTo(28,0);c.lineTo(34,2);c.moveTo(36,-1);c.lineTo(42,1);c.stroke();c.restore();
+  c.rotate(pose.angle);
+  const bx=s=>s*pose.projection,by=(s,offset=0)=>offset+Math.sin(pose.yaw)*Math.sin(s/69*Math.PI)*2;
+  c.lineCap='round';c.lineJoin='round';c.strokeStyle='#435b50';c.lineWidth=3.3;
+  c.beginPath();c.moveTo(0,0);c.bezierCurveTo(bx(26),by(26,-1.8),bx(48),by(48,2),bx(69),0);c.stroke();
+  c.strokeStyle='#a5bea2';c.lineWidth=1.35;
+  c.beginPath();c.moveTo(0,-.5);c.bezierCurveTo(bx(26),by(26,-2.4),bx(48),by(48,1.4),bx(69),0);c.stroke();
+  c.strokeStyle='#779578';c.lineWidth=1.65;
+  for(const [at,end,offset] of [[25,37,-7],[43,54,7],[53,63,-5]]){
+    c.beginPath();c.moveTo(bx(at),by(at));c.quadraticCurveTo(bx(at+4),by(at+4,offset*.7),bx(end),by(end,offset));c.stroke();
+  }
+  c.strokeStyle='#c4d3ac';c.lineWidth=.7;c.beginPath();c.moveTo(bx(29),by(29)-1.1);c.lineTo(bx(31),by(31)+1.3);c.moveTo(bx(47),by(47)-1.1);c.lineTo(bx(49),by(49)+1.2);c.stroke();
+  ellipse(c,bx(36),by(36,-7),1.2,2,'#b7cd9d');ellipse(c,bx(53),by(53,7),1.1,1.7,'#8faa85');
+  ellipse(c,0,0,1.8,2.1,'#91aa98');
+  c.restore();
   if(p.wallDir&&p.vy>0){c.fillStyle='#d4e4c6';for(let i=0;i<3;i++){const xx=p.wallDir*(p.dir||1)*16+Math.sin(time*9+i)*2,yy=-15+((time*32+i*8)%20);c.fillRect(xx,yy,1.5,2.5);}}
   c.restore();
 }
+
 function enemy(c, e, p, time) {
   if (e.hp <= 0) return;
   const x = e.x + (e.w || 30) / 2, y = e.y + (e.h || 28) / 2;
@@ -3010,7 +3135,7 @@ function updateHud(){
  $('tip-text').textContent=tip;
  if(performance.now()>toastUntil)$('toast').classList.remove('visible');
 }
-function frame(now){const dt=lastFrame?Math.min((now-lastFrame)/1000,.035):.016;lastFrame=now;game.step(dt,inputs());pressed.clear();for(const event of game.events.splice(0)){audio.effect(event.type);if(event.type==='treasure')showToast('Hidden treasury found · +22 shared Light',4);if(event.type==='hiddenArea')showToast(event.entered?'The lantern reveals a hidden treasury. S / ↓ at the doorway to return.':'Back on the main route.',4);if(event.type==='well')openWell(event.player);if(event.type==='wellReturn'){showToast(`${event.player?'Stag':'Ram'} returns to the well with ZERO hearts. Press ${event.player?'↓':'S'} to earn a heart.`,7);}if(event.type==='wellUnlocked')showToast('Well unlocked outside the arena. S / ↓ for one heart per fresh algorithm.',5);if(event.type==='bossReset')showToast('The arena is empty. Guardian restored; hazards cleared. Your chapter progress is safe.',5);if(event.type==='wellHeart')showToast(`${event.player?'STAG':'RAM'} receives ONE heart · ${event.hp}/5`,3);if(event.type==='lightCollected')showToast(`Shared Light collected: +${event.amount}`,2);if(event.type==='gate')openGate(event.index);if(event.type==='death')showToast(`Player ${event.player+1} has fallen. A gate can bring them back with ONE heart.`,6);if(event.type==='gateSolved')showToast(event.revived?'Your teammate returns with ONE heart. Stay safe together.':'Gate opened. Your hearts feel a little lighter.');if(event.type==='lifebloom')showToast('A lifebloom restores one heart. A reward for the road less travelled.',4);if(event.type==='puzzleSolved')showToast('Puzzle completed. The stone seal opens.',4);if(event.type==='checkpoint')showToast('Lantern lit. A fall returns you here — keep your hearts safe.',3);if(event.type==='bossStart')showToast(`${LEVELS[game.level].boss} awakens. ${LEVELS[game.level].mechanic}`,6);if(event.type==='bossDefeated')showToast('Guardian defeated! Follow the light to the doorway on the right.',5);if(event.type==='victory')showResult(true);if(event.type==='gameover')showResult(false);}
+function frame(now){const dt=lastFrame?Math.min((now-lastFrame)/1000,.035):.016;lastFrame=now;game.step(dt,inputs());pressed.clear();for(const event of game.events.splice(0)){audio.effect(event.type);if(event.type==='treasure')showToast('Hidden treasury found · +22 shared Light',4);if(event.type==='hiddenArea')showToast(event.entered?'The lantern reveals a hidden treasury. S / ↓ at the doorway to return.':'Back on the main route.',4);if(event.type==='well')openWell(event.player);if(event.type==='wellReturn'){showToast(`${event.player?'Stag':'Ram'} returns to the well with ZERO hearts. Press ${event.player?'↓':'S'} to earn a heart.`,7);}if(event.type==='wellUnlocked')showToast('Well unlocked outside the arena. S / ↓ for one heart per fresh algorithm.',5);if(event.type==='bossReset')showToast('The arena is empty. Guardian restored; hazards cleared. Your chapter progress is safe.',5);if(event.type==='wellHeart')showToast(`${event.player?'STAG':'RAM'} receives ONE heart · ${event.hp}/5`,3);if(event.type==='lightCollected')showToast(`Shared Light collected: +${event.amount}`,2);if(event.type==='gate')openGate(event.index);if(event.type==='death')showToast(`Player ${event.player+1} has fallen. A gate can bring them back with ONE heart.`,6);if(event.type==='gateSolved')showToast(event.revived?'Your teammate returns with ONE heart. Stay safe together.':'Gate opened. Your hearts feel a little lighter.');if(event.type==='lifebloom')showToast('A lifebloom restores one heart. A reward for the road less travelled.',4);if(event.type==='puzzleSolved')showToast('Puzzle completed. The stone seal opens.',4);if(event.type==='checkpoint')showToast(game.playerCount===2?'Lantern lit. Both heroes will respawn here after a fall.':'Lantern lit. A fall returns you here.',3);if(event.type==='bossStart')showToast(`${LEVELS[game.level].boss} awakens. ${LEVELS[game.level].mechanic}`,6);if(event.type==='bossDefeated')showToast('Guardian defeated! Follow the light to the doorway on the right.',5);if(event.type==='victory')showResult(true);if(event.type==='gameover')showResult(false);}
  updateWellPanel();
  render(ctx,game,reducedMotion?(game.mode==='playing'?game.time:0):now/1000);if(game.mode!=='menu')updateHud();requestAnimationFrame(frame);}
 chooseMode(selectedCount);updateChapterCards();requestAnimationFrame(frame);
