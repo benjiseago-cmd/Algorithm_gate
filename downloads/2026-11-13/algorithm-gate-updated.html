@@ -754,8 +754,8 @@ function traversalChapter(level) {
  add(score.b,1);ps.push(stone(4590,score.g[1],760,'ground'));
  add(score.c,2);ps.push(stone(7060,score.g[2],1200,'ground'));
  const gates=score.g.map((y,i)=>({x:[2400,4900,7200][i],y,solved:false,barrierTop:0}));
- // Timed crossings have clear, permanent launch stones. A plume's inactive
- // interval lasts over three seconds; its footprint is beyond the waiting edge.
+ // Timed crossings have permanent waiting stones and readable warning pulses.
+ // Beam off-windows last over three seconds, long enough for both heroes.
  const hazards=[];
  const protectedShafts=new Set(level===2?[2,3,4,5,6]:level===5?[2,3,4,5,27,28,29,30]:level===8?[27,28,29,30]:[]);
  const crossingSets=[[7,8,6,9,5,4],[15,19,21,16,18,17,20,14],[31,33,29,32,34,26,27,28]];
@@ -773,13 +773,28 @@ function traversalChapter(level) {
        Object.assign(h,{id,timingChallenge:true,fromPlatform:from,toPlatform:from+1,launchX:a.x+a.w*.48});hazards.push(h);
      }else{
        const period=4.9+(level%3)*.3,top=Math.min(a.y,b.y)-260,bottom=Math.max(a.y,b.y)+24;
-       hazards.push({id,type:'flame',x:cx,y:top,w:width,h:bottom-top,period,activeDuration:1.15+level*.025,phase:period*.55+(section*.19),timedActive:false,warningDuration:.8,
+       hazards.push({id,type:'flame',beam:true,x:cx,y:top,w:width,h:bottom-top,period,activeDuration:1.15+level*.025,phase:period*.55+(section*.19),timedActive:false,warningDuration:.8,
          timingChallenge:true,fromPlatform:from,toPlatform:from+1,launchX:a.x+a.w*.48});
      }
      const crossing=hazards[hazards.length-1];crossing.fixtureKind='spectral-crossing';crossing.runeLinks=[{x:a.x+a.w-6,y:a.y},{x:b.x+6,y:b.y}];
-     signs.push({supportIndex:from,relatedHazard:id,x:a.x+a.w*.45,y:a.y-95,text:blade?'Watch the blade rise. Jump through after it passes.':'Wait on this stone. Jump across when the plume fades.'});
+     signs.push({supportIndex:from,relatedHazard:id,x:a.x+a.w*.45,y:a.y-95,text:blade?'Watch the blade rise. Jump through after it passes.':'Wait on this stone. Jump across when the beam goes dark.'});
      chosen.push(from);
    }
+ });
+ // Rune beams guard selected permanent landing edges. A tall column makes
+ // the safe dark interval matter, while the left side stays wide enough to wait
+ // together. Indices deliberately avoid spawn stones, shafts and puzzle floors.
+ const beamStones=[[8,18,29],[5,21,34],[28,30],[9,19,32],[3,28,31],[9,17,35],[5,21,34],[19,27,30],[35,36],[5,17,29]];
+ beamStones[level].forEach((from,slot)=>{
+   const a=ps[from],b=ps[from+1],id=`beam-${level}-${slot}`,width=28+(level+slot)%3*2;
+   const period=5.35+(level%3)*.24+slot*.16,activeDuration=1.28+(level+slot)%4*.08;
+   const x=a.x+a.w-40,y=a.y-320;
+   hazards.push({id,type:'flame',beam:true,x,y,w:width,h:320,period,activeDuration,
+     phase:period*.21+slot*.77+level*.23,timedActive:false,warningDuration:.9,
+     timingChallenge:true,fromPlatform:from,toPlatform:from+1,launchX:a.x+a.w*.35,
+     fixtureKind:'stone-edge-beam',runeLinks:[{x:x+width/2,y:a.y}]});
+   signs.push({supportIndex:from,relatedHazard:id,x:a.x+a.w*.35,y:a.y-95,
+     text:slot%2?'Amber warns the beam is returning. Jump while it is dark.':'Wait left of the rune. Jump when the beam goes dark.'});
  });
  // Additional edge vents and orbiting blades vary the rhythm between crossings.
  // Spawn, puzzle floors, shaft mouths and approach checkpoints remain clear.
@@ -827,6 +842,17 @@ function traversalChapter(level) {
    ps.push(stone(x,bottom,390));
    walls.push({x:x-24,y:top-35,w:24,h:bottom-top+20,type:'wall'},{x:x+165,y:top+75,w:24,h:bottom-top-135,type:'wall'});
    signs.push({x:x+70,y:top-80,text:'Drop passage: S / ↓ through each shelf; exit below'});
+ }
+ // The actual stone gallery ceiling stops a beam at its underside. The
+ // collision column and the drawn column therefore fit the same low passage.
+ for(const h of hazards.filter(h=>h.beam)){
+   const bottom=h.y+h.h;
+   for(const roof of walls.filter(w=>w.w>w.h*4)){
+     const underside=roof.y+roof.h;
+     if(h.x<roof.x+roof.w&&h.x+h.w>roof.x&&underside>h.y&&underside<bottom){
+       h.y=underside;h.h=bottom-underside;
+     }
+   }
  }
  const checkpoints=ps.slice(0,40).flatMap((p,i)=>p.type==='moving'||p.type==='crumble'||i%3!==0&&![0,13,25,39].includes(i)?[]:[{x:i===0?110:p.x+40,y:p.y,platform:i,progress:i,active:i===0}]);
  for(const [i,g] of gates.entries())checkpoints.push({x:g.x-115,y:g.y,platform:[13,25,39][i],progress:[13,25,39][i],active:false});
@@ -881,7 +907,8 @@ function placeRouteSigns(data) {
   const routeName=startNotes.find(r=>!r.text.includes('W /')&&!r.text.includes('jump twice'))?.text;
   let notes=original.filter(r=>!startNotes.includes(r)&&!r.text.includes('Well before the boundary'));
   notes.unshift({x:220,y:startFloor.y-100,title:routeName,text:'W / ↑: jump twice. S / ↓: drop through ledges.',supportIndex:0,startTip:true});
-  const reserved=[...(data.puzzles||[]).map(q=>({x:q.x-555,y:q.y-350,w:535,h:69})),
+  const reserved=[...(data.hazards||[]).filter(h=>h.beam).map(h=>({x:h.x-8,y:h.y-8,w:h.w+16,h:h.h+16})),
+    ...(data.puzzles||[]).map(q=>({x:q.x-555,y:q.y-350,w:535,h:69})),
     ...(data.gates||[]).map(g=>({x:g.x-58,y:g.y-194,w:116,h:194}))];
   // The well already has its own name and instructions. Keep route plaques clear.
   if(data.bossArena)reserved.push({x:data.bossArena.left-110,y:data.bossArena.y-122,w:220,h:142});
@@ -2330,23 +2357,51 @@ function gate(c, gate, p, time) {
 // Quintic easing keeps the grip, elbow and twig continuous at each phase edge.
 function branchPose(p,time,index,bodyY=0,lean=0) {
   const ease=t=>{t=Math.max(0,Math.min(1,t));return t*t*t*(t*(t*6-15)+10);};
-  const mix=(a,b,t)=>a+(b-a)*ease(t),idle=-.42+Math.sin(time*2.2+index)*.035;
+  const mix=(a,b,t)=>a+(b-a)*ease(t),idle=.20+Math.sin(time*2.2+index)*.025;
   let age=Number.isFinite(p.swingAge)?p.swingAge:1;
   if(p.attack>0&&age>=.30)age=Math.max(0,.23-p.attack);
   if(p.readingWell||p.hp===0)age=1;
-  let angle=idle,yaw=1.18,handX=9+lean,handY=-21+bodyY,energy=0;
-  if(age>=0&&age<.05){const t=age/.05;angle=mix(idle,-1.02,t);yaw=mix(1.18,1.03,t);handX=mix(9+lean,7,t);handY=mix(-21,-24,t)+bodyY;energy=ease(t)*.2;}
+  let angle=idle,yaw=1.18,handX=9+lean,handY=-13+bodyY,energy=0;
+  if(age>=0&&age<.05){const t=age/.05;angle=mix(idle,-1.02,t);yaw=mix(1.18,1.03,t);handX=mix(9+lean,7,t);handY=mix(-13,-17,t)+bodyY;energy=ease(t)*.2;}
   else if(age<.19){
     const t=ease((age-.05)/.14);angle=-1.02+1.42*t;
     const side=angle<0?angle/-1.02:angle/.4;
     yaw=(angle<0?1.03:.95)*side*side;
     handX=9-(angle<0?2:1)*side*side;
-    handY=-21-3*side*side+bodyY;
+    handY=-14-3*side*side+bodyY;
     energy=Math.sin(Math.PI*Math.max(0,Math.min(1,(age-.05)/.14)));
-  }else if(age<.21){const t=(age-.19)/.02;angle=mix(.4,.48,t);yaw=mix(.95,1.12,t);handX=mix(8,8.5,t);handY=-24+bodyY;energy=.12*(1-ease(t));}
-  else if(age<.30){const t=(age-.21)/.09;angle=mix(.48,idle,t);yaw=mix(1.12,1.18,t);handX=mix(8.5,9+lean,t);handY=mix(-24,-21,t)+bodyY;}
+  }else if(age<.21){const t=(age-.19)/.02;angle=mix(.4,.48,t);yaw=mix(.95,1.12,t);handX=mix(8,8.5,t);handY=-17+bodyY;energy=.12*(1-ease(t));}
+  else if(age<.30){const t=(age-.21)/.09;angle=mix(.48,idle,t);yaw=mix(1.12,1.18,t);handX=mix(8.5,9+lean,t);handY=mix(-17,-13,t)+bodyY;}
   return {angle,yaw,handX,handY,energy,age,projection:Math.cos(yaw),length:69};
 }
+// The solid bone face silhouette, in the same hero-local coordinates and
+// head transform used by knight(). Eye sockets remain protected face pixels.
+// Call after the hero's world translation / direction / size scale, and use
+// even-odd clipping against a surrounding rectangle for the whole arm layer.
+function skullFacePath(p,time,index,bodyY=0,lean=0) {
+  const speed=Math.min(1,Math.abs(p.vx||0)/255),moving=speed>.12,air=!p.grounded;
+  const rising=air&&(p.vy||0)<-105,falling=air&&(p.vy||0)>105;
+  const face=new Path2D();
+  if(moving){
+    const points=index===0
+      ?[[-9,-43],[0,-47],[9,-44],[12,-37],[19,-31],[20,-26],[14,-24],[11,-20],[4,-21],[1,-28],[-8,-31]]
+      :[[-9,-44],[1,-48],[9,-43],[11,-36],[14,-30],[21,-22],[20,-18],[12,-18],[7,-22],[3,-29],[-7,-31]];
+    face.moveTo(...points[0]);
+    for(let i=1;i<points.length;i++)face.lineTo(...points[i]);
+  }else if(index===0){
+    face.moveTo(-10,-43);face.quadraticCurveTo(0,-48,10,-43);
+    for(const [x,y] of [[13,-33],[8,-27],[5,-21],[-5,-21],[-8,-27],[-13,-33]])face.lineTo(x,y);
+  }else{
+    face.moveTo(-9,-44);face.quadraticCurveTo(0,-47,9,-44);
+    for(const [x,y] of [[12,-36],[7,-30],[4,-18],[-4,-18],[-7,-30],[-12,-36]])face.lineTo(x,y);
+  }
+  face.closePath();
+  const glance=!moving&&!air?Math.pow(Math.max(0,Math.sin(time*.68+index*1.3)),18)*.07:0;
+  const angle=glance+(rising?-.045:falling?.045:0),result=new Path2D();
+  result.addPath(face,new DOMMatrix().translate(lean,bodyY).rotate(angle*180/Math.PI));
+  return result;
+}
+
 function knight(c, player, time, index) {
   const p=player,w=p.w||28,h=p.h||42,color=p.color||(index?'#dfa674':'#80d5c0');
   const x=p.x+w/2,y=p.y+h;
@@ -2468,9 +2523,12 @@ function knight(c, player, time, index) {
   // Bark and small forked twigs stay on the same 69px branch in every pose;
   // yaw foreshortens it at rest instead of swapping to a shorter weapon.
   const pose=branchPose(p,time,index,bodyY,lean),reach=p.reachScale||1;
-  c.save();c.translate(pose.handX,pose.handY);c.scale(reach,1);
+  // ARM_LAYER_BEGIN
+  c.save();
+  const faceMask=new Path2D();faceMask.rect(-100,-120,240,180);faceMask.addPath(skullFacePath(p,time,index,bodyY,lean));c.clip(faceMask,'evenodd');
+  c.translate(pose.handX,pose.handY);c.scale(reach,1);
   c.strokeStyle='#4b6861';c.lineWidth=2.4;c.lineCap='round';
-  c.beginPath();c.moveTo(-8,-5);c.quadraticCurveTo(-5,pose.angle<-.5?-8:3,0,0);c.stroke();
+  c.beginPath();c.moveTo(5+lean-pose.handX,-17+bodyY-pose.handY);c.quadraticCurveTo(8+lean-pose.handX,-14+bodyY-pose.handY,0,0);c.stroke();
   if(pose.energy>.2){
     const radius=61*pose.projection;
     for(let i=0;i<2;i++){c.strokeStyle=i?'#d0e9c91b':'#d9efd646';c.lineWidth=i?.7:1.3;c.beginPath();c.arc(0,0,Math.max(8,radius-i*4),pose.angle-.22-i*.09,pose.angle-.035);c.stroke();}
@@ -2489,6 +2547,7 @@ function knight(c, player, time, index) {
   ellipse(c,bx(36),by(36,-7),1.2,2,'#b7cd9d');ellipse(c,bx(53),by(53,7),1.1,1.7,'#8faa85');
   ellipse(c,0,0,1.8,2.1,'#91aa98');
   c.restore();
+  // ARM_LAYER_END
   if(p.wallDir&&p.vy>0){c.fillStyle='#d4e4c6';for(let i=0;i<3;i++){const xx=p.wallDir*(p.dir||1)*16+Math.sin(time*9+i)*2,yy=-15+((time*32+i*8)%20);c.fillRect(xx,yy,1.5,2.5);}}
   c.restore();
 }
@@ -2798,6 +2857,26 @@ function hazard(c, h, p, time) {
     for (let i = 0; i < 3; i++) { c.rotate(TAU / 3); c.beginPath(); c.moveTo(5, 0); c.lineTo(radius * .45, 0); c.stroke(); }
     ellipse(c, 0, 0, radius * .17, radius * .17, '#f4b58f');
     c.restore(); return;
+  }
+  if(h.type==='flame'&&h.beam){
+    const active=h.timedActive===true,warning=h.warning&&!active,x=h.x+h.w/2,base=h.y+h.h;
+    const color=active?'#cbfff0':warning?'#ffd397':'#6fbaad';
+    c.save();
+    glow(c,x,base-10,active?65:warning?40:20,active?'#93f1d6':'#edc98b',active?.2:warning?.11:.05);
+    c.beginPath();c.rect(h.x,h.y,h.w,h.h);c.clip();
+    if(active){
+      const g=c.createLinearGradient(h.x,0,h.x+h.w,0);g.addColorStop(0,'#8ee9cf66');g.addColorStop(.25,'#a7f7d8bb');g.addColorStop(.5,'#eafff3');g.addColorStop(.75,'#a7f7d8bb');g.addColorStop(1,'#8ee9cf66');
+      c.fillStyle=g;c.fillRect(h.x,h.y,h.w,h.h);
+      c.strokeStyle='#dbfff0bb';c.lineWidth=1;c.strokeRect(h.x+.5,h.y+.5,h.w-1,h.h-1);
+      for(let i=0;i<7;i++){const yy=h.y+((time*65+i*h.h/7)%h.h);c.strokeStyle='#ffffff55';c.beginPath();c.moveTo(h.x+2,yy);c.lineTo(h.x+h.w-2,yy-7);c.stroke();}
+    }else{
+      c.strokeStyle=warning?'#f4cb8bd0':'#84c1af55';c.lineWidth=warning?1.5:1;c.setLineDash(warning?[5,4]:[2,12]);c.strokeRect(h.x+.5,h.y+.5,h.w-1,h.h-1);c.setLineDash([]);
+      if(warning){c.fillStyle='#f0bc7b22';c.fillRect(h.x,h.y,h.w,h.h);c.fillStyle='#ffe1a6';for(let yy=base-18;yy>h.y;yy-=46){c.beginPath();c.moveTo(x-4,yy+4);c.lineTo(x,yy);c.lineTo(x+4,yy+4);c.stroke();}}
+    }
+    c.restore();
+    for(const yy of [h.y,base]){path(c,[[x,yy-6],[x+5,yy],[x,yy+6],[x-5,yy]],color);}
+    c.strokeStyle=color;c.lineWidth=2;c.beginPath();c.arc(x,base+15,6,-Math.PI/2,-Math.PI/2+TAU*(h.cycleProgress||0));c.stroke();
+    return;
   }
   if (h.type === 'flame') {
     const active = h.timedActive !== false, x = h.x + h.w / 2, base = h.y + h.h;
