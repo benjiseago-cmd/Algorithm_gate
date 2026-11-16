@@ -1,48 +1,48 @@
 # Algorithm Gate downloads
 
-## Updated game — platform lengths, timing and arena revision
+## Latest original edition — 16 November 2026
 
-1. Open **algorithm-gate-updated.html** and choose **Download raw file** (the down-arrow button above the code).
-2. Find it in your laptop’s Downloads folder, then double-click it to play offline.
-3. For the complete ZIP, download **download-backup.html**, open that saved HTML on your laptop, and press **Download backup ZIP**.
+1. Open **algorithm-gate-updated.html** and choose **Download raw file** (the downward arrow above the code).
+2. Find the saved HTML in your laptop's Downloads folder and double-click it to play offline.
+3. For the complete ZIP, download **download-backup.html**, open that saved HTML, and click **Download backup ZIP**.
 
-This revision varies platform lengths, adds 33 timed crossings, removes starting-floor enemies, anchors tips to real stone, and reworks each guardian’s attacks and arena together. Warden’s floor brambles now have a clear lane; warned roots make stationary perch camping unsafe. Real projectile cover remains.
+This revision fixes legs showing through the cloaks, smooths the branch attack, consolidates redundant lanterns and shares route checkpoints between both heroes. The first boss's behavior is unchanged; the Crown's casting position is corrected after reviewing every guardian.
 
-The untouched original is **algorithm-gate-original.html**. The ZIP contains that original, this update, the previous update, test scripts and detailed results.
+Slant Gate is a separate edition and has not been changed by this update.
 
-Algorithm Gate — platform lengths, timed crossings and guardian arena revision
-13 November 2026
+Algorithm Gate — cloak, branch attacks and shared lanterns
+16 November 2026
 
-Download algorithm-gate-updated.html and open it in Chrome, Edge or Firefox on a laptop. The game remains a self-contained offline HTML: no library, image, audio or network dependency is required. Both heroes, ten algorithm chapters, solo/co-op, puzzle stages, upgrades, Light and recovery rules are retained.
+Open algorithm-gate-updated.html in a modern laptop browser. It is a self-contained offline HTML. This update is for the original algorithm-maths edition. Slant Gate remains unchanged.
 
-What changed in this revision
-- 28–31 distinct main platform lengths per chapter (excluding the broad ground floors); individual stepping stones/run-ups span 108–242px, with narrow shaft shelves kept 118–138px. Optional branch ledges vary too. Puzzle chambers and the final refuge keep broad permanent floors.
-- 33 authored timed crossings: moving blades and spectral plumes positioned between selected route stones. Each has a permanent waiting stone and visible stone-edge rune anchors. Plumes show an amber warning before activation; warning and damage use the same timing state. Off windows are deliberately forgiving. Other edge vents/blades add variety, with the well approaches kept clear.
-- Ten arenas now work with their guardians' attacks. Warden/Prism/Cinder/Crown have open floor-wave lanes. Warden uses 1.05-second warned roots from the occupied floor or ledge. Tideclaw's refuges remain reachable, with slow arcing bubbles aimed at a locked position to discourage camping. Dives/leaps mark the actual occupied ledge height. Prism casts from above and its 3.2-second barrage lasts long enough for distant shots to arrive. Weaver casts from two heights and uses 1.1-second warned web markers, keeping its 4.2-second clean opening.
-- Corrected several projectile origins that were inside their own arena platforms. Stone still physically blocks shots; no attack is made to phase through cover. Falling ice/lightning still clip against real cover. Roots/webs grow from the marked support rather than falling through a roof.
-- Removed the enemy on every chapter's starting floor, after assigning stable Light IDs to the remaining monsters. No start-of-level heart loss while reading the controls.
-- World tips use posts anchored to actual stone, or plaques inset into arena floors. Start controls are combined, shaft/gallery/drop advice is repositioned, timing clues identify their launch stones, and text wraps without squeezing.
+Changes
+- Both articulated legs use the same moving cloak silhouette as an occlusion mask. They no longer paint over the cloth, including damage-blink frames. Walking, rising, apex, falling and landing poses remain.
+- Both heroes hold forked branches. A continuous eased pose moves from rest through a wind-up, sweep, follow-through and return. The branch has fixed geometry and turns into/out of the picture plane instead of abruptly changing length. Trails are short and restrained. The ram horns, stag antlers and skull artwork are retained.
+- Damage still resolves when an attack is triggered. The existing 0.23-second attack timer and 0.38-second normal / 0.30-second Quicksilver cooldowns are unchanged. The visual return ends at 0.30 seconds. Longreach still increases both hitbox width and peak visible horizontal reach by exactly 20% (69 to 82.8 world pixels). A hero at zero hearts or reading the well rests the branch.
+- Redundant checkpoint nodes on the same real landing are consolidated. Route lanterns sit on actual stable stone, including the low ledges above two gate-approach floors. Each chapter now has 10–14 useful route lanterns, with no adjacent duplicates on the same landing.
+- When either living co-op hero touches a new route lantern, both heroes receive its route respawn anchor. Nobody is teleported, healed or revived just by touching it. A dead partner keeps the future anchor but still needs the existing gate-revival rule. A repeated touch of the latest lamp also resynchronizes a teammate after a gate revival. Older lamps cannot move the party's checkpoint backwards.
+- Shared respawn positions fit both heroes on the support and stay on the lantern's side of unopened gates/seals. Falls recheck current crate and obstacle geometry. Boss-well recovery keeps its separate safe refuge and one-heart-per-fresh-answer rules.
+- Reviewed every guardian against its arena, including warnings, safe escape choices, usable attack openings and real projectile cover. One defect was found in the final guardian: part of its barrage could spawn inside the middle shelf. The Crown now casts from a higher actual position; projectiles still collide with cover. Boss HP, speeds, timings and arena geometry are otherwise unchanged.
+- The first guardian's attack pattern and arena are unchanged. Four deterministic solo/co-op normal/enraged traces match the previous build exactly.
 
-Validation on the merged game
-- 86/86 scripted Chromium integration checks, covering ordered algorithms, all ten solo/co-op recovery systems, duplicate heart prevention, retries, outside-arena protection, actual keyboard controls including focused-well co-op input, saved upgrades/Light, projectile cover and secret-room isolation.
-- 112 focused engine assertions for safe starts in every chapter/mode, no hazards in the well approach, warning-versus-live damage state, and ballistic cover collision.
-- All ten chapters pass continuous traversal simulations in solo and co-op: 39 accepted transitions per chapter, no teleports between accepted transitions. The solver searches/replays input timings from saved states. Combat, puzzle mechanisms, barriers and hazards are excluded here; actual stone, roofs, walls, crumble, moving platforms and shared-camera physics remain.
-- 66/66 live timed-crossing solutions (33 crossings in each mode) take no damage; waiting is safe.58 cases also demonstrate that mistimed launches can hurt. These tests isolate one timed crossing at a time.
-- 60/60 optional branch transitions pass exact contact tests in solo/co-op.
-- Every arena shelf is reachable without upgrades in jump-physics graph tests.34/34 guardian/arena checks pass, including actual shot paths, open bramble lanes, warned escape input, Tideclaw refuge/bubble paths, locked-height dive warnings and clear exposure windows. Stationary camping probes sample floor and ledge positions over three cycles, repeatedly pinning the hero to that position to test whether the real attack can threaten it; they are not difficulty ratings or natural player behavior.
-- 70 world signs pass geometry clearance checks; browser text measurements fit their plaques and use no max-width text squeezing. Scripted route/arena screenshots were visually reviewed. New root/web/bubble/plume states render without browser errors.
-- All 76 puzzle-stage physics solutions and local resets remain valid from the prior mechanism suite; the mechanism implementation is unchanged in this revision.
-- Offline Chromium context successfully loads HTML directly and makes no network requests. Managed Chrome blocks file:// navigation in this environment, so exact double-click file navigation was not tested here.
+Validation on the final integrated HTML
+- 169/169 automated browser/engine checks: algorithm progression, controls, purchases/saves, co-op recovery, projectile cover, secrets and the new checkpoint behavior across all ten chapters.
+- 21 focused checkpoint checks: re-touch after gate revival, no teleport/heal, safe return from the secret collision dimension, and unchanged Slant Gate checksum.
+- 41 animation checks, including 224 pixel-mask comparisons across both heroes, both directions, walking/air/landing and translucent damage frames. Branch phase boundaries and Longreach geometry are checked. Pose and locomotion sheets were visually inspected.
+- 87 guardian quality checks: normal/enraged fights and the Crown's three stages in both modes; explicit warnings, bounded phases, clean exposure windows, 216 no-upgrade approaches to a strike opportunity and tested rush/dive/leap/marker escape choices. Some deliberately wrong-direction attempts take damage; passing means an intended safe choice exists, not that every choice is safe.
+- 34 guardian cover/camping checks remain passing.
+- 460 natural-cycle emitter scenarios cover sampled floor/perch positions and both modes. 28,200 projectiles were observed, with zero births inside collision cover.
+- Four Warden trace comparisons are identical over 30 simulated seconds each.
+- Offline Chromium content test runs without external requests.
 
 Limits
-No manual human playthrough was performed. No complete run combines all live route hazards, puzzle solving and guardian combat end to end. Overall difficulty, pacing and real two-person keyboard comfort still need player/classroom feedback. Automated traversal, isolated timed crossings, mechanisms and guardian attack paths are tested separately. No known failing automated checks remain.
+These are automated engine simulations, scripted Chromium tests and screenshot inspections. No manual full-game playthrough or subjective fun rating was performed. Simulations sample positions and input timings; they do not prove every possible action or real two-person keyboard experience. Overall feel still benefits from player feedback.
 
-Archive contents
-algorithm-gate-updated.html: this revision.
-algorithm-gate-original.html: byte-for-byte original uploaded algorithm edition.
-algorithm-gate-before-round2.html: the previous delivered update.
-reports/: automated results.
-tests/: test scripts. These use Node.js; browser tests use Playwright/Chromium. Some retain work/ output paths from the development checkout.
+Archive
+algorithm-gate-updated.html is this revision.
+algorithm-gate-before-round3.html is the previous delivered algorithm edition.
+algorithm-gate-original.html is the byte-for-byte initial uploaded attachment.
+reports/ and tests/ contain the validation evidence and test scripts. Some test scripts retain work/ paths from the development checkout. The game itself needs only the HTML file.
 
-Original SHA-256
+Original attachment SHA-256
 0c22f65182fe43da471ce43720a00828bbd470d927c7527636d5e3370792f1d9
