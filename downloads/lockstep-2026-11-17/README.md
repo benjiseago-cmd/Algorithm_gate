@@ -1,5 +1,7 @@
 # Lockstep: Escape from Cogspire
 
+**Updated 19 November 2026:** both heroes can triple-jump. Press W / Up up to three times before landing; holding the key spends only one jump. Lockstep now uses a cog icon in the browser tab and interface. Rook has a blue-black feathered head, smaller eyes and a long curved raven beak. Kit retains the same appearance. The first two jump impulses, key attacks, maths and layouts are preserved.
+
 A complete offline Year 6 maths platformer about **lowest common multiple (LCM)** and **highest common factor (HCF)**. Built as a separate game on Algorithm Gate’s tested platform engine, with new heroes, prison artwork, security machines, physical maths machinery, question cards and an independent save profile.
 
 ## Download and play
@@ -12,7 +14,7 @@ Use the newest downloaded copy; previously saved games do not update automatical
 
 ## The escape
 
-Rook, a brass raven escape artist, and Kit, a copper fox locksmith, are trapped inside Cogspire. Climb through **ten sectors**, from the Holding Cells to the Sky Docks, and outwit ten mechanical guardians.
+Rook, a blue-black raven escape artist, and Kit, a copper fox locksmith, are trapped inside Cogspire. Climb through **ten sectors**, from the Holding Cells to the Sky Docks, and outwit ten mechanical guardians.
 
 - **30 number locks:** 15 LCM and 15 HCF, with direct examples, patrol cycles, equal supply bundles and longest equal rope pieces. Later problems use three numbers and ask players to choose their strategy from the situation. Hints and retries cost nothing; worked explanations follow correct answers.
 - **18 physical maths machines:** nine clock synchronisers and nine supply splitters. Push a trolley onto a numbered dock, watch the cycle/group preview, then ride the lift after choosing the first shared tick or greatest equal grouping. Existing multi-stage mirrors, access crates, pulleys and magnetic sliders follow. R resets only the unfinished stage for free.
@@ -21,7 +23,7 @@ Rook, a brass raven escape artist, and Kit, a copper fox locksmith, are trapped 
 
 ## Controls
 
-**Rook / solo:** A/D move, W jump or double-jump, C swing key. **Kit:** arrows move, Up jump or double-jump, full stop (.) swing pick. **S / Down:** interact or drop through ledges. Hold toward a wall and jump to wall-jump. **R:** free local machine reset. **B:** tools bench. **Esc:** pause/back.
+**Rook / solo:** A/D move, W jump or triple-jump, C swing key. **Kit:** arrows move, Up jump or triple-jump, full stop (.) swing pick. **S / Down:** interact or drop through ledges. Hold toward a wall and jump to wall-jump. **R:** free local machine reset. **B:** tools bench. **Esc:** pause/back.
 
 The in-game field guide explains both maths methods and the physical machines. Number-lock challenges pause the world; the Recovery Relay leaves the other hero’s fight running. Ordinary guardian contact is harmless, while marked landing slams, projectiles and active damage zones still hurt. Entered heroes cannot leave an active arena; knockouts return to the relay, and victory releases the exits.
 
@@ -29,6 +31,6 @@ The in-game field guide explains both maths methods and the physical machines. N
 
 Automated checks cover every sector in solo/co-op, all 18 machines, 30 main locks, 100,000 independently audited generated questions, timed crossings, guardian boundaries/contact, shared recovery, cover and both heroes’ animation masks. Browser checks include real input/form events and laptop layouts. The HTML runs in an offline Chromium context without external requests.
 
-These are scripted simulations, automated browser tests and screenshot inspections. **No manual full-game playthrough or subjective difficulty/fun assessment was performed.** See TESTING.md and CURRICULUM.md in the ZIP for exact checks and limits.
+These are scripted simulations, automated browser tests and screenshot inspections. **No manual full-game playthrough or subjective difficulty/fun assessment was performed.** See TESTING.md for this revision, PREVIOUS-TESTING.md for the initial release checks, and CURRICULUM.md for teaching details.
 
 Created 17 November 2026. This game uses separate `lockstep-` save keys and does not overwrite the other games’ saves.
