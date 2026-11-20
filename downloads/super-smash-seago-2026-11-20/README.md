@@ -1,18 +1,30 @@
 # Super Smash Seago
 
-Updated 20 November 2026. An original offline platform fighter for a laptop keyboard, with a solo unlock campaign and local two-player battles.
+Updated 20 November 2026. A self-contained laptop platform fighter with fifteen fighters, fifteen arenas, a fourteen-rival solo campaign, local two-player battles and nets-of-shapes comeback questions.
 
 ## Download and play
 
-Open **super-smash-seago.html** on GitHub and choose **Download raw file** (the down-arrow button). Open that saved HTML in Chrome, Edge, Firefox or another current desktop browser. The game is self-contained and works offline. No account, installation, assets folder or internet connection is needed.
+Open **super-smash-seago.html** on GitHub and choose **Download raw file** (the down-arrow button). Open the saved HTML in a current desktop browser. It works offline with no installation, account, assets folder or server.
 
-For the editable source ZIP, download **download-backup.html** using the same down-arrow button, open that downloaded page, and click **Download source backup ZIP**. This extra page embeds the entire backup; it also works offline.
+For the editable source ZIP, download **download-backup.html** with the same down-arrow button, open that saved page, and click **Download source backup ZIP**. That downloader embeds the complete backup and also works offline.
 
-## Solo adventure and unlocks
+## New fighters and worlds
 
-Start with **Mr Seago** — “Just a teacher.” — and his classroom. The solo adventure has nine computer rivals. Win a five-life match to unlock that rival and their arena for two-player mode. Cleared challenges can be replayed; unlocked fighters may also be used in solo challenges. Losses and draws keep existing unlocks but award no new ones.
+- **Girly Girl / Makeup Box** — cheerleading, dancing and makeup; the second campaign fight. Every platform crumbles, including three travelling trays. There is no permanent floor. Platforms return after2.5seconds; a respawn drawer gets1.8seconds of grace before it can start crumbling. Keep moving.
+- **Napoleon / Waterloo Waterline** — bicorne, baton, cannonball and cannon salute, with forts, pontoons and mechanical lifts.
+- **Edmund / Lanternwood Wardrobe** — ginger hair, freckles, a nervous hunched pose, wintry delight attacks and snowy wardrobe/lamppost scenery.
+- **007 / Secret Service Hangar** — tuxedo, pistol shots, ricochets and a charged gadget barrage, with moving vaults and gantries.
+- **Harry Kane / Golden Boot Stadium** — football kicks, ball shots and a hat-trick special, with a split pitch, stands and moving sporting platforms.
 
-Unlocks save locally in this browser, on this device and game copy. Clearing browser storage or opening a different file/browser/device can give a fresh save. There is no online account or shared class save. A message appears if storage is unavailable; progress then lasts only for the current visit.
+These rivals are interleaved with the earlier fighters rather than appended as a separate block. The original ten fighters and ten arenas retain their earlier combat statistics and map geometry.
+
+## Campaign and saved unlocks
+
+Only **Mr Seago** — “Just a teacher.” — and his classroom start unlocked. Win against a rival to unlock that fighter and arena for two-player mode. Defeat, a draw or multiplayer cannot unlock campaign content. Cleared fights can be replayed with any already unlocked fighter.
+
+Earlier version1 saves are migrated automatically: old wins and their fighter/map unlocks remain. The campaign offers the earliest undefeated challenge, including new rivals inserted among old ones. The save format is now version2, using the existing browser storage key. Replays do not duplicate unlocks.
+
+Saves belong to the browser, device and game-copy location. Keep the same file location when replacing an older download. Clearing storage or opening a different copy/browser/device can start a fresh save. If browser storage is unavailable, progress lasts only for that visit.
 
 ## Controls
 
@@ -20,42 +32,38 @@ Unlocks save locally in this browser, on this device and game copy. Clearing bro
 |---|---|---|
 | Move | A / D | Left / Right |
 | Jump | W | Up |
-| Drop from upper ledge / fall faster | S | Down |
+| Drop / fast-fall | S | Down |
 | Normal attack | C | Comma |
 | Heavy attack | V | Full stop |
 | Charged special | B | Slash |
-| Question selection | W/S or A/D | Arrows |
-| Submit selected answer | C | Comma |
+| Choose quiz answer | W/S or A/D | Arrows |
+| Confirm quiz answer | C | Comma |
 | Free hint | B | Slash |
 
-Solo players can use **either complete keyboard layout**, including arrows/comma/slash for comeback questions. Both layouts control the same solo fighter; the CPU stays independent. In two-player mode the layouts stay separate.
+Solo accepts either complete layout, including questions. The computer remains independent. In two-player mode the layouts control separate fighters. Mouse answers and hints also work. Escape pauses.
 
-Mouse clicks also select answers and hints. Escape pauses. The button in the **bottom-right arena corner** toggles browser fullscreen; it remains available in fullscreen.
+Use **Full screen** in the menu or the arena’s bottom-right corner. Fullscreen now covers the whole page: after a match you can return to the menu, scroll through fighters/arenas, and start again without pressing Escape. Both fullscreen buttons show the current state.
 
-## Match rules
+## Rules and visual reminders
 
-Every new match, retry and rematch opens with **3–2–1–FIGHT**. Fighters, CPU, platforms, match time and powerup timers stay frozen during the countdown. Pause and help also freeze it.
+Every new match, retry and rematch starts **3–2–1–FIGHT**. Fighters, CPU, moving platforms, clock and powerup timers freeze during the countdown; pause/help also freeze it.
 
-- Each fighter starts with five lives. Ring-outs cost one life.
-- While lives remain, a correct multiple-choice question about nets of 3D shapes returns you safely, with zero damage and brief protection. Attacking ends that protection.
-- **A wrong answer costs one additional remaining life** and gives a fresh question. The final lost life ends the match. Hints are free. Duplicate/stale question submissions cannot take another life.
-- Damage increases knockback and reduces normal jumps between landings: **three below100%, two from100%, one from130%**. Land to reset the jump count. Direct special movement remains possible without refunding normal jumps.
-- All ten specials are strong offensive attacks with visible wind-ups, distinct large effects and substantial damage/launch. Earn a full special bar through real hits, then use B or slash.
-- Sky crystals first fall around ten seconds into an active fight, then every twenty seconds. Touch one to become a **dragon** or **war elephant** for twelve seconds. Normal, heavy and special attacks change. Specials still need full charge. The form ends on expiry or knockout.
-- The computer uses the same physics and ordinary movement/attack inputs. Its own knockout comeback takes2.5seconds; it never answers a pupil's question.
+Each fighter has five lives. Ring-outs cost one life. If lives remain, a correct four-choice question about nets of3Dshapes returns you at zero damage with brief protection. Attacking ends protection. Each wrong answer costs another life and gives a fresh question; hints are free. Stale or duplicate submissions cannot consume another life. The final lost life ends the match.
 
-## Worlds and artwork
+Normal jumps between landings: three below100%, two from100%, one from130%. Damage also increases knockback. The damage number grows at100%, grows again and pulses at130%. A full special bar shakes and glows until used. Reduced-motion preferences disable those animations while keeping static emphasis.
 
-Ten arenas use distinct permanent routes, vertical steps, moving crossings/lifts and unstable shortcuts. Each includes two moving and two crumbling platforms. Stable spawn landings cannot be dropped through. Crumbles disappear temporarily and stop blocking shots; moving surfaces use their actual collision geometry. Platforms block projectiles, including fast shots.
+All fifteen specials are offensive charged attacks with readable wind-ups, substantial damage/launch and distinct effects. Full charge is earned from real hits, not waiting. Platforms block projectiles using actual swept collision geometry; removed crumbles stop covering.
 
-The bright original waterfall-adventure art includes different scenery for each arena, animated lava falls in the ember-themed world, and cyan dot eyes for Rook. Lava, water, plants and distant scenery are decorative, not hidden hazards. No Nintendo artwork or characters are included.
+Sky crystals first fall at roughly ten active seconds, then every twenty. Three twelve-second forms cycle fairly: fire-breathing **Dragon**, charging **War elephant**, and a very fast armored **Gladiator lion**. Each replaces normal/heavy/special moves; charged specials still need a full bar. A form ends on expiry or knockout. The lion runs at480units/second before other status effects. Crystals wait for a returning support if Makeup Box is temporarily entirely gone.
 
-## Source and testing
+The computer uses ordinary movement/attack inputs and the same physics. Its own quiz comeback takes2.5seconds; it never answers a pupil’s question. It is a deterministic heuristic rather than a human or trained opponent.
 
-The ZIP includes the current standalone HTML, editable source, tests and reports, plus untouched copies of Foldbreak Arena and Super Smash Seago before this UI polish. To rebuild, run `python source/build.py` (Python3); this writes `source/super-smash-seago.html`. The playable HTML needs no build tools.
+## Source and verification
 
-Test scripts require Node.js and, for browser checks, Playwright plus Chromium. The scripts preserve their development paths (`work/seago`); arrange that path or adjust it when reproducing tests elsewhere. Reports identify the fixtures used. See **TESTING.md**, **ROSTER.md** and **WORLDS.md** for details.
+The ZIP contains the current offline HTML, editable modules/build script, tests/reports and untouched previous HTML releases. Rebuild with `python source/build.py` (Python3); the output is `source/super-smash-seago.html`. No build tools are needed to play.
 
-Verification uses automated physics/combat simulations and scripted Chromium clicks, keys, fullscreen and offline-content checks. Scripted campaign outcome fixtures verify unlock integration; they are not manually won campaign matches. **No manual two-person playthrough or pupil balance assessment has been performed.**
+Node.js tests use Playwright and Chromium for browser checks. Some scripts retain development paths such as `work/seago`; arrange that path or adjust it to reproduce them elsewhere. Companion `.cjs` fixtures are included.
 
-Algorithm Gate, Slant Gate, Lockstep and the previous Foldbreak Arena release remain unchanged.
+Reports distinguish automated physics/combat simulations, prepared knockout/attack fixtures and actual browser clicks/keys/wheel/fullscreen events. Unlock fixtures are not manually won campaigns. Offline HTML contents were tested with networking disabled; the managed browser blocks direct file-URL navigation. **No manual two-person playthrough, class trial or human balance assessment has been performed.** See TESTING.md, ROSTER.md, WORLDS.md and source validation notes.
+
+Algorithm Gate, Slant Gate, Lockstep and the earlier Foldbreak Arena release remain unchanged. All rendering is procedural with no external image assets.
