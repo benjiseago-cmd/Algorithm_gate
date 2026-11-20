@@ -10,7 +10,7 @@ For the editable source ZIP, download **download-backup.html** using the same do
 
 ## Solo adventure and unlocks
 
-Start with **Mr Seago** — “just an ordinary teacher” — and his classroom. The solo adventure has nine computer rivals. Win a five-life match to unlock that rival and their arena for two-player mode. Cleared challenges can be replayed; unlocked fighters may also be used in solo challenges. Losses and draws keep existing unlocks but award no new ones.
+Start with **Mr Seago** — “Just a teacher.” — and his classroom. The solo adventure has nine computer rivals. Win a five-life match to unlock that rival and their arena for two-player mode. Cleared challenges can be replayed; unlocked fighters may also be used in solo challenges. Losses and draws keep existing unlocks but award no new ones.
 
 Unlocks save locally in this browser, on this device and game copy. Clearing browser storage or opening a different file/browser/device can give a fresh save. There is no online account or shared class save. A message appears if storage is unavailable; progress then lasts only for the current visit.
 
@@ -28,9 +28,13 @@ Unlocks save locally in this browser, on this device and game copy. Clearing bro
 | Submit selected answer | C | Comma |
 | Free hint | B | Slash |
 
+Solo players can use **either complete keyboard layout**, including arrows/comma/slash for comeback questions. Both layouts control the same solo fighter; the CPU stays independent. In two-player mode the layouts stay separate.
+
 Mouse clicks also select answers and hints. Escape pauses. The button in the **bottom-right arena corner** toggles browser fullscreen; it remains available in fullscreen.
 
 ## Match rules
+
+Every new match, retry and rematch opens with **3–2–1–FIGHT**. Fighters, CPU, platforms, match time and powerup timers stay frozen during the countdown. Pause and help also freeze it.
 
 - Each fighter starts with five lives. Ring-outs cost one life.
 - While lives remain, a correct multiple-choice question about nets of 3D shapes returns you safely, with zero damage and brief protection. Attacking ends that protection.
@@ -48,7 +52,7 @@ The bright original waterfall-adventure art includes different scenery for each 
 
 ## Source and testing
 
-The ZIP includes the current standalone HTML, editable source, tests and reports, plus the untouched previous Foldbreak Arena HTML. To rebuild, run `python source/build.py` (Python3); this writes `source/super-smash-seago.html`. The playable HTML needs no build tools.
+The ZIP includes the current standalone HTML, editable source, tests and reports, plus untouched copies of Foldbreak Arena and Super Smash Seago before this UI polish. To rebuild, run `python source/build.py` (Python3); this writes `source/super-smash-seago.html`. The playable HTML needs no build tools.
 
 Test scripts require Node.js and, for browser checks, Playwright plus Chromium. The scripts preserve their development paths (`work/seago`); arrange that path or adjust it when reproducing tests elsewhere. Reports identify the fixtures used. See **TESTING.md**, **ROSTER.md** and **WORLDS.md** for details.
 
