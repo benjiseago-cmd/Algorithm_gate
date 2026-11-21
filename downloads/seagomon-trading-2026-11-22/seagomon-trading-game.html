@@ -1,0 +1,3905 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#111728"><meta name="description" content="Earn Seago Coins with times-table speed runs. Open monster packs, discover shinies, and build a 100-card Seagomon collection."><title>Seagomon: The Trading Game</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect x='5' y='3' width='30' height='34' rx='7' fill='%23b9f274'/%3E%3Cpath d='M12 13h5v6h-5zm11 0h5v6h-5zM15 25h10v3H15z' fill='%23111728'/%3E%3C/svg%3E"><style>:root{color-scheme:dark;--bg:#101625;--panel:#1b2439;--panel2:#242f49;--ink:#f4f5ff;--muted:#aeb8d1;--line:#b3c5ed25;--lime:#bbf578;--gold:#ffd774;--violet:#b19af8;--common:#b3bfcc;--uncommon:#7cdbad;--rare:#7dbdff;--epic:#c19afd;--megarare:#ffd36a;font-family:Trebuchet MS,Segoe UI,Arial,sans-serif;font-synthesis:none}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 20% 0,#27315b7a,transparent 55%),radial-gradient(ellipse at 95% 50%,#43345745,transparent 45%),var(--bg);color:var(--ink);font-size:16px}button,input,select{font:inherit}button,a{touch-action:manipulation}button{cursor:pointer;color:inherit;border:0}button:disabled{cursor:default;opacity:.42}a{color:inherit}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:4px}h1,h2,h3,p{margin:0}button[hidden],[hidden]{display:none!important}.app-shell{width:min(1440px,100%);height:100dvh;min-height:680px;padding:18px 32px 10px;margin:auto;display:grid;grid-template-rows:66px minmax(0,1fr) 24px;gap:16px}.topbar{display:flex;align-items:center;gap:26px}.brand{display:flex;align-items:center;gap:11px;text-decoration:none;flex-shrink:0}.brand>svg{width:38px;height:43px;filter:drop-shadow(0 4px 0 #080c16aa)}.brand>span{font-size:23px;letter-spacing:1.5px;font-weight:900;line-height:1.1}.brand small{display:block;color:var(--muted);font-size:11px;font-weight:700;letter-spacing:3px;margin-top:5px}.wallet{margin-left:auto;display:flex;align-items:center;gap:9px;padding:12px 16px;border:1px solid #ebc57735;border-radius:13px;background:#ffdc7d0b;white-space:nowrap}.coin-icon{width:25px;height:25px;border-radius:50%;display:inline-grid;place-items:center;background:#f4c65e;border:2px solid #ffe7a0;box-shadow:0 2px 0 #a4722c;color:#7c4b16;font-size:14px;font-weight:900;flex-shrink:0}.wallet strong{font-size:24px;color:var(--gold);font-variant-numeric:tabular-nums}.wallet>span:last-child{font-size:12px;color:#e1cda4}.topbar nav{display:flex;align-items:center;gap:9px}.nav-button,.shop-button,.icon-button{min-height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:700;padding:10px 14px}.nav-button{background:#d3ddff0b;border:1px solid var(--line);color:#e4e8fc}.nav-button>span{color:var(--muted);font-size:12px}.shop-button{background:var(--lime);color:#203522;border:1px solid #dfffac;box-shadow:0 3px 0 #6d914c}.nav-button:hover{background:#d3ddff16}.shop-button:hover{background:#cdff93}.icon-button{background:transparent;border:1px solid var(--line);width:44px;padding:11px}.topbar button svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}.dashboard{display:grid;grid-template-rows:minmax(230px,1fr) minmax(260px,1fr);gap:18px;min-height:0}.display-section,.practice-section{min-height:0}.section-top{display:flex;align-items:center;justify-content:space-between;gap:15px;height:33px;margin-bottom:9px}.section-top h1,.practice-top h2{font-size:21px;letter-spacing:-.5px;font-weight:800}.section-top>span{font-size:12px;color:var(--muted)}.display-cases{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;height:calc(100% - 42px)}.case-slot{position:relative;min-width:0;border:1px solid #9aafe52d;border-radius:15px;background:radial-gradient(ellipse at 50% 24%,#516ba52e,transparent 75%),linear-gradient(145deg,#1f2b42b8,#1a2338);padding:8px 8px 13px;display:flex;justify-content:center;align-items:center;overflow:hidden;box-shadow:inset 0 1px 0 #fff1,0 7px 18px #03071025}.case-slot::before{content:'';position:absolute;inset:8px;border:1px solid #d0dbfa0c;border-radius:10px;pointer-events:none}.case-slot::after{content:'';position:absolute;width:76%;height:7px;bottom:8px;left:12%;border-radius:8px;background:#8490b931;box-shadow:0 3px 0 #111a2a,0 -5px 20px #607aaa16}.case-slot:hover{border-color:#aebcf66b}.case-slot:focus-visible{outline-offset:0}.empty-case{display:flex;flex-direction:column;align-items:center;gap:10px;color:#90a0bf;font-size:14px}.empty-case .empty-card{width:90px;height:120px;border:2px dashed #8ba1ce46;border-radius:12px;display:grid;place-items:center;font-size:35px;color:#8197c657;transform:rotate(-5deg);background:#a3b5e307}.empty-case small{font-size:12px;color:#798ba8}.case-slot .seago-card{width:140px;height:calc(100% - 5px);max-height:210px;min-height:170px;pointer-events:none;transform:rotate(-2deg);box-shadow:0 9px 16px #050b1b77}.case-slot:nth-child(even) .seago-card{transform:rotate(2deg)}.case-slot:hover .seago-card{transform:rotate(0) translateY(-2px)}.case-position{position:absolute;top:11px;left:12px;color:#6f819f;font-size:11px;letter-spacing:1px}.case-edit{position:absolute;right:12px;bottom:17px;color:#99acc9;font-size:11px}.practice-section{background:linear-gradient(145deg,#202a42,#1a2236);border:1px solid var(--line);border-radius:16px;padding:15px 18px 11px;display:grid;grid-template-rows:48px minmax(0,1fr) 23px;gap:10px}.practice-top{display:flex;align-items:center;justify-content:space-between;gap:18px}.practice-top p{font-size:12px;color:var(--muted);margin-top:5px}.order-switch{display:flex;padding:4px;border:1px solid var(--line);background:#121a2b;border-radius:12px;gap:3px;flex-shrink:0}.order-switch button{padding:8px 13px;border-radius:8px;font-size:14px;background:transparent;color:#a8b5d2;white-space:nowrap}.order-switch button b{margin-left:7px;font-size:12px;color:#8295b8}.order-switch button[aria-pressed=true]{color:#fff;background:#3f4768;box-shadow:0 2px 3px #060b1680}.order-switch button[aria-pressed=true] b{color:var(--lime)}.table-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:9px}.table-tile{background:linear-gradient(150deg,#34405a80,#202a4099);border:1px solid #b2c3ed22;border-bottom:3px solid var(--tier);border-radius:10px;padding:8px 11px;display:grid;grid-template-columns:1fr auto;align-content:center;column-gap:5px;row-gap:3px;text-align:left;min-height:64px;transition:transform .15s,background .15s}.table-tile:hover{background:#42516a80;transform:translateY(-2px)}.table-number{font-size:25px;font-weight:800;color:#edf1ff;letter-spacing:-.5px}.table-number small{font-size:15px;color:#a1b0cd;font-weight:600;margin-left:3px}.table-coins{color:var(--tier);font-size:14px;font-weight:800;align-self:center;white-space:nowrap}.table-best{font-size:12px;color:#a7b6d0;grid-column:1/-1;font-variant-numeric:tabular-nums}.tier-one{--tier:#a6ddb4}.tier-two{--tier:#99bffa}.tier-three{--tier:#c4a7f2}.bonus-tile{border:1px dashed #a5b4dc30;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;text-align:center;color:#ad9fda;font-size:12px;line-height:1.4;padding:8px}.bonus-tile b{color:var(--gold);font-size:16px}.practice-footer{display:flex;align-items:center;justify-content:space-between;gap:14px;color:#9eacc8;font-size:11px}.tier-key{display:flex;gap:8px;align-items:center}.tier-key::before{content:'';width:6px;height:6px;border-radius:2px;background:var(--tier);flex-shrink:0}.tier-key b{color:var(--tier);font-size:11px;font-weight:600}.statusbar{display:flex;justify-content:space-between;align-items:center;gap:15px;font-size:12px;color:#7f90ae}.statusbar button{background:transparent;color:#a6b6d3;font-size:12px;padding:0}.statusbar #save-status.warn{color:#ffcf82}.toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,12px);background:#eef3ff;color:#21314e;border:1px solid #fff;border-radius:12px;padding:12px 22px;font-size:14px;box-shadow:0 9px 35px #0007;max-width:min(90%,650px);z-index:8;opacity:0;pointer-events:none;transition:.18s}.toast.visible{opacity:1;transform:translate(-50%,0)}
+/* Shared card frame: art and names remain unique for all 100 species. */
+.seago-card{--rarity:var(--common);border:2px solid var(--rarity);border-radius:11px;background:linear-gradient(150deg,#fff9ed,#e3e2ce);color:#26364a;position:relative;padding:7px 8px;display:flex;flex-direction:column;overflow:hidden;text-align:left;isolation:isolate}.rarity-common{--rarity:var(--common)}.rarity-uncommon{--rarity:var(--uncommon)}.rarity-rare{--rarity:var(--rare)}.rarity-epic{--rarity:var(--epic)}.rarity-megarare{--rarity:var(--megarare)}.seago-card-top{display:flex;justify-content:space-between;gap:4px;font-size:9px;font-weight:800;letter-spacing:.3px;color:#566679}.seago-card-art{flex:1;min-height:60px;display:flex;align-items:center;justify-content:center;position:relative;border-radius:7px;margin:6px 0;background:radial-gradient(ellipse at 50% 70%,#a1cbb680,transparent 67%),linear-gradient(150deg,#d9e7df,#b5cfcc);border:1px solid #74889736;overflow:hidden}.seago-card-art::before{content:'';position:absolute;width:85%;height:85%;border:1px solid #ffffff55;border-radius:50%;transform:translate(15%,-7%);pointer-events:none}.seago-card-art svg{position:relative;width:100%;height:100%;max-height:125px;filter:drop-shadow(0 4px 0 #263d4a30)}.seago-card h3{font-size:14px;line-height:1.15;letter-spacing:-.2px;font-weight:900;margin:0 0 4px}.seago-card-rarity{font-size:9px;font-weight:800;color:#5e6172;line-height:1.3;white-space:nowrap}.seago-card>p{font-size:11px;line-height:1.4;color:#526072;margin-top:6px}.seago-card-count{position:absolute;top:24px;right:5px;padding:2px 5px;background:#23344add;color:white;border-radius:5px;font-size:10px;z-index:2}.seago-card.is-shiny{background:linear-gradient(120deg,#fbe3ae,#c9dffd 30%,#e5b9ee 60%,#e3f4b8);box-shadow:0 0 20px #aeb8ed30}.seago-card.is-shiny::after{content:'';position:absolute;inset:-70%;z-index:2;background:linear-gradient(110deg,transparent 40%,#fff6 48%,#fff1 53%,transparent 60%);transform:translateX(-24%) rotate(-15deg);pointer-events:none;animation:foil-light 5s linear infinite}.seago-card.is-shiny .seago-card-art{background:radial-gradient(ellipse,#f7e1a9bb,transparent 65%),linear-gradient(130deg,#d9b9f1,#aed9e2 45%,#dcecb4)}.seago-card.is-shiny .seago-card-rarity{color:#6c3986}.rarity-rare .seago-card-art{background-color:#b3d0ec}.rarity-epic .seago-card-art{background-color:#c6b4e8}.rarity-megarare .seago-card-art{background-color:#e4ce94}.rarity-megarare{box-shadow:0 0 19px #ffdb7623}.is-compact .seago-card-art{margin:5px 0}.is-compact h3{font-size:13px}.is-compact .seago-card-top{font-size:9px}
+/* Overlay screens use internal scrolling; the main laptop dashboard stays fixed. */
+dialog{position:fixed;inset:0;width:min(1060px,calc(100vw - 48px));max-height:calc(100dvh - 48px);margin:auto;background:linear-gradient(145deg,#28334d,#192238);color:var(--ink);border:1px solid #a8bee34d;border-radius:21px;padding:27px;box-shadow:0 25px 120px #000a;overflow:auto;scrollbar-width:thin;scrollbar-color:#7083ae #1a253d}dialog::backdrop{background:#080e1bd9;backdrop-filter:blur(8px)}.dialog-close{position:absolute;right:14px;top:10px;color:#b7c6e0;background:transparent;width:34px;height:34px;border-radius:8px;font-size:27px;z-index:4}.dialog-close:hover{background:#ffffff10}.dialog-heading{display:flex;justify-content:space-between;align-items:center;gap:18px;padding-right:32px;margin-bottom:22px}.dialog-heading h2{font-size:28px;letter-spacing:-.8px}.dialog-heading p{font-size:14px;color:#afbeda;margin-top:7px;line-height:1.6}.eyebrow{font-size:12px;text-transform:uppercase;color:var(--lime);font-weight:800;letter-spacing:1.4px;margin-bottom:7px}.quiet-button{background:transparent;border:1px solid var(--line);color:#c1cce3;border-radius:10px;padding:10px 14px;font-size:14px}.primary-button{background:var(--lime);color:#243a28;border:1px solid #e3ffb1;border-bottom:4px solid #7ba756;border-radius:11px;padding:12px 22px;font-size:16px;font-weight:800;box-shadow:0 4px 12px #08101555}.primary-button:hover{background:#d1ff9d}.secondary-button{background:#465174;color:#eff2ff;border:1px solid #aebbea3d;border-bottom:3px solid #24304f;border-radius:11px;padding:12px 20px;font-size:14px;font-weight:700}.button-row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:12px;margin-top:22px}.muted{color:var(--muted)}.small{font-size:12px}.empty-message{padding:35px 20px;text-align:center;color:#a8b7d2;line-height:1.8;font-size:15px}.modal-stats{display:flex;gap:22px;align-items:center;font-size:14px;color:var(--muted)}.modal-stats strong{color:var(--gold);font-size:22px}
+/* Speed run */
+.challenge-ready,.challenge-result{text-align:center;padding:24px 10px;max-width:680px;margin:auto}.challenge-ready h2,.challenge-result h2{font-size:38px;letter-spacing:-1px}.challenge-ready .run-table{font-size:92px;font-weight:900;color:var(--lime);margin:14px 0 2px}.run-details{display:flex;gap:13px;justify-content:center;flex-wrap:wrap;margin:14px 0 22px;font-size:14px;color:#bac6e0}.run-details>span{border:1px solid var(--line);padding:8px 12px;border-radius:9px;background:#a8b8e708}.coin-preview{color:var(--gold);font-size:19px;font-weight:800}.challenge-ready .muted{font-size:14px;line-height:1.6;margin:12px 0}.challenge-live{max-width:670px;margin:auto;padding:10px 8px 20px}.run-topline{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:20px}.run-topline h2{font-size:23px}.run-topline p{font-size:14px;color:var(--muted);margin-top:6px}.stopwatch{font-size:40px;font-weight:900;color:var(--gold);font-variant-numeric:tabular-nums;letter-spacing:-1px}.run-track{height:8px;border-radius:10px;background:#0c1428;overflow:hidden}.run-track>span{display:block;height:100%;background:var(--lime);transition:width .13s}.equation{text-align:center;font-size:82px;font-weight:900;letter-spacing:-3px;margin:28px 0 20px;white-space:nowrap}.equation .eq-symbol{font-weight:500;color:#7e8fac;margin:0 10px}.answer-form{display:flex;gap:12px;justify-content:center;align-items:center}.answer-form label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}.answer-form input{width:190px;background:#101b30;border:2px solid #93b77a;border-radius:12px;color:white;font-size:43px;text-align:center;padding:9px 12px;letter-spacing:2px;font-weight:800;outline-offset:3px}.answer-form button{font-size:17px;min-height:71px;padding:15px 24px}.answer-feedback{text-align:center;min-height:28px;margin-top:16px;color:#ffbd88;font-size:15px;font-weight:700}.run-bottom{text-align:center;font-size:13px;color:#8e9fbc;margin-top:8px}.challenge-result .finish-time{font-size:72px;letter-spacing:-2px;font-weight:900;color:#fff;margin-top:16px;font-variant-numeric:tabular-nums}.challenge-result .previous-best{font-size:14px;color:var(--muted);margin-top:6px}.earned-coins{margin:23px auto 0;display:flex;align-items:center;justify-content:center;gap:10px;color:var(--gold);font-size:37px;font-weight:900}.reward-breakdown{display:flex;justify-content:center;gap:25px;flex-wrap:wrap;font-size:14px;color:#aebad4;margin-top:14px}.reward-breakdown b{color:#d5e3c8}.challenge-result.new-record h2{color:var(--lime)}
+/* Packs */
+.pack-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.pack-offer{background:#c5d2f209;border:1px solid var(--line);border-radius:15px;padding:19px;display:flex;flex-direction:column;align-items:center;text-align:center}.pack-offer h3{font-size:23px;margin-bottom:8px}.pack-offer .pack-note{font-size:14px;line-height:1.55;color:#b4c0da;min-height:45px}.pack-picture{position:relative;width:132px;height:173px;margin:22px 0 17px;border:2px solid var(--pack-accent,#9caff0);border-radius:8px;background:linear-gradient(135deg,#ffffff22,transparent 35%),linear-gradient(145deg,var(--pack-a,#5669b7),var(--pack-b,#262a5a));box-shadow:8px 9px 0 #080d2444,0 12px 25px #050d2e40;transform:rotate(-5deg);display:flex;flex-direction:column;justify-content:center;align-items:center;gap:9px;isolation:isolate}.pack-picture::before,.pack-picture::after{content:'';position:absolute;left:0;right:0;height:8px;background:repeating-linear-gradient(90deg,#d9e0ff44 0 2px,transparent 2px 5px)}.pack-picture::before{top:3px}.pack-picture::after{bottom:3px}.pack-picture .pack-mark{font-size:43px;color:var(--pack-accent,#d4dbff);filter:drop-shadow(0 3px 0 #0004)}.pack-picture b{font-size:11px;letter-spacing:1px}.pack-picture small{font-size:10px;color:#ffffffaa;letter-spacing:2px}.pack-picture.lucky{--pack-a:#207b70;--pack-b:#154240;--pack-accent:#b5f5a9;transform:rotate(3deg)}.pack-picture.shiny{--pack-a:#815b96;--pack-b:#3e3e78;--pack-accent:#ffe5a2;background:linear-gradient(120deg,#ffcc8a55,#b3c4f733 45%,#f4aada44),linear-gradient(145deg,var(--pack-a),var(--pack-b))}.pack-offer .pack-price{display:flex;gap:7px;align-items:center;font-size:27px;color:var(--gold);font-weight:900;margin:2px 0 14px}.pack-offer .primary-button{width:100%;margin-top:auto}.pack-offer .odds-button{background:transparent;color:#bdcbe4;font-size:13px;padding:13px 6px 0;text-decoration:underline;text-underline-offset:3px}.pack-bottom{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:13px;color:#91a2c1;margin-top:19px}.odds-table{width:100%;border-collapse:collapse;font-size:15px}.odds-table th{text-align:left;color:#98abc8;font-size:13px;font-weight:600;padding:10px 12px;border-bottom:1px solid var(--line)}.odds-table td{padding:13px 12px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}.rarity-chip{display:inline-flex;align-items:center;gap:6px;color:var(--rarity,var(--common));font-weight:700}.odds-note{font-size:14px;color:#adbdd6;line-height:1.8;margin-top:17px}.pack-opening{text-align:center;padding:18px 0 5px}.pack-opening h2{font-size:30px}.pack-opening .pack-picture{margin:28px auto;transform:rotate(-4deg);width:160px;height:205px;transition:.3s}.pack-opening .pack-picture:hover{transform:rotate(0) translateY(-6px)}.reveal-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:13px;margin:26px 0 10px}.reveal-button{padding:0;background:transparent;position:relative;min-width:0;min-height:238px;border-radius:12px}.reveal-button .seago-card{height:238px;width:100%;transition:transform .2s}.reveal-button:hover .seago-card{transform:translateY(-4px)}.card-back{height:238px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:17px;border:3px solid #b2b6ed;border-radius:12px;background:repeating-linear-gradient(45deg,#3c4878 0 7px,#39436d 7px 14px);box-shadow:inset 0 0 0 6px #202b4d,0 7px 15px #040b1e55;color:#d9e2ff}.card-back b{font-size:38px;color:#b5f69a}.card-back span{font-size:10px;letter-spacing:1px}.reveal-tag{display:block;font-size:12px;color:var(--lime);margin-top:9px;font-weight:700;min-height:15px}.reveal-button .seago-card h3{font-size:15px}.reveal-button .seago-card-top{font-size:10px}.reveal-button .seago-card-rarity{font-size:10px}.reveal-button .seago-card-art svg{max-height:155px}
+/* Collection and individual card details */
+.collection-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:17px}.collection-controls input,.collection-controls select{height:41px;background:#121d32;color:#e6edff;border:1px solid #8b9ec044;border-radius:9px;padding:8px 12px;font-size:14px}.collection-controls input{flex:1;min-width:130px}.collection-controls select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='m1 1 5 5 5-5' stroke='%23aebad4' fill='none' stroke-width='2'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:30px}.collection-controls .quiet-button{font-size:13px;padding:10px}.collection-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}.collection-card{padding:0;background:transparent;text-align:left;border-radius:11px;position:relative;min-width:0}.collection-card .seago-card{height:194px;width:100%;transition:transform .15s}.collection-card:hover .seago-card{transform:translateY(-3px)}.collection-card.is-unowned .seago-card{filter:grayscale(.75);opacity:.40}.collection-card.is-unowned::after{content:'NOT FOUND';position:absolute;left:10px;right:10px;top:82px;text-align:center;background:#182136df;color:#bac9e1;padding:6px;border-radius:6px;font-size:10px;letter-spacing:1px}.collection-card .owned-note{font-size:11px;color:#9cb2d0;display:block;text-align:center;margin-top:6px}.collection-pagination{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#a7b6ce;margin-top:20px}.collection-pagination button{font-size:13px;padding:8px 13px}.collection-pagination .pager-buttons{display:flex;gap:8px}.detail-layout{display:grid;grid-template-columns:240px 1fr;gap:30px;align-items:start}.detail-layout>.seago-card{width:240px;height:340px;padding:13px}.detail-layout .seago-card h3{font-size:22px}.detail-layout .seago-card-art svg{max-height:215px}.detail-layout .seago-card-top{font-size:12px}.detail-layout .seago-card-rarity{font-size:12px}.detail-copy h2{font-size:31px;margin-bottom:10px;letter-spacing:-.7px}.detail-copy>p{font-size:15px;line-height:1.7;color:#aebfd9;margin-bottom:18px}.detail-variants{display:flex;gap:8px;margin-bottom:18px}.detail-variants button{font-size:14px;padding:9px 13px;border-radius:9px;background:#354361;border:1px solid #abbcde30}.detail-variants button.active{border-color:var(--lime);color:var(--lime)}.detail-metadata{display:flex;gap:20px;font-size:14px;color:#9bb0ce;margin-bottom:19px}.detail-actions{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0}.detail-actions button{font-size:14px;padding:11px 15px}.card-chances{font-size:13px;color:#9fb3cf;line-height:1.8;margin-top:18px;padding:13px;border:1px solid var(--line);border-radius:10px}.card-chances b{color:#d1ddf0}.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}.rules-grid article{border:1px solid var(--line);border-radius:12px;padding:18px;background:#f1f5ff04}.rules-grid h3{font-size:18px;color:#e4e8fa;margin-bottom:9px}.rules-grid p{font-size:14px;line-height:1.8;color:#afbed6}.settings-buttons{display:grid;gap:12px;max-width:480px}.settings-buttons button{padding:14px 20px;text-align:left}.settings-note{font-size:14px;line-height:1.8;color:#9cafcb;margin-top:19px}.wallet.pop{animation:wallet-pop .4s}.run-error{animation:run-shake .25s}
+@keyframes foil-light{0%,20%{transform:translateX(-35%) rotate(-15deg)}70%,100%{transform:translateX(35%) rotate(-15deg)}}@keyframes wallet-pop{50%{transform:scale(1.04);box-shadow:0 0 20px #ffdb6b44}}@keyframes run-shake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+@media(min-height:900px){.case-slot .seago-card{width:160px;max-height:246px}.case-slot .seago-card h3{font-size:15px}.case-slot .seago-card-art svg{max-height:150px}.practice-section{padding:21px 23px 15px}.table-tile{padding:13px 15px}.table-number{font-size:31px}.table-best{font-size:14px}.table-coins{font-size:16px}}
+@media(max-width:1150px){.app-shell{padding:14px 23px 9px;gap:13px;grid-template-rows:62px minmax(0,1fr) 23px}.topbar{gap:15px}.brand>span{font-size:21px}.brand small{font-size:10px}.wallet{padding:9px 11px;gap:6px}.wallet>span:last-child{display:none}.nav-button,.shop-button{padding:10px 12px}.dashboard{gap:15px}.display-cases{gap:11px}.practice-section{padding:13px 14px 10px;gap:9px}.practice-top h2,.section-top h1{font-size:20px}.practice-top p{font-size:11px}.table-tile{padding:7px 9px}.table-number{font-size:24px}.table-coins{font-size:13px}.table-best{font-size:11px}.tier-key{gap:5px;font-size:10px}.tier-key b{font-size:10px}.order-switch button{padding:8px 10px}.collection-grid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+@media(max-width:850px){.app-shell{height:auto;min-height:100dvh;padding:12px 16px;grid-template-rows:auto auto auto;gap:16px}.topbar{flex-wrap:wrap;gap:13px}.brand{margin-right:auto}.brand>span{font-size:19px}.brand>svg{width:32px}.wallet{margin:0}.topbar nav{width:100%;justify-content:flex-end}.topbar nav .nav-button{margin-right:auto}.dashboard{grid-template-rows:255px auto;gap:18px}.display-cases{gap:8px}.case-slot{padding:7px 5px 12px}.case-slot .seago-card{width:min(140px,100%);max-height:190px;min-height:160px;padding:5px}.case-slot .seago-card h3{font-size:11px}.case-slot .seago-card-rarity{font-size:8px}.case-position,.case-edit{display:none}.empty-case{font-size:11px;gap:7px}.empty-case .empty-card{width:65px;height:100px;font-size:28px}.empty-case small{font-size:10px}.practice-section{grid-template-rows:auto auto auto;min-height:310px}.practice-top{flex-direction:column;align-items:flex-start;gap:13px}.practice-top p{font-size:12px}.order-switch{align-self:stretch;display:flex}.order-switch button{flex:1}.table-grid{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,82px)}.practice-footer{flex-wrap:wrap;justify-content:center;gap:10px}.statusbar{font-size:10px;gap:10px}.statusbar button{font-size:11px}dialog{width:calc(100vw - 24px);max-height:calc(100dvh - 24px);padding:22px 17px}.dialog-heading h2{font-size:25px}.dialog-heading p{font-size:13px}.pack-grid{gap:10px}.pack-offer{padding:14px 9px}.pack-offer h3{font-size:19px}.pack-picture{width:102px;height:140px}.pack-offer .pack-note{font-size:12px;min-height:57px}.pack-offer .primary-button{font-size:13px;padding:10px}.pack-offer .pack-price{font-size:23px}.reveal-grid{gap:7px;grid-template-columns:repeat(5,minmax(0,1fr))}.reveal-button,.reveal-button .seago-card,.card-back{min-height:190px;height:190px}.reveal-button .seago-card{padding:5px}.reveal-button .seago-card h3{font-size:11px}.reveal-button .seago-card-rarity{font-size:8px}.reveal-button .seago-card-top{font-size:8px}.collection-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.collection-card .seago-card{height:185px}.detail-layout{grid-template-columns:200px 1fr;gap:20px}.detail-layout>.seago-card{width:200px;height:300px}.rules-grid{grid-template-columns:1fr}}
+@media(max-height:700px) and (min-width:851px){.app-shell{min-height:620px;height:auto}.dashboard{grid-template-rows:235px 260px}.case-slot .seago-card{max-height:180px;min-height:170px}.equation{font-size:65px;margin:20px 0}.challenge-ready,.challenge-result{padding:8px}.challenge-result .finish-time{font-size:58px}}
+@media(max-width:560px){.brand small{font-size:9px;letter-spacing:2px}.wallet strong{font-size:21px}.display-cases{grid-template-columns:repeat(2,minmax(0,1fr))}.dashboard{grid-template-rows:435px auto}.section-top>span{font-size:10px}.table-grid{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(4,82px)}.pack-grid{grid-template-columns:1fr}.pack-offer{display:grid;grid-template-columns:100px 1fr;gap:8px 15px;text-align:left;align-items:center}.pack-offer .pack-picture{grid-row:1/5;margin:9px}.pack-offer h3,.pack-offer .pack-note,.pack-offer .pack-price{margin:0}.pack-offer .pack-note{min-height:0}.pack-offer .odds-button{grid-column:2;padding-top:0;text-align:left}.reveal-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.reveal-button .seago-card,.card-back{height:235px}.reveal-button .seago-card h3{font-size:15px}.reveal-button .seago-card-rarity{font-size:10px}.reveal-button .seago-card-top{font-size:10px}.collection-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.collection-card .seago-card{height:177px;padding:5px}.detail-layout{grid-template-columns:1fr}.detail-layout>.seago-card{margin:auto}.detail-copy h2{text-align:center}.equation{font-size:54px;letter-spacing:-2px}.answer-form input{width:130px;font-size:34px}.answer-form button{padding:12px 15px;font-size:15px;min-height:62px}.stopwatch{font-size:32px}.challenge-ready h2,.challenge-result h2{font-size:30px}.challenge-result .finish-time{font-size:58px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* Keep task-critical records and coin labels readable on laptop widths. */
+.table-best{font-size:14px}.table-coins{font-size:14px}.is-compact h3{font-size:14px}.is-compact .seago-card-rarity{font-size:10px}
+@media(max-width:1150px) and (min-width:851px){.table-best,.table-coins{font-size:14px}.is-compact h3{font-size:14px}}
+</style></head>
+<body>
+<div class="app-shell">
+<header class="topbar"><a class="brand" href="#" id="home" aria-label="Seagomon home"><svg viewBox="0 0 42 46" aria-hidden="true"><rect x="2" y="5" width="29" height="37" rx="7" fill="#7362d8" transform="rotate(-8 18 23)"/><rect x="10" y="2" width="29" height="37" rx="7" fill="#b9f274" stroke="#e1ffae" stroke-width="1.5"/><path d="M17 13h5v6h-5zm12 0h5v6h-5zM21 25h9v3h-9z" fill="#182132"/></svg><span>SEAGOMON<small>THE TRADING GAME</small></span></a><div class="wallet" aria-label="Seago Coins"><span class="coin-icon" aria-hidden="true">S</span><strong id="coin-balance" aria-live="polite">0</strong><span>Seago Coins</span></div><nav aria-label="Game navigation"><button class="nav-button" id="collection-button"><svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3" y="2" width="14" height="16" rx="2"/><path d="M7 7h6M7 10h6M7 13h4"/></svg>Collection <span id="collection-count">0/100</span></button><button class="shop-button" id="shop-button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3h12v14H4zM4 6h12M8 10h4M10 8v4"/></svg><span id="shop-label">Pack shop</span></button><button class="icon-button" id="options-button" aria-label="Game options and save backup" title="Options"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h14"/><circle cx="7" cy="5" r="2"/><circle cx="13" cy="10" r="2"/><circle cx="8" cy="15" r="2"/></svg></button></nav></header>
+<main id="dashboard" class="dashboard">
+<section class="display-section" aria-labelledby="display-heading"><div class="section-top"><h1 id="display-heading">Your display case</h1><span id="display-summary">Choose your favourites</span></div><div class="display-cases" id="display-cases"></div></section>
+<section class="practice-section" aria-labelledby="practice-heading"><div class="practice-top"><div><h2 id="practice-heading">Pick a times table</h2><p>Twelve facts. Beat your best. Earn your next pack.</p></div><div class="order-switch" role="group" aria-label="Question order"><button id="ordered-button" aria-pressed="true">In order <b>1×</b></button><button id="shuffled-button" aria-pressed="false">Shuffled <b>2×</b></button></div></div><div class="table-grid" id="table-grid"></div><div class="practice-footer"><span class="tier-key tier-one">2 · 5 · 10 <b>1× coins</b></span><span class="tier-key tier-two">3 · 4 · 9 · 11 <b>2× coins</b></span><span class="tier-key tier-three">6 · 7 · 8 · 12 <b>3× coins</b></span></div></section>
+</main>
+<footer class="statusbar"><span id="save-status">Saved on this device</span><span id="shiny-count">0 shinies discovered</span><button id="rules-button">How it works</button></footer>
+</div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<dialog id="game-dialog" aria-labelledby="dialog-title"><button id="dialog-close" class="dialog-close" aria-label="Close dialog">×</button><div id="dialog-content"></div></dialog>
+<input id="restore-input" type="file" accept="application/json,.json" hidden>
+<script>/* Seagomon: The Trading Game. 60 faithfully extracted originals + 40 original new designs.
+ * Source attachment SHA-256: 28ef248159a27871b1990ee0c73840554528e8aa6a9e2ce44b33477237ca5248
+ * All images are offline inline pixel SVG; no third-party assets or network requests. */
+const SEAGO_CATALOG = (() => {
+  const palette = {"B":"#000000","W":"#ffffff","R":"#ef4444","U":"#3b82f6","G":"#22c55e","Y":"#facc15","N":"#78350f","A":"#94a3b8","P":"#f472b6","V":"#a855f7","T":"#2dd4bf","O":"#f97316","D":"#064e3b","L":"#4ade80","E":"#022c22","C":"#38bdf8","F":"#451a03","M":"#dc2626","S":"#fde047","X":"#475569","I":"#e2e8f0","Q":"#d97706","Z":"#8b5cf6","K":"#14b8a6","H":"#f87171","J":"#fb923c","p":"#ffd3b6","Skins":"#ffdbac"};
+  const cards = [
+  {
+    "id": "slime",
+    "name": "Grass Slime",
+    "sourceSpriteKey": "slime",
+    "maxHp": 20,
+    "baseDmg": 5,
+    "element": "Earth",
+    "catchRate": 0.8,
+    "grid": [
+      "................",
+      ".......P........",
+      "......PYP.......",
+      ".......P........",
+      "......LLL.......",
+      ".....LLLLL......",
+      "....LLLLLLL.....",
+      "...LLYBLLYBLL...",
+      "...LLLLLLLLLL...",
+      "..LLLLLLLLLLLL..",
+      ".LLLLLLLLLLLLLL.",
+      ".LGLLLLLLLLLLGL.",
+      "LGGLLGLLLLGLLGGL",
+      "GGGGGGGGGGGGGGGG",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A meadow friend with a tiny blossom and a surprisingly springy bounce.",
+    "rarity": "common",
+    "number": 1,
+    "attack": 5,
+    "hp": 20
+  },
+  {
+    "id": "sprout",
+    "name": "Leaf Sprout",
+    "sourceSpriteKey": "sprout",
+    "maxHp": 25,
+    "baseDmg": 4,
+    "element": "Earth",
+    "catchRate": 0.8,
+    "grid": [
+      "................",
+      "......LLL.......",
+      ".....LWWLL......",
+      ".....LBWLL......",
+      "......LLL.......",
+      "......EGE.......",
+      "....EEGGGEE.....",
+      "...E..EGE..E....",
+      "......EGE.......",
+      "......EGE.......",
+      ".....EEGEE......",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "Its leafy crown drinks the morning light before the forest wakes.",
+    "rarity": "common",
+    "number": 2,
+    "attack": 4,
+    "hp": 25
+  },
+  {
+    "id": "mouse",
+    "name": "Field Mouse",
+    "sourceSpriteKey": "mouse",
+    "maxHp": 15,
+    "baseDmg": 6,
+    "element": "Earth",
+    "catchRate": 0.9,
+    "grid": [
+      "................",
+      "....Y......Y....",
+      "...YY......YY...",
+      "...YYY....YYY...",
+      "....YYYYYYYY....",
+      "...YYYWWYYWWY...",
+      "...YYYYBYYBYY...",
+      "...YYYYYYYYYY...",
+      "....YYRRYYRR....",
+      ".....YYYYYY.....",
+      "......YYYY...YY.",
+      ".....YYYYYY.YY..",
+      "...AAYY..YYAA...",
+      "..AAYY....YYAA..",
+      "..AAAA....AAAA..",
+      "................"
+    ],
+    "source": true,
+    "description": "A nimble seed collector whose whiskers can sense a storm.",
+    "rarity": "common",
+    "number": 3,
+    "attack": 6,
+    "hp": 15
+  },
+  {
+    "id": "beetle",
+    "name": "Shell Beetle",
+    "sourceSpriteKey": "beetle",
+    "maxHp": 30,
+    "baseDmg": 3,
+    "element": "Earth",
+    "catchRate": 0.7,
+    "grid": [
+      "................",
+      ".....N....N.....",
+      "....NN....NN....",
+      "....NNW..WNN....",
+      "....NNB..BNN....",
+      ".....NNNNNN.....",
+      "...NNAAAAAANN...",
+      "...NAAAAAAAAN...",
+      "..NAAAXAAXAAAN..",
+      "..NAAAXAAXAAAN..",
+      "...NAAAAAAAAN...",
+      "...NNAAAAAANN...",
+      "..N..NNNNNN..N..",
+      "..N...N..N...N..",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A polished shell keeps this patient little explorer safe.",
+    "rarity": "common",
+    "number": 4,
+    "attack": 3,
+    "hp": 30
+  },
+  {
+    "id": "caterpillar",
+    "name": "Green Pillar",
+    "sourceSpriteKey": "caterpillar",
+    "maxHp": 20,
+    "baseDmg": 4,
+    "element": "Earth",
+    "catchRate": 0.8,
+    "grid": [
+      "................",
+      ".......R..R.....",
+      "......R....R....",
+      ".....GGGG.......",
+      "....GWWBG.......",
+      "...GGGGGGGG.....",
+      "...GLLGLLGLLG...",
+      "..GLLGLLGLLGLG..",
+      "..GGLLGLLGLLGG..",
+      "...GGGGGGGGGG...",
+      "....G.G..G.G....",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "It counts every leaf along its slow, winding trail.",
+    "rarity": "common",
+    "number": 5,
+    "attack": 4,
+    "hp": 20
+  },
+  {
+    "id": "ant",
+    "name": "Worker Ant",
+    "sourceSpriteKey": "ant",
+    "maxHp": 18,
+    "baseDmg": 5,
+    "element": "Earth",
+    "catchRate": 0.8,
+    "grid": [
+      "................",
+      "......F..F......",
+      ".....FF..FF.....",
+      "....FRRFFRRF....",
+      ".....FFFFFF.....",
+      "....FFFFFFFF....",
+      "...F...FF...F...",
+      "..F...FFFF...F..",
+      "......FFFF......",
+      "....FFFFFFFF....",
+      "...F.FFFFFF.F...",
+      "..F...F..F...F..",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A small worker with the strength to carry a whole team.",
+    "rarity": "common",
+    "number": 6,
+    "attack": 5,
+    "hp": 18
+  },
+  {
+    "id": "slug",
+    "name": "Goo Slug",
+    "sourceSpriteKey": "slug",
+    "maxHp": 28,
+    "baseDmg": 3,
+    "element": "Water",
+    "catchRate": 0.9,
+    "grid": [
+      "................",
+      "................",
+      "......P..P......",
+      ".....W....W.....",
+      ".....B....B.....",
+      ".....P....P.....",
+      ".....PPPPPP.....",
+      "....PPPPPPPP....",
+      "...PPPPPPPPPP...",
+      "..PPPPPPPPPPPP..",
+      ".PPPPPPPPPPPPPP.",
+      "..PPPPPPPPPPPP..",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "It leaves a sparkling ribbon wherever the rain takes it.",
+    "rarity": "common",
+    "number": 7,
+    "attack": 3,
+    "hp": 28
+  },
+  {
+    "id": "snail",
+    "name": "Armored Snail",
+    "sourceSpriteKey": "snail",
+    "maxHp": 35,
+    "baseDmg": 2,
+    "element": "Water",
+    "catchRate": 0.7,
+    "grid": [
+      "................",
+      "................",
+      ".......QQQ......",
+      "......QQNQQ.....",
+      ".....QQNNNQQ....",
+      ".....QNNNQNQ....",
+      ".....QQNQQNQ....",
+      "......QQQQQ.....",
+      "......QLLLL.....",
+      "...L.LLWWLL.....",
+      "..W.BLLBBLL.....",
+      "...LLLLLLLLLLL..",
+      "....LLLLLLLLL...",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A spiral fortress and a peaceful heart travel together.",
+    "rarity": "common",
+    "number": 8,
+    "attack": 2,
+    "hp": 35
+  },
+  {
+    "id": "worm",
+    "name": "Earth Worm",
+    "sourceSpriteKey": "worm",
+    "maxHp": 15,
+    "baseDmg": 3,
+    "element": "Earth",
+    "catchRate": 0.9,
+    "grid": [
+      "................",
+      "................",
+      ".....WW.........",
+      ".....BW.........",
+      "....PPP.........",
+      "...PPPP....PP...",
+      "...PPPP...PPPP..",
+      "....PPPP.PPPP...",
+      ".....PPPPPPP....",
+      "......PPPPP.....",
+      "....N..PPP..N...",
+      "...NNN.....NNN..",
+      "..NNNNN...NNNNN.",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "The soil hums softly wherever this curious digger passes.",
+    "rarity": "common",
+    "number": 9,
+    "attack": 3,
+    "hp": 15
+  },
+  {
+    "id": "golem",
+    "name": "Stone Golem",
+    "sourceSpriteKey": "golem",
+    "maxHp": 50,
+    "baseDmg": 6,
+    "element": "Earth",
+    "catchRate": 0.5,
+    "grid": [
+      "................",
+      ".....XXXXXX.....",
+      "....XXXXXXXX....",
+      "...XXXRRRRXXX...",
+      "...XXXRXXRXXX...",
+      "....XXXXXXXX....",
+      "XXXX.XXXXXX.XXXX",
+      "XXXX.XXXXXX.XXXX",
+      "XXXX.XXXXXX.XXXX",
+      ".XX..XXXXXX..XX.",
+      ".....XXXXXX.....",
+      ".....XX..XX.....",
+      "....XXX..XXX....",
+      "....XXX..XXX....",
+      "...XXXX..XXXX...",
+      "................"
+    ],
+    "source": true,
+    "description": "Ancient stone remembers every footstep through the ruins.",
+    "rarity": "uncommon",
+    "number": 10,
+    "attack": 6,
+    "hp": 50
+  },
+  {
+    "id": "crab",
+    "name": "Clawculator",
+    "sourceSpriteKey": "crab",
+    "maxHp": 40,
+    "baseDmg": 10,
+    "element": "Water",
+    "catchRate": 0.5,
+    "grid": [
+      "................",
+      "..R..........R..",
+      ".RRR........RRR.",
+      ".RWR........RWR.",
+      ".RBR........RBR.",
+      "..R..........R..",
+      "...RRRRRRRRRR...",
+      "...RRRRRRRRRR...",
+      "...RRWWRRWWRR...",
+      "...RRBBRRBBRR...",
+      "..R.RRRRRRRR.R..",
+      ".R..R..RR..R..R.",
+      "...RR......RR...",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "Its clever claws measure each wave before it makes a move.",
+    "rarity": "uncommon",
+    "number": 11,
+    "attack": 10,
+    "hp": 40
+  },
+  {
+    "id": "bird",
+    "name": "Aqua Bird",
+    "sourceSpriteKey": "bird",
+    "maxHp": 25,
+    "baseDmg": 12,
+    "element": "Water",
+    "catchRate": 0.5,
+    "grid": [
+      "................",
+      ".......C........",
+      "......CUC.......",
+      "......UUU.......",
+      "....YUUBU.......",
+      "..CC..UUU..CC...",
+      ".CUU.UUUUU.UUC..",
+      "C.UUUUUUUUUU.C..",
+      "..UUU.UUU.UUU...",
+      "......UUU.......",
+      ".....UCCCU......",
+      "....UC.C.CU.....",
+      "....C..C..C.....",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "An ocean breeze follows every beat of its blue wings.",
+    "rarity": "uncommon",
+    "number": 12,
+    "attack": 12,
+    "hp": 25
+  },
+  {
+    "id": "bat",
+    "name": "Cave Bat",
+    "sourceSpriteKey": "bat",
+    "maxHp": 20,
+    "baseDmg": 14,
+    "element": "Earth",
+    "catchRate": 0.6,
+    "grid": [
+      "................",
+      "..V........V....",
+      ".VV........VV...",
+      "VVV........VVV..",
+      "VVVV.VVVV.VVVV..",
+      ".VVVVWWVVWWVVV..",
+      "..VVVBBVVBBVV...",
+      "..VVVVVVVVVVV...",
+      "...V.VVVVVV.V...",
+      "...V.VVVVVV.V...",
+      "......VVVV......",
+      "......V..V......",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "It reads the shape of the cave through a thousand tiny echoes.",
+    "rarity": "common",
+    "number": 13,
+    "attack": 14,
+    "hp": 20
+  },
+  {
+    "id": "scorpion",
+    "name": "Sting Scorp",
+    "sourceSpriteKey": "scorpion",
+    "maxHp": 35,
+    "baseDmg": 11,
+    "element": "Earth",
+    "catchRate": 0.4,
+    "grid": [
+      "................",
+      ".......N........",
+      "......NNN.......",
+      "......N.........",
+      "......N.........",
+      "..N...N...N.....",
+      "..N...N...N.....",
+      ".NNN.NNN.NNN....",
+      ".NWN.NNN.NWN....",
+      ".NBN.NNN.NBN....",
+      "..N.NNNNN.N.....",
+      ".N..N...N..N....",
+      "...N.....N......",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A careful desert hunter with an unmistakable curled tail.",
+    "rarity": "uncommon",
+    "number": 14,
+    "attack": 11,
+    "hp": 35
+  },
+  {
+    "id": "wasp",
+    "name": "Dart Wasp",
+    "sourceSpriteKey": "wasp",
+    "maxHp": 18,
+    "baseDmg": 15,
+    "element": "Fire",
+    "catchRate": 0.6,
+    "grid": [
+      "................",
+      "...I........I...",
+      "..III..YY..III..",
+      "..III.YWWY.III..",
+      "...I..YBBY..I...",
+      "......YYYY......",
+      ".....BBYYBB.....",
+      ".....YYYYYY.....",
+      "......YYYY......",
+      "......Y..Y......",
+      "......Y..Y......",
+      ".......B........",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "Gold stripes flash just before this darting scout takes flight.",
+    "rarity": "common",
+    "number": 15,
+    "attack": 15,
+    "hp": 18
+  },
+  {
+    "id": "snake",
+    "name": "Viper Strike",
+    "sourceSpriteKey": "snake",
+    "maxHp": 25,
+    "baseDmg": 13,
+    "element": "Earth",
+    "catchRate": 0.6,
+    "grid": [
+      "................",
+      ".......L........",
+      "......LWL.......",
+      ".....LWBL.......",
+      ".....LRLL.......",
+      "......L.........",
+      "....LLLLL.......",
+      "...LLLLLLL......",
+      "..LL.....LL.....",
+      "..LL.LLL.LL.....",
+      "..LLLLLLLLL.....",
+      "...LLLLLLL......",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A silent coil of green that strikes with perfect timing.",
+    "rarity": "common",
+    "number": 16,
+    "attack": 13,
+    "hp": 25
+  },
+  {
+    "id": "lizard",
+    "name": "Desert Runner",
+    "sourceSpriteKey": "lizard",
+    "maxHp": 30,
+    "baseDmg": 9,
+    "element": "Fire",
+    "catchRate": 0.7,
+    "grid": [
+      "................",
+      ".....OOOOO......",
+      "....OWWWJWO.....",
+      "...OWBWBJWO.....",
+      "....OJJJJO......",
+      ".....JJJJ.......",
+      "...G.JJJJ.G.....",
+      "...G.JJJJ.G.....",
+      ".....JJJJ.......",
+      "...G.JJJJ.G.....",
+      "...G.JJJJ.G.....",
+      ".....JJJJ.......",
+      "......JJ........",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "Quick orange feet race across the warmest desert stones.",
+    "rarity": "common",
+    "number": 17,
+    "attack": 9,
+    "hp": 30
+  },
+  {
+    "id": "hawk",
+    "name": "Sky Hawk",
+    "sourceSpriteKey": "hawk",
+    "maxHp": 35,
+    "baseDmg": 12,
+    "element": "Fire",
+    "catchRate": 0.5,
+    "grid": [
+      "................",
+      "......NN........",
+      ".....NNWN.......",
+      "....N.NBN.......",
+      "...N..NNY.......",
+      "..N...NNNN......",
+      ".N..NNNNNNNN....",
+      "N..NN.NN.NN.N...",
+      "...N..NN..N.....",
+      "...N..NN..N.....",
+      "...N..NN..N.....",
+      "......NN........",
+      "......Y.Y.......",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "It rides rising heat high above the ancient ruins.",
+    "rarity": "uncommon",
+    "number": 18,
+    "attack": 12,
+    "hp": 35
+  },
+  {
+    "id": "vulture",
+    "name": "Scavenger",
+    "sourceSpriteKey": "vulture",
+    "maxHp": 40,
+    "baseDmg": 10,
+    "element": "Fire",
+    "catchRate": 0.5,
+    "grid": [
+      "................",
+      "................",
+      ".......PP.......",
+      "......PWWP......",
+      "......PWWP......",
+      "......PBB.......",
+      ".....XXXXXX.....",
+      "....XXXXXXXX....",
+      "...XX.XXXX.XX...",
+      "...X..XXXX..X...",
+      "......XXXX......",
+      "......X..X......",
+      "......Y..Y......",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A watchful scavenger that knows every path through the badlands.",
+    "rarity": "uncommon",
+    "number": 19,
+    "attack": 10,
+    "hp": 40
+  },
+  {
+    "id": "fox",
+    "name": "Ember Fox",
+    "sourceSpriteKey": "fox",
+    "maxHp": 30,
+    "baseDmg": 8,
+    "element": "Fire",
+    "catchRate": 0.6,
+    "grid": [
+      "................",
+      ".......R........",
+      "..R...RYR...R...",
+      ".RYR..OOO..RYR..",
+      ".ROO.OOOOO.OOR..",
+      "..OOOOOOOOOOOO..",
+      "..OOOBOOOOBOOO..",
+      "..OOOOOOOOOOOO..",
+      "...OWWWWWWWWO...",
+      "...OWWWBBWWWO...",
+      "....OWWWWWWO....",
+      ".....OOOOOO.....",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A warm ember glows beneath its bright, mischievous coat.",
+    "rarity": "common",
+    "number": 20,
+    "attack": 8,
+    "hp": 30
+  },
+  {
+    "id": "ghost",
+    "name": "Data Wraith",
+    "sourceSpriteKey": "ghost",
+    "maxHp": 25,
+    "baseDmg": 9,
+    "element": "Water",
+    "catchRate": 0.6,
+    "grid": [
+      "................",
+      "......IIII......",
+      ".....IIIIII.....",
+      "....IIWIIWII....",
+      "....IIBIIBII....",
+      "....IIIIIIII....",
+      "....IIIIIIII....",
+      "...IIIIIIIIII...",
+      "...IIIIIIIIII...",
+      "...III.III.III..",
+      "...II...I...II..",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A friendly fragment of lost data drifting through the marsh.",
+    "rarity": "common",
+    "number": 21,
+    "attack": 9,
+    "hp": 25
+  },
+  {
+    "id": "frog",
+    "name": "Bog Frog",
+    "sourceSpriteKey": "frog",
+    "maxHp": 35,
+    "baseDmg": 7,
+    "element": "Water",
+    "catchRate": 0.7,
+    "grid": [
+      "................",
+      "................",
+      "................",
+      "....GG....GG....",
+      "...GWWG..GWWG...",
+      "...GWGB..GWGB...",
+      "....GGGGGGGG....",
+      "...GGGGGGGGGG...",
+      "..GGGDDDDDDGGG..",
+      ".GGGGDDDDDDGGGG.",
+      ".GGGGGGGGGGGGGG.",
+      "GG..GGGGGGGG..GG",
+      "G....G....G....G",
+      "GG..GG....GG..GG",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "Its evening song ripples from one lily pad to the next.",
+    "rarity": "common",
+    "number": 22,
+    "attack": 7,
+    "hp": 35
+  },
+  {
+    "id": "spider",
+    "name": "Web Weaver",
+    "sourceSpriteKey": "spider",
+    "maxHp": 28,
+    "baseDmg": 10,
+    "element": "Earth",
+    "catchRate": 0.5,
+    "grid": [
+      "................",
+      "X...X......X...X",
+      "XX..X......X..XX",
+      ".X..X.XXXX.X..X.",
+      "..XX.XXXXXX.XX..",
+      "...XXXXXXXXXX...",
+      "...XXWXXXXWXX...",
+      "...XXBXXXXBXX...",
+      "...XXXXXXXXXX...",
+      "....XXXXXXXX....",
+      "....X.XXXX.X....",
+      "...XX..XX..XX...",
+      "...X...XX...X...",
+      "..XX...XX...XX..",
+      ".XX....XX....XX.",
+      "................"
+    ],
+    "source": true,
+    "description": "Eight patient legs spin a web as precise as a constellation.",
+    "rarity": "common",
+    "number": 23,
+    "attack": 10,
+    "hp": 28
+  },
+  {
+    "id": "owl",
+    "name": "Night Owl",
+    "sourceSpriteKey": "owl",
+    "maxHp": 32,
+    "baseDmg": 8,
+    "element": "Earth",
+    "catchRate": 0.6,
+    "grid": [
+      "................",
+      "......N..N......",
+      ".....NN..NN.....",
+      "....NWWNNWWN....",
+      "....NBBNNBBN....",
+      "...NNNNNNNNNN...",
+      "...NNNNNNNNNN...",
+      "..N.NNNNNNNN.N..",
+      "..N.NNNNNNNN.N..",
+      "..N.NNNNNNNN.N..",
+      "...NNNNNNNNNN...",
+      ".....YY..YY.....",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A quiet keeper of the marsh with wide and watchful eyes.",
+    "rarity": "common",
+    "number": 24,
+    "attack": 8,
+    "hp": 32
+  },
+  {
+    "id": "turtle",
+    "name": "Shell Tank",
+    "sourceSpriteKey": "turtle",
+    "maxHp": 60,
+    "baseDmg": 4,
+    "element": "Water",
+    "catchRate": 0.4,
+    "grid": [
+      "................",
+      ".......GG.......",
+      "......GGGG......",
+      ".....GWWGWWG....",
+      ".....GGGBGGG....",
+      "......GGGG......",
+      "....DDDDDDDD....",
+      "...DDDDDDDDDD...",
+      "..DDDDDDDDDDDD..",
+      "..DDDDDDDDDDDD..",
+      "..DDDDDDDDDDDD..",
+      "...DDDDDDDDDD...",
+      "....DDDDDDDD....",
+      "...GG......GG...",
+      "..GGG......GGG..",
+      "................"
+    ],
+    "source": true,
+    "description": "Its mighty shell shelters friends when the tide turns rough.",
+    "rarity": "uncommon",
+    "number": 25,
+    "attack": 4,
+    "hp": 60
+  },
+  {
+    "id": "toad",
+    "name": "Warty Toad",
+    "sourceSpriteKey": "toad",
+    "maxHp": 40,
+    "baseDmg": 6,
+    "element": "Water",
+    "catchRate": 0.6,
+    "grid": [
+      "................",
+      "................",
+      "................",
+      "......DDDD......",
+      ".....DWDWDW.....",
+      "....DWBWDWBD....",
+      "....DDDDDDDD....",
+      "...DDDDDDDDDD...",
+      "...D.DDDDDD.D...",
+      "...D.DDDDDD.D...",
+      "...DDDDDDDDDD...",
+      "...D.D....D.D...",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A mossy marsh resident with a wonderfully rumbling call.",
+    "rarity": "common",
+    "number": 26,
+    "attack": 6,
+    "hp": 40
+  },
+  {
+    "id": "newt",
+    "name": "River Newt",
+    "sourceSpriteKey": "newt",
+    "maxHp": 25,
+    "baseDmg": 10,
+    "element": "Water",
+    "catchRate": 0.7,
+    "grid": [
+      "................",
+      "................",
+      "................",
+      "................",
+      "......UU........",
+      ".....UWWU.......",
+      "....UWBBU.......",
+      "....UUYUU.......",
+      "....UUUUU.......",
+      "...U..U..U......",
+      "..U...U...U.....",
+      "......UUUUUU....",
+      "........UUUUU...",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A bright little swimmer that dances between river stones.",
+    "rarity": "common",
+    "number": 27,
+    "attack": 10,
+    "hp": 25
+  },
+  {
+    "id": "mantis",
+    "name": "Blade Mantis",
+    "sourceSpriteKey": "mantis",
+    "maxHp": 30,
+    "baseDmg": 12,
+    "element": "Earth",
+    "catchRate": 0.5,
+    "grid": [
+      "................",
+      ".....LL..LL.....",
+      "....LLWLLWLL....",
+      "....LLBLLBLL....",
+      ".....LLLLLL.....",
+      "...LLL.GG.LLL...",
+      "..LL...GG...LL..",
+      ".LL....GG....LL.",
+      ".......GG.......",
+      ".......GG.......",
+      "......L..L......",
+      ".....LL..LL.....",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "Leaf-shaped blades sweep the tall grass with graceful precision.",
+    "rarity": "uncommon",
+    "number": 28,
+    "attack": 12,
+    "hp": 30
+  },
+  {
+    "id": "moth",
+    "name": "Dust Moth",
+    "sourceSpriteKey": "moth",
+    "maxHp": 20,
+    "baseDmg": 9,
+    "element": "Fire",
+    "catchRate": 0.8,
+    "grid": [
+      "................",
+      "....V......V....",
+      "...VV......VV...",
+      "....VV....VV....",
+      ".....V....V.....",
+      "..III.AAAA.III..",
+      ".IIIIIWWWWIIIII.",
+      "IIIIIIBBBBIIIIII",
+      "..IIIIAAAAIIII..",
+      "...IIIAAAAIII...",
+      "......AAAA......",
+      "......A..A......",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "Its powdery wings gather the last light of the day.",
+    "rarity": "common",
+    "number": 29,
+    "attack": 9,
+    "hp": 20
+  },
+  {
+    "id": "dragon",
+    "name": "Data Dragon",
+    "sourceSpriteKey": "dragon",
+    "maxHp": 80,
+    "baseDmg": 15,
+    "element": "Fire",
+    "catchRate": 0.2,
+    "grid": [
+      ".......MM.......",
+      "......MMMM......",
+      ".....MBMMBM.....",
+      ".....MMMMMM.....",
+      "......MMMM...SS.",
+      "SS....MMMM..SS..",
+      "SSS..MMMMMM.S...",
+      ".SSMMMMMMMMMM...",
+      "..SMMMMMMMMMM...",
+      "..MMMMMMMMMMMM..",
+      ".MMM.MMMMMM.MMM.",
+      ".MM..MM..MM..MM.",
+      "MM...MM..MM...MM",
+      "W....W....W....W",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A mighty original whose blazing wings guard the highest peaks.",
+    "rarity": "rare",
+    "number": 30,
+    "attack": 15,
+    "hp": 80
+  },
+  {
+    "id": "wolf",
+    "name": "Alpha Wolf",
+    "sourceSpriteKey": "wolf",
+    "maxHp": 50,
+    "baseDmg": 14,
+    "element": "Earth",
+    "catchRate": 0.3,
+    "grid": [
+      "................",
+      "....A......A....",
+      "...AA......AA...",
+      "...AA......AA...",
+      "...AAA....AAA...",
+      "....AAAAAAAA....",
+      "...AAAWWAAWWA...",
+      "...AAAABAAABA...",
+      "....AAAAAAAA....",
+      "...XAAAAAAAAX...",
+      "..XXAAAAAAAAXX..",
+      "..XX.AAAAAA.XX..",
+      ".XX..XX..XX..XX.",
+      ".X...X....X...X.",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "The mountain pack follows its steady, fearless howl.",
+    "rarity": "uncommon",
+    "number": 31,
+    "attack": 14,
+    "hp": 50
+  },
+  {
+    "id": "bear",
+    "name": "Grizzly",
+    "sourceSpriteKey": "bear",
+    "maxHp": 70,
+    "baseDmg": 12,
+    "element": "Earth",
+    "catchRate": 0.2,
+    "grid": [
+      "................",
+      "....N......N....",
+      "...NN......NN...",
+      "...NNNNNNNNNN...",
+      "..NNNWWNNWWNNN..",
+      "..NNNNBNNBNNNN..",
+      "..NNNNNNNNNNNN..",
+      "...NNNFFFFNNN...",
+      "...NNNFFFFNNN...",
+      "..NNNNNNNNNNNN..",
+      "..NNNNNNNNNNNN..",
+      ".NNNNNNNNNNNNNN.",
+      ".NN.NN....NN.NN.",
+      "NN..NN....NN..NN",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A gentle giant until its mountain home is threatened.",
+    "rarity": "rare",
+    "number": 32,
+    "attack": 12,
+    "hp": 70
+  },
+  {
+    "id": "gryphon",
+    "name": "Sky Gryphon",
+    "sourceSpriteKey": "gryphon",
+    "maxHp": 60,
+    "baseDmg": 16,
+    "element": "Fire",
+    "catchRate": 0.2,
+    "grid": [
+      "................",
+      "...S........S...",
+      "..SSS......SSS..",
+      "..SSSS....SSSS..",
+      "...SSSSSSSSSS...",
+      "...SWWWSSWWWSS..",
+      "....SBBSSBBS....",
+      "...SSSSSSSSSS...",
+      "...SSSSSSSSSS...",
+      "....SSSSSSSS....",
+      "SS...SSSSSS...SS",
+      "SSS..SSSSSS..SSS",
+      "..SSSSSSSSSSSS..",
+      "...WW......WW...",
+      "...WWW....WWW...",
+      "................"
+    ],
+    "source": true,
+    "description": "Golden feathers and powerful paws rule the open sky.",
+    "rarity": "rare",
+    "number": 33,
+    "attack": 16,
+    "hp": 60
+  },
+  {
+    "id": "knight",
+    "name": "Silver Knight",
+    "sourceSpriteKey": "knight",
+    "maxHp": 90,
+    "baseDmg": 10,
+    "element": "Earth",
+    "catchRate": 0.1,
+    "grid": [
+      "................",
+      ".......AA.......",
+      "......AAAA......",
+      ".....AAYYAA.....",
+      "....AAABBAAA....",
+      "....AAAAAAAA....",
+      "...I..AAAA..I...",
+      "..III.AAAA.III..",
+      "..I.I.AAAA.I.I..",
+      "......AAAA......",
+      ".....AA..AA.....",
+      "....AA....AA....",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A steadfast guardian clad in shining silver armor.",
+    "rarity": "rare",
+    "number": 34,
+    "attack": 10,
+    "hp": 90
+  },
+  {
+    "id": "yeti",
+    "name": "Snow Yeti",
+    "sourceSpriteKey": "yeti",
+    "maxHp": 85,
+    "baseDmg": 14,
+    "element": "Water",
+    "catchRate": 0.2,
+    "grid": [
+      "................",
+      ".....WWWWWW.....",
+      "....WWWWWWWW....",
+      "...WWWCWWCWWW...",
+      "...WWWCBBCWWW...",
+      "...WWWWWWWWWW...",
+      "..WWWWWWWWWWWW..",
+      "..WWWWWWWWWWWW..",
+      "..WW.WWWWWW.WW..",
+      ".....WWWWWW.....",
+      ".....WW..WW.....",
+      "....WW....WW....",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "Broad snowy shoulders carry the chill of the high mountains.",
+    "rarity": "rare",
+    "number": 35,
+    "attack": 14,
+    "hp": 85
+  },
+  {
+    "id": "titan",
+    "name": "Iron Titan",
+    "sourceSpriteKey": "titan",
+    "maxHp": 100,
+    "baseDmg": 11,
+    "element": "Earth",
+    "catchRate": 0.1,
+    "grid": [
+      "................",
+      ".....AAAAAA.....",
+      "....AAAAAAAA....",
+      "...AAAACCAAAA...",
+      "...AACCCCCCAA...",
+      "....AAAAAAAA....",
+      "...AAAAAAAAAA...",
+      "..AAAAAAAAAAAA..",
+      "..XXAAAAAAAAXX..",
+      "..XXAAAAAAAAXX..",
+      "..XXAAAAAAAAXX..",
+      "...X.AAAAAA.X...",
+      ".....AA..AA.....",
+      "....AAA..AAA....",
+      "....AAA..AAA....",
+      "................"
+    ],
+    "source": true,
+    "description": "Heavy iron footsteps echo deep beneath the mountain.",
+    "rarity": "rare",
+    "number": 36,
+    "attack": 11,
+    "hp": 100
+  },
+  {
+    "id": "chimera",
+    "name": "Mythic Chimera",
+    "sourceSpriteKey": "chimera",
+    "maxHp": 75,
+    "baseDmg": 16,
+    "element": "Fire",
+    "catchRate": 0.2,
+    "grid": [
+      "................",
+      "....NNN..YYY....",
+      "...NWWN..YWWY...",
+      "...NBBN..YBBY...",
+      "...NNNN..YYYY...",
+      "G..NNNNNNYYYY...",
+      "GG.NYYNYYNYYN...",
+      ".G.NYYNYYNYYN...",
+      ".G.NYYNYYNYYN...",
+      ".GGNN......YY...",
+      "...NN......YY...",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "Two fierce minds share one extraordinary mountain beast.",
+    "rarity": "rare",
+    "number": 37,
+    "attack": 16,
+    "hp": 75
+  },
+  {
+    "id": "gargoyle",
+    "name": "Stone Gargoyle",
+    "sourceSpriteKey": "gargoyle",
+    "maxHp": 65,
+    "baseDmg": 12,
+    "element": "Earth",
+    "catchRate": 0.3,
+    "grid": [
+      "................",
+      "..X........X....",
+      ".XX........XX...",
+      "XXX........XXX..",
+      "XXXA.AAAA.AXXX..",
+      ".AAAAWWAAWAAAA..",
+      "..AAABBAABAAA...",
+      "..AAAAAAAAAAA...",
+      "...A.AAAAAA.A...",
+      "...A.AAAAAA.A...",
+      "......AAAA......",
+      "......A..A......",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A stone-winged sentinel that wakes when the moon rises.",
+    "rarity": "rare",
+    "number": 38,
+    "attack": 12,
+    "hp": 65
+  },
+  {
+    "id": "bloom",
+    "name": "Petal Bloom",
+    "sourceSpriteKey": "bloom",
+    "maxHp": 30,
+    "baseDmg": 4,
+    "element": "Earth",
+    "catchRate": 0.8,
+    "grid": [
+      "................",
+      ".......P........",
+      ".....P.P.P......",
+      "....P.YYY.P.....",
+      "...P.YWWWY.P....",
+      ".....YBWBY......",
+      "...P.YYYYY.P....",
+      "....P.YYY.P.....",
+      ".....P.G.P......",
+      ".......G........",
+      "......DGD.......",
+      ".....D.G.D......",
+      ".......G........",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A cheerful flower that turns to greet every passing friend.",
+    "rarity": "common",
+    "number": 39,
+    "attack": 4,
+    "hp": 30
+  },
+  {
+    "id": "root",
+    "name": "Deep Root",
+    "sourceSpriteKey": "root",
+    "maxHp": 40,
+    "baseDmg": 3,
+    "element": "Earth",
+    "catchRate": 0.7,
+    "grid": [
+      "................",
+      ".......N........",
+      "......N.N.......",
+      ".....NNNNN......",
+      "....N.N.N.N.....",
+      "....NWWNWWN.....",
+      "...NNBBNBBNN....",
+      "....NNNNNNN.....",
+      ".....NNNNN......",
+      "...N..NNN..N....",
+      "..N...N.N...N...",
+      "..N..N...N..N...",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "Its tangled roots keep the oldest secrets of the meadow.",
+    "rarity": "common",
+    "number": 40,
+    "attack": 3,
+    "hp": 40
+  },
+  {
+    "id": "petal",
+    "name": "Wind Petal",
+    "sourceSpriteKey": "petal",
+    "maxHp": 20,
+    "baseDmg": 5,
+    "element": "Earth",
+    "catchRate": 0.8,
+    "grid": [
+      "................",
+      ".......P........",
+      "......P.P.......",
+      ".....P...P......",
+      "....P.W.W.P.....",
+      "...P..B.B..P....",
+      "....P.....P.....",
+      ".....PP.PP......",
+      ".......G........",
+      "......LGL.......",
+      ".....L.G.L......",
+      ".......G........",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A delicate dancer carried from grove to grove by the breeze.",
+    "rarity": "common",
+    "number": 41,
+    "attack": 5,
+    "hp": 20
+  },
+  {
+    "id": "thorn",
+    "name": "Briar Thorn",
+    "sourceSpriteKey": "thorn",
+    "maxHp": 25,
+    "baseDmg": 6,
+    "element": "Earth",
+    "catchRate": 0.7,
+    "grid": [
+      "................",
+      ".......R........",
+      "......RGR.......",
+      ".....RGWGR......",
+      "....RGWBBWGR....",
+      "....RGGGGGGR....",
+      "...R..GGGG..R...",
+      "...R.G.GG.G.R...",
+      "......G..G......",
+      ".....D....D.....",
+      "....D......D....",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "Sharp red thorns guard a brave little woodland heart.",
+    "rarity": "common",
+    "number": 42,
+    "attack": 6,
+    "hp": 25
+  },
+  {
+    "id": "ember_drake",
+    "name": "Ember Drake",
+    "sourceSpriteKey": "ember_drake",
+    "maxHp": 45,
+    "baseDmg": 12,
+    "element": "Fire",
+    "catchRate": 0.5,
+    "grid": [
+      "................",
+      "......RRRR......",
+      ".....RRRRRR.....",
+      "....RRWYRYWRR...",
+      "....RRRBRBRRR...",
+      ".....RRRRRR.....",
+      "OO...RRRRRR...OO",
+      "OOO.RRRRRRRR.OOO",
+      ".OOORRRRRRRROOO.",
+      "..OORRRRRRRROO..",
+      "...ORRRRRRRRO...",
+      "....RRR..RRR....",
+      "....RR....RR....",
+      "...RRR....RRR...",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A young drake practicing the ancient art of breathing embers.",
+    "rarity": "uncommon",
+    "number": 43,
+    "attack": 12,
+    "hp": 45
+  },
+  {
+    "id": "ash_wyrm",
+    "name": "Ash Wyrm",
+    "sourceSpriteKey": "ash_wyrm",
+    "maxHp": 35,
+    "baseDmg": 14,
+    "element": "Fire",
+    "catchRate": 0.5,
+    "grid": [
+      "................",
+      ".......X........",
+      "......XWX.......",
+      ".....XWBX.......",
+      ".....XRRX.......",
+      "......X.........",
+      "....XXXXXX......",
+      "...XX....XX.....",
+      "..XX..XX..XX....",
+      "..XX..XX..XX....",
+      "...XX....XX.....",
+      "....XXXXXX......",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A smoky spiral stirs beneath the cooling volcanic ash.",
+    "rarity": "uncommon",
+    "number": 44,
+    "attack": 14,
+    "hp": 35
+  },
+  {
+    "id": "flare_hound",
+    "name": "Flare Hound",
+    "sourceSpriteKey": "flare_hound",
+    "maxHp": 40,
+    "baseDmg": 11,
+    "element": "Fire",
+    "catchRate": 0.6,
+    "grid": [
+      "................",
+      ".......R........",
+      "......RO........",
+      "....R.ROW.R.....",
+      "...ROORBBOOR....",
+      "..ROOOOOOOOOR...",
+      "..ROOOOOOOOOR...",
+      "..O.OOOOOOO.O...",
+      "..O.OOOOOOO.O...",
+      "...OOO...OOO....",
+      "...OO.....OO....",
+      "...O.......O....",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A loyal hound whose mane flares when adventure calls.",
+    "rarity": "uncommon",
+    "number": 45,
+    "attack": 11,
+    "hp": 40
+  },
+  {
+    "id": "cinder_bat",
+    "name": "Cinder Bat",
+    "sourceSpriteKey": "cinder_bat",
+    "maxHp": 25,
+    "baseDmg": 15,
+    "element": "Fire",
+    "catchRate": 0.6,
+    "grid": [
+      "................",
+      "..O........O....",
+      ".OO........OO...",
+      "OOO........OOO..",
+      "OOOR.RRRR.ROOO..",
+      ".RRRROWWROORRR..",
+      "..RRROBBORRRR...",
+      "..RRRRRRRRRRR...",
+      "...R.RRRRRR.R...",
+      "...R.RRRRRR.R...",
+      "......RRRR......",
+      "......R..R......",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "Warm orange wings flicker against the dark cave ceiling.",
+    "rarity": "uncommon",
+    "number": 46,
+    "attack": 15,
+    "hp": 25
+  },
+  {
+    "id": "abyssal_serpent",
+    "name": "Abyssal Serpent",
+    "sourceSpriteKey": "abyssal_serpent",
+    "maxHp": 50,
+    "baseDmg": 10,
+    "element": "Water",
+    "catchRate": 0.5,
+    "grid": [
+      "................",
+      "......U.........",
+      ".....UWU........",
+      "....UWBBU.......",
+      "....UCCU........",
+      ".....U..........",
+      "...UUUUU........",
+      "..UU...UU.......",
+      ".UU..U..UU......",
+      ".UU..U..UU......",
+      "..UU...UU.......",
+      "...UUUUU........",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "An elegant blue coil watches over the deepest water.",
+    "rarity": "uncommon",
+    "number": 47,
+    "attack": 10,
+    "hp": 50
+  },
+  {
+    "id": "deep_crab",
+    "name": "Deep Crab",
+    "sourceSpriteKey": "deep_crab",
+    "maxHp": 65,
+    "baseDmg": 7,
+    "element": "Water",
+    "catchRate": 0.4,
+    "grid": [
+      "................",
+      "..V..........V..",
+      ".VVV........VVV.",
+      ".VWV........VWV.",
+      ".VBV........VBV.",
+      "..V..........V..",
+      "...VVVVVVVVVV...",
+      "...VVVVVVVVVV...",
+      "...VVCCVVCCVV...",
+      "...VVCCVVCCVV...",
+      "..V.VVVVVVVV.V..",
+      ".V..V..VV..V..V.",
+      "...VV......VV...",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "Violet claws glow where sunlight never reaches the sea floor.",
+    "rarity": "uncommon",
+    "number": 48,
+    "attack": 7,
+    "hp": 65
+  },
+  {
+    "id": "tide_hunter",
+    "name": "Tide Hunter",
+    "sourceSpriteKey": "tide_hunter",
+    "maxHp": 45,
+    "baseDmg": 11,
+    "element": "Water",
+    "catchRate": 0.5,
+    "grid": [
+      "................",
+      "......T.........",
+      ".....TT.........",
+      "....TTWT........",
+      "...TTTBT........",
+      "...TTTTT........",
+      "..TT.TTTT.......",
+      "..T..TTTTTT.....",
+      "....TT.TT.T.....",
+      "....TT.TT.......",
+      "....TT.TT.......",
+      "......T..T......",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A swift coastal hunter that moves with the turning tide.",
+    "rarity": "uncommon",
+    "number": 49,
+    "attack": 11,
+    "hp": 45
+  },
+  {
+    "id": "reef_shark",
+    "name": "Reef Shark",
+    "sourceSpriteKey": "reef_shark",
+    "maxHp": 55,
+    "baseDmg": 12,
+    "element": "Water",
+    "catchRate": 0.4,
+    "grid": [
+      "................",
+      "......A.........",
+      ".....AAA........",
+      "....AAWA........",
+      "...AAABA........",
+      "...AAAAA........",
+      "..AAAAAAA.......",
+      "...AAAAAA.......",
+      ".....AAAAA......",
+      "......AAAAA.....",
+      ".......AAAA.....",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A silver fin slips between bright coral gardens.",
+    "rarity": "uncommon",
+    "number": 50,
+    "attack": 12,
+    "hp": 55
+  },
+  {
+    "id": "elder_wyrm",
+    "name": "Elder Wyrm",
+    "sourceSpriteKey": "elder_wyrm",
+    "maxHp": 95,
+    "baseDmg": 15,
+    "element": "Fire",
+    "catchRate": 0.1,
+    "grid": [
+      "................",
+      "...Y........Y...",
+      "..YYY......YYY..",
+      "..Y.Y......Y.Y..",
+      "......YYYY......",
+      ".....YWWWWY.....",
+      "....YWBBBBWY....",
+      "....YYYYYYYY....",
+      "....Y.YYYY.Y....",
+      "...Y.Y.YY.Y.Y...",
+      "...Y...YY...Y...",
+      "......Y..Y......",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "Golden horns mark a keeper of the oldest mountain stories.",
+    "rarity": "epic",
+    "number": 51,
+    "attack": 15,
+    "hp": 95
+  },
+  {
+    "id": "void_behemoth",
+    "name": "Void Behemoth",
+    "sourceSpriteKey": "void_behemoth",
+    "maxHp": 110,
+    "baseDmg": 12,
+    "element": "Earth",
+    "catchRate": 0.1,
+    "grid": [
+      "................",
+      "X..............X",
+      "XX....XXXX....XX",
+      ".XX..XXXXXX..XX.",
+      "..XXXXXXXXXXXX..",
+      "..XXVVXXXXVVXX..",
+      "..XXVVXXXXVVXX..",
+      "..XXXXXXXXXXXX..",
+      "..XXXXXXXXXXXX..",
+      "...XXXXXXXXXX...",
+      "...XXXXXXXXXX...",
+      "..XXXXXXXXXXXX..",
+      ".XX.XX....XX.XX.",
+      "XX..XX....XX..XX",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A vast shadow with violet eyes and the weight of a mountain.",
+    "rarity": "epic",
+    "number": 52,
+    "attack": 12,
+    "hp": 110
+  },
+  {
+    "id": "star_weaver",
+    "name": "Star Weaver",
+    "sourceSpriteKey": "star_weaver",
+    "maxHp": 80,
+    "baseDmg": 14,
+    "element": "Fire",
+    "catchRate": 0.2,
+    "grid": [
+      "................",
+      "......ZZZZ......",
+      ".....ZZZZZZ.....",
+      "....ZZWZZWZZ....",
+      "....ZZBZZBZZ....",
+      "....ZZZZZZZZ....",
+      "....ZZZZZZZZ....",
+      "...ZZZZZZZZZZ...",
+      "...ZZZZZZZZZZ...",
+      "...ZZZ.ZZZ.ZZZ..",
+      "...ZZ...Z...ZZ..",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "It spins starlight into quiet violet threads.",
+    "rarity": "rare",
+    "number": 53,
+    "attack": 14,
+    "hp": 80
+  },
+  {
+    "id": "nebula_ray",
+    "name": "Nebula Ray",
+    "sourceSpriteKey": "nebula_ray",
+    "maxHp": 85,
+    "baseDmg": 13,
+    "element": "Water",
+    "catchRate": 0.2,
+    "grid": [
+      "................",
+      ".......Z........",
+      "......ZZZ.......",
+      ".....ZWPWZ......",
+      "....ZWBPBWZ.....",
+      "...ZZZPPPZZZ....",
+      "..ZZZPPPPPZZZ...",
+      ".ZZZPPPPPPPZZZ..",
+      "ZZZPPPPPPPPPZZZ.",
+      "..ZZZZZZZZZZZ...",
+      "....ZZZZZZZ.....",
+      "......ZZZ.......",
+      ".......Z........",
+      "................",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "A broad, graceful ray that glides through a sea of stars.",
+    "rarity": "rare",
+    "number": 54,
+    "attack": 13,
+    "hp": 85
+  },
+  {
+    "id": "omnislime",
+    "name": "Omnislime",
+    "sourceSpriteKey": "slime",
+    "maxHp": 150,
+    "baseDmg": 30,
+    "element": "Earth",
+    "catchRate": 0,
+    "grid": [
+      ".......Y.Y.Y.Y......",
+      ".......YYYYYYY......",
+      "....................",
+      ".........P..........",
+      "........PYP.........",
+      ".........P..........",
+      "........LLL.........",
+      "L......LLLLL.......L",
+      "GL....LLLLLLL.....LG",
+      "L....LLYBLLYBLL....L",
+      ".....LLLLLLLLLL.....",
+      "....LLLLLLLLLLLL....",
+      "...LLLLLLLLLLLLLL...",
+      "...LGLLLLLLLLLLGL...",
+      ".GLGGLLGLLLLGLLGGLG.",
+      "..GGGGGGGGGGGGGGGG..",
+      "....................",
+      "....................",
+      "....................",
+      "...................."
+    ],
+    "source": true,
+    "description": "The crowned meadow sovereign gathers every little slime into its orbit.",
+    "originalGrid": [
+      "................",
+      ".......P........",
+      "......PYP.......",
+      ".......P........",
+      "......LLL.......",
+      ".....LLLLL......",
+      "....LLLLLLL.....",
+      "...LLYBLLYBLL...",
+      "...LLLLLLLLLL...",
+      "..LLLLLLLLLLLL..",
+      ".LLLLLLLLLLLLLL.",
+      ".LGLLLLLLLLLLGL.",
+      "LGGLLGLLLLGLLGGL",
+      "GGGGGGGGGGGGGGGG",
+      "................",
+      "................"
+    ],
+    "artNote": "Original sprite retained, with unique elite silhouette details added because the attachment reuses another creature sprite.",
+    "rarity": "epic",
+    "number": 55,
+    "attack": 30,
+    "hp": 150
+  },
+  {
+    "id": "chaos_crab",
+    "name": "Chaos Crab",
+    "sourceSpriteKey": "crab",
+    "maxHp": 130,
+    "baseDmg": 35,
+    "element": "Water",
+    "catchRate": 0,
+    "grid": [
+      "....................",
+      "....................",
+      "....................",
+      "R...R..........R...R",
+      "RR.RRR........RRR.RR",
+      "...RWR........RWR...",
+      "...RBR........RBR...",
+      "....R..........R....",
+      ".....RRRRRRRRRR.....",
+      ".....RRRRRRRRRR.....",
+      ".....RRWWRRWWRR.....",
+      ".....RRBBRRBBRR.....",
+      "R...R.RRRRRRRR.R...R",
+      "RRRR..R..RR..R..RRRR",
+      "..RR.RR......RR.RR..",
+      "....................",
+      "......YY....YY......",
+      "....................",
+      "....................",
+      "...................."
+    ],
+    "source": true,
+    "description": "An elite tidebreaker with a fearsome second pair of outer pincers.",
+    "originalGrid": [
+      "................",
+      "..R..........R..",
+      ".RRR........RRR.",
+      ".RWR........RWR.",
+      ".RBR........RBR.",
+      "..R..........R..",
+      "...RRRRRRRRRR...",
+      "...RRRRRRRRRR...",
+      "...RRWWRRWWRR...",
+      "...RRBBRRBBRR...",
+      "..R.RRRRRRRR.R..",
+      ".R..R..RR..R..R.",
+      "...RR......RR...",
+      "................",
+      "................",
+      "................"
+    ],
+    "artNote": "Original sprite retained, with unique elite silhouette details added because the attachment reuses another creature sprite.",
+    "rarity": "epic",
+    "number": 56,
+    "attack": 35,
+    "hp": 130
+  },
+  {
+    "id": "nether_toad",
+    "name": "Nether Toad",
+    "sourceSpriteKey": "toad",
+    "maxHp": 140,
+    "baseDmg": 32,
+    "element": "Earth",
+    "catchRate": 0,
+    "grid": [
+      "....................",
+      "....................",
+      ".....VV......VV.....",
+      "....V.V......V.V....",
+      "....V..V....V..V....",
+      ".....V.VDDDDV.V.....",
+      ".....VVDWDWDWVV.....",
+      "......DWBWDWBD......",
+      "......DDDDDDDD......",
+      ".....DDDDDDDDDD.....",
+      ".....D.DDDDDD.D.....",
+      ".....D.DDDDDD.D..DD.",
+      ".....DDDDDDDDDD..D..",
+      ".....D.D....D.DDD...",
+      "....................",
+      "....................",
+      "....................",
+      "....................",
+      "....................",
+      "...................."
+    ],
+    "source": true,
+    "description": "Curling horns and a shadow tail reveal this legendary marsh ruler.",
+    "originalGrid": [
+      "................",
+      "................",
+      "................",
+      "......DDDD......",
+      ".....DWDWDW.....",
+      "....DWBWDWBD....",
+      "....DDDDDDDD....",
+      "...DDDDDDDDDD...",
+      "...D.DDDDDD.D...",
+      "...D.DDDDDD.D...",
+      "...DDDDDDDDDD...",
+      "...D.D....D.D...",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "artNote": "Original sprite retained, with unique elite silhouette details added because the attachment reuses another creature sprite.",
+    "rarity": "epic",
+    "number": 57,
+    "attack": 32,
+    "hp": 140
+  },
+  {
+    "id": "seago_shark",
+    "name": "Seago Shark",
+    "sourceSpriteKey": "reef_shark",
+    "maxHp": 200,
+    "baseDmg": 40,
+    "element": "Fire",
+    "catchRate": 0,
+    "grid": [
+      "....................",
+      "....................",
+      "............O.......",
+      "........A...OR......",
+      ".......AAA..ORR.....",
+      "......AAWA..ORRO....",
+      ".....AAABA..ORO.....",
+      ".....AAAAA..OO......",
+      "....AAAAAAA......A..",
+      ".....AAAAAA.....AA..",
+      "...A...AAAAA.AAAA...",
+      "..A.A...AAAAA...AA..",
+      ".AAA.....AAAA....A..",
+      "..................AA",
+      "..................A.",
+      "....................",
+      "....................",
+      "....................",
+      "....................",
+      "...................."
+    ],
+    "source": true,
+    "description": "A blazing sail and powerful tail announce the champion of the fiery reef.",
+    "originalGrid": [
+      "................",
+      "......A.........",
+      ".....AAA........",
+      "....AAWA........",
+      "...AAABA........",
+      "...AAAAA........",
+      "..AAAAAAA.......",
+      "...AAAAAA.......",
+      ".....AAAAA......",
+      "......AAAAA.....",
+      ".......AAAA.....",
+      "................",
+      "................",
+      "................",
+      "................",
+      "................"
+    ],
+    "artNote": "Original sprite retained, with unique elite silhouette details added because the attachment reuses another creature sprite.",
+    "rarity": "megarare",
+    "number": 58,
+    "attack": 40,
+    "hp": 200
+  },
+  {
+    "id": "crystal_golem",
+    "name": "Crystal Golem",
+    "sourceSpriteKey": "crystal_golem",
+    "maxHp": 150,
+    "baseDmg": 30,
+    "element": "Earth",
+    "catchRate": 0,
+    "grid": [
+      "................",
+      ".....TTTTTT.....",
+      "....TTTTTTTT....",
+      "...TTTWWWWTTT...",
+      "...TTTWTWTTTT...",
+      "....TTTTTTTT....",
+      "TTTT.TTTTTT.TTTT",
+      "TTTT.TTTTTT.TTTT",
+      "TTTT.TTTTTT.TTTT",
+      ".TT..TTTTTT..TT.",
+      ".....TTTTTT.....",
+      ".....TT..TT.....",
+      "....TTT..TTT....",
+      "....TTT..TTT....",
+      "...TTTT..TTTT...",
+      "................"
+    ],
+    "source": true,
+    "description": "Turquoise crystal limbs carry a brilliant ancient core.",
+    "rarity": "epic",
+    "number": 59,
+    "attack": 30,
+    "hp": 150
+  },
+  {
+    "id": "omega_dragon",
+    "name": "Omega Dragon",
+    "sourceSpriteKey": "omega_dragon",
+    "maxHp": 220,
+    "baseDmg": 45,
+    "element": "Fire",
+    "catchRate": 0,
+    "grid": [
+      ".......ZZ.......",
+      "......ZZZZ......",
+      ".....ZBZBZZ.....",
+      ".....ZZZZZZ.....",
+      "......ZZZZ...ZZ.",
+      "ZZ....ZZZZ..ZZ..",
+      "ZZZ..ZZZZZZ.Z...",
+      ".ZZZZZZZZZZZZ...",
+      "..ZZZZZZZZZZZ...",
+      "..ZZZZZZZZZZZZ..",
+      ".ZZZ.ZZZZZZ.ZZZ.",
+      ".ZZ..ZZ..ZZ..ZZ.",
+      "ZZ...ZZ..ZZ...ZZ",
+      "W....W....W....W",
+      "................",
+      "................"
+    ],
+    "source": true,
+    "description": "The ultimate violet dragon unfurls its wings at the edge of the world.",
+    "rarity": "megarare",
+    "number": 60,
+    "attack": 45,
+    "hp": 220
+  },
+  {
+    "id": "moss_lantern",
+    "name": "Moss Lantern",
+    "element": "Earth",
+    "description": "A tiny woodland keeper carries a warm seedlight through the fog.",
+    "maxHp": 34,
+    "baseDmg": 5,
+    "grid": [
+      "......DDDD......",
+      ".....DD..DD.....",
+      ".....D....D.....",
+      "....DDDDDDDD....",
+      "...DGGGGGGGGD...",
+      "...DGSSSSSSGD...",
+      "...DGSWSSWSGD...",
+      "...DGSBSSBSGD...",
+      "...DGSSSSSSGD...",
+      "..LLGGSSSSGGLL..",
+      ".L..DGGGGGGD..L.",
+      "....DDDDDDDD....",
+      ".....D....D.....",
+      "....DD....DD....",
+      "................",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.8111111111111111,
+    "rarity": "common",
+    "number": 61,
+    "attack": 5,
+    "hp": 34
+  },
+  {
+    "id": "pebble_pup",
+    "name": "Pebble Pup",
+    "element": "Earth",
+    "description": "Its stone paws click softly while it follows the tracks of falling stars.",
+    "maxHp": 32,
+    "baseDmg": 7,
+    "grid": [
+      "....XX....XX....",
+      "...XAA....AAX...",
+      "...XAAAXXAAX....",
+      "....AAAAAAA.....",
+      "...AAWWAWWAA....",
+      "...AABBAABBA....",
+      "...AAAAAAAAA....",
+      "....AABBBBA.....",
+      ".....AAAAA...XX.",
+      "...XAAAAAAAXXAAX",
+      "..XAAAAAAAAAAAX.",
+      "..XAXAAAAAAXAX..",
+      "..XAXAAAAAAXAX..",
+      "..XXX.....XXX...",
+      "................",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.8222222222222222,
+    "rarity": "common",
+    "number": 62,
+    "attack": 7,
+    "hp": 32
+  },
+  {
+    "id": "acorn_imp",
+    "name": "Acorn Imp",
+    "element": "Earth",
+    "description": "This mischievous seed hoards acorn caps as tiny helmets.",
+    "maxHp": 26,
+    "baseDmg": 6,
+    "grid": [
+      ".......G........",
+      "......GGG.......",
+      ".....NNNNN......",
+      "....NQQQQQN.....",
+      "...NQQQQQQQN....",
+      "..NNNNNNNNNNN...",
+      "....QWWWWQ......",
+      "....QBWWBQ......",
+      "...QQQQQQQQ.....",
+      "..Q.QQQQQQ.Q....",
+      ".Q..QQNNQQ..Q...",
+      "....QQNNQQ......",
+      ".....Q..Q.......",
+      "....QQ..QQ......",
+      "................",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.8555555555555556,
+    "rarity": "common",
+    "number": 63,
+    "attack": 6,
+    "hp": 26
+  },
+  {
+    "id": "fern_fawn",
+    "name": "Fern Fawn",
+    "element": "Earth",
+    "description": "New fern fronds curl from its antlers after every spring rain.",
+    "maxHp": 41,
+    "baseDmg": 7,
+    "grid": [
+      "..L..L...L..L...",
+      "...LLL...LLL....",
+      "....LL...LL.....",
+      ".....N...N......",
+      "....NNNNNNN.....",
+      "....NWWNWWN.....",
+      "....NBBNBBN.....",
+      "....NQQQQQN.....",
+      "..L..NNNNN......",
+      "...LNNNNNNNN....",
+      "....NQNNQNQNN...",
+      "....NNNNNNNNN...",
+      "....N.NNNN.N....",
+      "....N.N..N.N....",
+      "...NN.N..N.NN...",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.7722222222222223,
+    "rarity": "common",
+    "number": 64,
+    "attack": 7,
+    "hp": 41
+  },
+  {
+    "id": "honey_nibbler",
+    "name": "Honey Nibbler",
+    "element": "Earth",
+    "description": "It stores honey in its striped tail and shares the sweetest drops.",
+    "maxHp": 29,
+    "baseDmg": 5,
+    "grid": [
+      "....NN...NN.....",
+      "...NQQN.NQQN....",
+      "...NQQNNNQQN....",
+      "....QQQQQQQ.....",
+      "...QWWQQWWQ.....",
+      "...QBBQQBBQ.....",
+      "...QQQNNQQQ.....",
+      "....QWQQWQ...Y..",
+      ".....QQQQ...YYY.",
+      "..QQQQQQQQ..YNY.",
+      ".Q..QQNNQQQ.YYY.",
+      "....QQQQQQQQYNY.",
+      "....QNNNNQ..YYY.",
+      "....Q....Q......",
+      "...QQ....QQ.....",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.8388888888888889,
+    "rarity": "common",
+    "number": 65,
+    "attack": 5,
+    "hp": 29
+  },
+  {
+    "id": "lantern_moth",
+    "name": "Lantern Moth",
+    "element": "Fire",
+    "description": "Its glowing wing windows help lost travellers find a safe path.",
+    "maxHp": 25,
+    "baseDmg": 9,
+    "grid": [
+      ".....Y....Y.....",
+      "......Y..Y......",
+      "...OO..YY..OO...",
+      "..OSSOGWWGOSSO..",
+      ".OSSSOGBBGOSSSO.",
+      ".OSSYOGGGGOYSSO.",
+      "..OYOOGGGGOOYO..",
+      "...OO.GGGG.OO...",
+      "..OYYOGGGGOYYO..",
+      ".OYSSOGGGGOSSYO.",
+      "..OYSOGGGGOSYO..",
+      "...OO..GG..OO...",
+      ".......GG.......",
+      "......G..G......",
+      "................",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.8611111111111112,
+    "rarity": "common",
+    "number": 66,
+    "attack": 9,
+    "hp": 25
+  },
+  {
+    "id": "prism_jelly",
+    "name": "Prism Jelly",
+    "element": "Water",
+    "description": "Light splits into little rainbows inside its clear, drifting bell.",
+    "maxHp": 31,
+    "baseDmg": 8,
+    "grid": [
+      "......CCCC......",
+      "....CCIIIICC....",
+      "...CIIIWWIIIC...",
+      "..CIIIWWWWIIIC..",
+      "..CIWWIWWIWWIC..",
+      ".CIIWBIWWIBWIIC.",
+      ".CIIIIIIIIIIIIC.",
+      ".CTTTTVVVVTTTTC.",
+      "..CCCCCCCCCCCC..",
+      "...T.T.CC.T.T...",
+      "..TT.T.CC.T.TT..",
+      "..T..T.CC.T..T..",
+      ".....T.CC.T.....",
+      "....TT.CC.TT....",
+      ".......CC.......",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.8277777777777777,
+    "rarity": "common",
+    "number": 67,
+    "attack": 8,
+    "hp": 31
+  },
+  {
+    "id": "coral_crown",
+    "name": "Coral Crown",
+    "element": "Water",
+    "description": "A small reef guardian wears a living crown of branching coral.",
+    "maxHp": 43,
+    "baseDmg": 7,
+    "grid": [
+      "..P...P...P.....",
+      ".PPP.PPP.PPP....",
+      "..P.P.P.P.P.....",
+      "...PPPPPPP......",
+      "...TTTTTTT......",
+      "..TTWWTWWTT.....",
+      "..TTBBTBBTT.....",
+      "..TTTTTTTTT.....",
+      ".CCTTTTTTTCC....",
+      "CC.TTKKKTT.CC...",
+      "C..TTKKKTT..C...",
+      "...TTTTTTT......",
+      "..TT..T..TT.....",
+      ".TT...T...TT....",
+      "......TT........",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.7611111111111111,
+    "rarity": "common",
+    "number": 68,
+    "attack": 7,
+    "hp": 43
+  },
+  {
+    "id": "kelp_dancer",
+    "name": "Kelp Dancer",
+    "element": "Water",
+    "description": "Its ribbon arms sway to the rhythm of deep ocean currents.",
+    "maxHp": 30,
+    "baseDmg": 8,
+    "grid": [
+      "...G......G.....",
+      "..GGG....GGG....",
+      "...GG....GG.....",
+      "....GG..GG......",
+      ".....GGGG.......",
+      "....GWWWWG......",
+      "....GBWWBG......",
+      ".....GGGG.......",
+      "..G..GGGG..G....",
+      ".GG.GGKKGG.GG...",
+      "..GGGKKKKGGG....",
+      ".....KKKK.......",
+      "....KK..KK......",
+      "...KK....KK.....",
+      "..KK......KK....",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.8333333333333334,
+    "rarity": "common",
+    "number": 69,
+    "attack": 8,
+    "hp": 30
+  },
+  {
+    "id": "bubble_otter",
+    "name": "Bubble Otter",
+    "element": "Water",
+    "description": "It collects perfect bubbles and balances them on its nose.",
+    "maxHp": 38,
+    "baseDmg": 6,
+    "grid": [
+      "......CCC.......",
+      ".....CIIIC......",
+      "......CCC.......",
+      "...NN.....NN....",
+      "..NQQN...NQQN...",
+      "...QQQQQQQQQ....",
+      "...QWWQQQWWQ....",
+      "...QBBQQQBBQ....",
+      "....QQQTQQQ.....",
+      "....QIIIIQQ.....",
+      "..QQQIIIIQQQ....",
+      ".Q..QIIIIQ..Q...",
+      "....QQQQQQ..QQ..",
+      ".....Q..QQQQQ...",
+      "....QQ..QQ......",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.7888888888888889,
+    "rarity": "common",
+    "number": 70,
+    "attack": 6,
+    "hp": 38
+  },
+  {
+    "id": "ink_sailor",
+    "name": "Ink Sailor",
+    "element": "Water",
+    "description": "A little ink captain raises a broad fin to sail across calm lagoons.",
+    "maxHp": 35,
+    "baseDmg": 9,
+    "grid": [
+      ".......X........",
+      "......XIX.......",
+      ".....XIIX.......",
+      "....XIIIX.......",
+      "...XIIIIX.......",
+      "...XXXXXX.......",
+      ".....VVVV.......",
+      "....VWWWWV......",
+      "....VBWWBV......",
+      "...VVVVVVVV.....",
+      "..VVVVVVVVVV....",
+      ".VV.VV..VV.VV...",
+      ".V..VV..VV..V...",
+      "...VV....VV.....",
+      "..VV......VV....",
+      "..V........V...."
+    ],
+    "source": false,
+    "catchRate": 0.8055555555555556,
+    "rarity": "common",
+    "number": 71,
+    "attack": 9,
+    "hp": 35
+  },
+  {
+    "id": "frost_narwhal",
+    "name": "Frost Narwhal",
+    "element": "Water",
+    "description": "Its frosty horn draws delicate ice patterns on the surface of lakes.",
+    "maxHp": 62,
+    "baseDmg": 10,
+    "grid": [
+      "..........I.....",
+      ".........II.....",
+      "........III.....",
+      ".......IIII.....",
+      "......CCCCCC....",
+      ".....CWWCCCIC...",
+      "....CCBBCCCICC..",
+      "...CCCCCCCCCCCC.",
+      "..CCCCCCCCCCCCCC",
+      ".CCICCCCCCCCCCC.",
+      "...CIIICCCCCCC..",
+      "....CIIIIIICCC..",
+      ".....CCCCCCC..CC",
+      "........CCCCCCCC",
+      "...........CC...",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.6555555555555556,
+    "rarity": "uncommon",
+    "number": 72,
+    "attack": 10,
+    "hp": 62
+  },
+  {
+    "id": "coal_tortoise",
+    "name": "Coal Tortoise",
+    "element": "Fire",
+    "description": "A warm coal seam glows beneath the heavy plates of its shell.",
+    "maxHp": 64,
+    "baseDmg": 6,
+    "grid": [
+      ".....XXXXXX.....",
+      "...XXMMXXMMXX...",
+      "..XMMMMXXMMMMX..",
+      "..XMMXXXXXXMMX..",
+      ".XXMMXRRRRXMMXX.",
+      ".XMMXXRRRRXXMMX.",
+      ".XMMMMXXXXMMMMX.",
+      "..XMMMMMMMMMMX..",
+      "..XXXXMMMMXXXX..",
+      "...NNXXXXXXNN...",
+      "..NNNNNNNNNNNN..",
+      "..NWBNNNNNBWNN..",
+      "...NNNNNNNNNN...",
+      "....NN....NN....",
+      "...NNN....NNN...",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.6444444444444444,
+    "rarity": "uncommon",
+    "number": 73,
+    "attack": 6,
+    "hp": 64
+  },
+  {
+    "id": "candle_wisp",
+    "name": "Candle Wisp",
+    "element": "Fire",
+    "description": "This friendly flame leaves a trail of floating wax stars.",
+    "maxHp": 24,
+    "baseDmg": 11,
+    "grid": [
+      ".......Y........",
+      "......YYY.......",
+      ".....YYOYY......",
+      ".....YOOOY......",
+      "......OOO.......",
+      ".....IIIII......",
+      ".....IWWWI......",
+      "....IIBWBI......",
+      "....IIIIII......",
+      ".....IIIII......",
+      "...IIIIIIIII....",
+      "..II.IIIII.II...",
+      ".II..IIIII..II..",
+      ".....IIIII......",
+      "....II...II.....",
+      "...II.....II...."
+    ],
+    "source": false,
+    "catchRate": 0.8666666666666667,
+    "rarity": "common",
+    "number": 74,
+    "attack": 11,
+    "hp": 24
+  },
+  {
+    "id": "bellows_boar",
+    "name": "Bellows Boar",
+    "element": "Fire",
+    "description": "Its springy belly blows little gusts that keep campfires burning.",
+    "maxHp": 51,
+    "baseDmg": 9,
+    "grid": [
+      "....R......R....",
+      "...RNR....RNR...",
+      "....NNNNNNNN....",
+      "...NWWNNWWNN....",
+      "...NBBNNBBNN....",
+      "..NNNNNNNNNNN...",
+      "..NQNNQQNNNQN...",
+      "..WNNQQQQNNNW...",
+      "...WNNNNNNNW....",
+      "..NNNMMMMNNNN...",
+      ".N..NMRRMN..N...",
+      "....NMMMMN......",
+      "....NNNNNN......",
+      "....N....N......",
+      "...NN....NN.....",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.7166666666666667,
+    "rarity": "uncommon",
+    "number": 75,
+    "attack": 9,
+    "hp": 51
+  },
+  {
+    "id": "spark_finch",
+    "name": "Spark Finch",
+    "element": "Fire",
+    "description": "A crackling yellow crest flashes whenever it learns a new song.",
+    "maxHp": 23,
+    "baseDmg": 12,
+    "grid": [
+      "......Y.........",
+      ".....YYY........",
+      "......YOY.......",
+      ".....OOOO.......",
+      "....OWWWO.......",
+      "....OBBBOQ......",
+      ".....OOOOQQ.....",
+      "..Y...OOOO......",
+      ".YYO.OOOOOO.....",
+      ".YOOOOSSSOOO....",
+      "..OOOOOSOOO.....",
+      "...OOOOSOO......",
+      "....OOOOO.......",
+      ".....Q.Q........",
+      "....QQ.QQ.......",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.8722222222222222,
+    "rarity": "common",
+    "number": 76,
+    "attack": 12,
+    "hp": 23
+  },
+  {
+    "id": "obsidian_ram",
+    "name": "Obsidian Ram",
+    "element": "Fire",
+    "description": "Its spiral horns ring like dark glass when they strike mountain stone.",
+    "maxHp": 69,
+    "baseDmg": 10,
+    "grid": [
+      "..XXXX....XXXX..",
+      ".XX..XX..XX..XX.",
+      ".X.XX.X..X.XX.X.",
+      ".XX.XXX..XXX.XX.",
+      "..XXXAAAAAAXXX..",
+      "....AXXAXXA.....",
+      "....AWBAWBA.....",
+      "....AAAAAAA.....",
+      ".....AMMMA......",
+      "...XXAAAAAXX....",
+      "..XXXXAAAAXXXX..",
+      "..XXAXXXXXAXX...",
+      "....AXXXXA......",
+      "....A....A......",
+      "...XX....XX.....",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.6166666666666667,
+    "rarity": "uncommon",
+    "number": 77,
+    "attack": 10,
+    "hp": 69
+  },
+  {
+    "id": "cinder_centipede",
+    "name": "Cinder Centipede",
+    "element": "Fire",
+    "description": "Its many warm feet leave a dotted trail across cooled lava.",
+    "maxHp": 39,
+    "baseDmg": 11,
+    "grid": [
+      "..R..........R..",
+      "...R........R...",
+      "....RR....RR....",
+      "....OWWOOWWO....",
+      "....OBBOOBBO....",
+      ".....OOOOOO.....",
+      "..R.OOMMOO.R....",
+      "...ROOMMOOR.....",
+      "..R.OOMMOO.R....",
+      "...ROOMMOOR.....",
+      "..R.OOMMOO.R....",
+      "...ROOMMOOR.....",
+      "..R.OOMMOO.R....",
+      ".....OOOO.......",
+      "......OO........",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.7833333333333333,
+    "rarity": "common",
+    "number": 78,
+    "attack": 11,
+    "hp": 39
+  },
+  {
+    "id": "geyser_gator",
+    "name": "Geyser Gator",
+    "element": "Water",
+    "description": "Steam puffs from the ridges on its back before a joyful splash.",
+    "maxHp": 57,
+    "baseDmg": 9,
+    "grid": [
+      "....I.....I.....",
+      "...III...III....",
+      "....I.....I.....",
+      ".....C...C......",
+      "....CC..CC......",
+      "...TTTTTTTT.....",
+      "..TWWTTWWTTT....",
+      "..TBBTTBBTTTTT..",
+      "..TTTTTTTTTTTTT.",
+      "...TWWWWWWWWTT..",
+      "....TTTTTTTTTT..",
+      "...T.TTTTTT.T.T.",
+      "..TT.TTTTTT.TT..",
+      ".....T....T.....",
+      "....TT....TT....",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.6833333333333333,
+    "rarity": "uncommon",
+    "number": 79,
+    "attack": 9,
+    "hp": 57
+  },
+  {
+    "id": "amber_oracle",
+    "name": "Amber Oracle",
+    "element": "Earth",
+    "description": "A fossil seed floats inside its amber heart, dreaming of ancient forests.",
+    "maxHp": 78,
+    "baseDmg": 13,
+    "grid": [
+      ".......Q........",
+      "......QQQ.......",
+      ".....QQSQQ......",
+      "....QQSSSQQ.....",
+      "...QQSSWSSQQ....",
+      "..QQSSWBWSSQQ...",
+      "...QQSSWSSQQ....",
+      "....QQSSSQQ.....",
+      ".....QQSQQ......",
+      "....NQQQQQN.....",
+      "...NNQQQQQNN....",
+      "..N.NNQQQNN.N...",
+      ".N...NNQNN...N..",
+      ".....N...N......",
+      "....NN...NN.....",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.5666666666666667,
+    "rarity": "rare",
+    "number": 80,
+    "attack": 13,
+    "hp": 78
+  },
+  {
+    "id": "clockwork_cicada",
+    "name": "Clockwork Cicada",
+    "element": "Earth",
+    "description": "Its brass wings count the quiet seconds between summer songs.",
+    "maxHp": 52,
+    "baseDmg": 9,
+    "grid": [
+      ".....Q....Q.....",
+      "......Q..Q......",
+      "......NNNN......",
+      ".....QWBBWQ.....",
+      "..IIIQQQQQQIII..",
+      ".IIAIINNNNIIAII.",
+      "IIIAAQQQQQQAAIII",
+      "IIIAAQNQQNQAAIII",
+      ".IIAAQNNNNQAAII.",
+      "..IAAQNQQNQAAI..",
+      "...IAQNNNNQAI...",
+      "....IQQQQQQI....",
+      ".....QNQQNQ.....",
+      "....Q.NNNN.Q....",
+      "...QQ..QQ..QQ...",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.7111111111111111,
+    "rarity": "uncommon",
+    "number": 81,
+    "attack": 9,
+    "hp": 52
+  },
+  {
+    "id": "rune_badger",
+    "name": "Rune Badger",
+    "element": "Earth",
+    "description": "Ancient markings brighten on its back whenever it uncovers a forgotten path.",
+    "maxHp": 56,
+    "baseDmg": 11,
+    "grid": [
+      "................",
+      ".......A...A....",
+      "......AXA.AXA...",
+      "..XX..AXAAAXA...",
+      ".XXX.AAWAAWAAA..",
+      "XXXXAAABAAABAA..",
+      ".XXAAAAIXXIAAA..",
+      "..AAAAAIBBIAAA..",
+      "..AAXXXAAAAXAA..",
+      "..AXYXYXXXAXAA..",
+      "..AAXYXXXXXXAA..",
+      "...AAXAAAAAXAA..",
+      "...XXAA..AAXX...",
+      "...XAA....AAX...",
+      "...FFF....FFF...",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.6888888888888889,
+    "rarity": "uncommon",
+    "number": 82,
+    "attack": 11,
+    "hp": 56
+  },
+  {
+    "id": "bloom_stag",
+    "name": "Bloom Stag",
+    "element": "Earth",
+    "description": "Tiny blossoms grow along its branching antlers, marking each new season.",
+    "maxHp": 68,
+    "baseDmg": 12,
+    "grid": [
+      "..P.P......P.P..",
+      ".PYPP.....PPYP..",
+      "..N.N......N.N..",
+      "...NNN....NNN...",
+      ".....NN..NN.....",
+      "......NWWN......",
+      "......NBBN......",
+      "......NNNN......",
+      "...NNNNLNNNN....",
+      "..NNLNNLLNNNN...",
+      ".NNNNNNNNNNNNN..",
+      ".N..NNNNNNNN.N..",
+      "....NN....NN....",
+      "....N......N....",
+      "...NN......NN...",
+      "...FF......FF..."
+    ],
+    "source": false,
+    "catchRate": 0.6222222222222222,
+    "rarity": "uncommon",
+    "number": 83,
+    "attack": 12,
+    "hp": 68
+  },
+  {
+    "id": "terrarium_toadstool",
+    "name": "Terrarium Toadstool",
+    "element": "Earth",
+    "description": "A whole moss garden thrives beneath its glassy mushroom cap.",
+    "maxHp": 44,
+    "baseDmg": 7,
+    "grid": [
+      "......GGGG......",
+      "....GGLLIIGG....",
+      "...GLIILLILGG...",
+      "..GLLILLGIILLG..",
+      ".GIIIIGLLGIIIIG.",
+      ".GGLLLIILLILLGG.",
+      "..GGGGGGGGGGGG..",
+      ".....GIIIG......",
+      "....GIIILIG.....",
+      "....GIWGWIG.....",
+      "....GIBGBIG.....",
+      "....GLGGGLG.....",
+      "...NGLGGGLGN....",
+      "..NNGGGGGGNNN...",
+      "..N...NNN...N...",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.7555555555555555,
+    "rarity": "common",
+    "number": 84,
+    "attack": 7,
+    "hp": 44
+  },
+  {
+    "id": "cobalt_lobster",
+    "name": "Cobalt Lobster",
+    "element": "Water",
+    "description": "Its mighty blue claws snap in rhythm with the ocean currents.",
+    "maxHp": 64,
+    "baseDmg": 15,
+    "grid": [
+      ".UUU........UUU.",
+      "UCUCU......UCUCU",
+      "UCWCU......UCWCU",
+      ".UUU........UUU.",
+      "..U..........U..",
+      "...U.U....U.U...",
+      "....UUWUUWUU....",
+      ".....UBUUBU.....",
+      "...UUUUUUUUUU...",
+      "..U..UCCCCU..U..",
+      ".U..UUUUUUUU..U.",
+      "...U.UCCCCU.U...",
+      "..U..UUUUUU..U..",
+      ".....UCCCCU.....",
+      "....UUUUUUUU....",
+      "....UU....UU...."
+    ],
+    "source": false,
+    "catchRate": 0.6444444444444444,
+    "rarity": "uncommon",
+    "number": 85,
+    "attack": 15,
+    "hp": 64
+  },
+  {
+    "id": "nautilus_knight",
+    "name": "Nautilus Knight",
+    "element": "Water",
+    "description": "It guards sunken ruins with a spiral shield and a needle of pearl.",
+    "maxHp": 76,
+    "baseDmg": 15,
+    "grid": [
+      "............I...",
+      "...........III..",
+      "....QQQQ....I...",
+      "...QIIIQQ...I...",
+      "..QIQQQIQQ..I...",
+      ".QIQIIIQIQ..I...",
+      ".QIQIQQQIQ.III..",
+      ".QIQIQIQIQ..I...",
+      ".QIQQQIQIQTTI...",
+      "..QIIIQIQTWBT...",
+      "...QQQQQTTBTT...",
+      "....TTTTTTTT....",
+      "...T..TTTT..T...",
+      "..T...T..T...T..",
+      ".....TT..TT.....",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.5777777777777777,
+    "rarity": "rare",
+    "number": 86,
+    "attack": 15,
+    "hp": 76
+  },
+  {
+    "id": "raincloud_ram",
+    "name": "Raincloud Ram",
+    "element": "Water",
+    "description": "Rain taps a gentle beat on its curled horns before every storm.",
+    "maxHp": 58,
+    "baseDmg": 10,
+    "grid": [
+      "................",
+      "....III..III....",
+      "...IIAIIIIAII...",
+      "..IIAIIWIIAIII..",
+      ".IIAIIIBIIAAIII.",
+      ".IIAAIIIIAAIIII.",
+      "..IIAAAAAAIIII..",
+      "...IIIIIIIIII...",
+      "..IIIIIIIIIIII..",
+      "..IIIIIIIIIIII..",
+      "...IIIIIIIIII...",
+      "....AA....AA....",
+      "....XX....XX....",
+      "..C....C.....C..",
+      "..U....U.....U..",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.6777777777777778,
+    "rarity": "uncommon",
+    "number": 87,
+    "attack": 10,
+    "hp": 58
+  },
+  {
+    "id": "tide_harp",
+    "name": "Tide Harp",
+    "element": "Water",
+    "description": "The living strings across its body hum with the changing tides.",
+    "maxHp": 46,
+    "baseDmg": 12,
+    "grid": [
+      "........TT......",
+      ".......TCTT.....",
+      "......TCCCT.....",
+      "....TTTTICT.....",
+      "...TCT.I.CT.....",
+      "..TCT..I.CT.....",
+      ".TCT.I.I.CT.....",
+      "TCT..I.I.CT.....",
+      "TC.I.I.I.CT.....",
+      "TC.I.I.I.CT.....",
+      "TCCIIIIIICCT....",
+      ".TCCCCCCCCCT....",
+      "..TTTWCTWTT.....",
+      "....TBCTBT......",
+      ".....TTTT.......",
+      "....TT..TT......"
+    ],
+    "source": false,
+    "catchRate": 0.7444444444444445,
+    "rarity": "uncommon",
+    "number": 88,
+    "attack": 12,
+    "hp": 46
+  },
+  {
+    "id": "snowflake_spider",
+    "name": "Snowflake Spider",
+    "element": "Water",
+    "description": "Each delicate leg leaves a frost flower wherever it touches.",
+    "maxHp": 54,
+    "baseDmg": 13,
+    "grid": [
+      ".I............I.",
+      "..I..........I..",
+      "...IC......CI...",
+      "....IC....CI....",
+      ".I...ICCCCI...I.",
+      "..I..CWIWC..I...",
+      "...ICCBIBCCI....",
+      "....CCCCCCCC....",
+      "...ICCIICCCI....",
+      "..I..CIIIIC..I..",
+      ".I...CCCCCC...I.",
+      "....IC....CI....",
+      "...IC......CI...",
+      "..I..........I..",
+      ".I............I.",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.7,
+    "rarity": "uncommon",
+    "number": 89,
+    "attack": 13,
+    "hp": 54
+  },
+  {
+    "id": "moon_koi",
+    "name": "Moon Koi",
+    "element": "Water",
+    "description": "It swims through moonlit mist, trailing ribbons of silver light.",
+    "maxHp": 62,
+    "baseDmg": 12,
+    "grid": [
+      "............II..",
+      "..........IIUI..",
+      ".........IUUUI..",
+      "........IUUII...",
+      "....IIIIUUUI....",
+      "...IUCCCCUUI....",
+      "..IUCCCWWCUI....",
+      ".IUCCCCBWCUII...",
+      "IUCCCICCCCUIUI..",
+      "IUCCCIUCCUIIUI..",
+      ".IUUUIUUUI..IUI.",
+      "..IIUUUUI....IUI",
+      "....IIUII.....II",
+      ".....IUI........",
+      "......II........",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.6555555555555556,
+    "rarity": "uncommon",
+    "number": 90,
+    "attack": 12,
+    "hp": 62
+  },
+  {
+    "id": "comet_manta",
+    "name": "Comet Manta",
+    "element": "Water",
+    "description": "A brilliant tail guides drifting creatures safely through the deep.",
+    "maxHp": 82,
+    "baseDmg": 17,
+    "grid": [
+      ".......CC.......",
+      "......CCUC......",
+      ".....CCWWCC.....",
+      "....CCUBBUCC....",
+      "...CCUUUUUUCC...",
+      ".CCCUUICCIUUCCC.",
+      "CCUUUICCCCIUUUCC",
+      "CUUUICCCCCCIUUUC",
+      ".CUUUCCCCCCUUUC.",
+      "..CCUUUUUUUUCC..",
+      "....CCCCCCCC....",
+      ".......CC.......",
+      "........C.......",
+      ".........C..S...",
+      "..........CYSY..",
+      "...........SY..."
+    ],
+    "source": false,
+    "catchRate": 0.5444444444444445,
+    "rarity": "rare",
+    "number": 91,
+    "attack": 17,
+    "hp": 82
+  },
+  {
+    "id": "aurora_elk",
+    "name": "Aurora Elk",
+    "element": "Water",
+    "description": "Its sweeping mane paints ribbons of color across the winter sky.",
+    "maxHp": 88,
+    "baseDmg": 16,
+    "grid": [
+      "...C.....V......",
+      "..C.C...V.V.....",
+      ".C..CC.VV..V....",
+      ".....CCVV.......",
+      ".....IWWI.......",
+      ".....IBBI.......",
+      "...CTIII........",
+      "..CTTVII........",
+      ".CTTVVIIIIIIII..",
+      ".TTVVIIIAIIIII..",
+      "..VVIIIAAAIIII..",
+      "....III...IIII..",
+      "....II.....II...",
+      "....I......I....",
+      "...II.....II....",
+      "...AA.....AA...."
+    ],
+    "source": false,
+    "catchRate": 0.5111111111111111,
+    "rarity": "rare",
+    "number": 92,
+    "attack": 16,
+    "hp": 88
+  },
+  {
+    "id": "sunwheel_scarab",
+    "name": "Sunwheel Scarab",
+    "element": "Fire",
+    "description": "It rolls a glowing sunstone that warms the dunes after dusk.",
+    "maxHp": 72,
+    "baseDmg": 14,
+    "grid": [
+      "......Q..Q......",
+      ".....QY..YQ.....",
+      ".....QWYYWQ.....",
+      "......BYYB......",
+      "....QQQQQQQQ....",
+      "...QYYYYYYYYQ...",
+      "..QYYQYYYYQYYQ..",
+      ".QYQQYQYYQYQQYQ.",
+      ".QYYQQYYYYQQYYQ.",
+      ".QYYYQYYYYQYYYQ.",
+      "..QYYYYYYYYYYQ..",
+      "...QYYYYYYYYQ...",
+      "..Q.QQQQQQQQ.Q..",
+      ".Q...Q....Q...Q.",
+      "....QQ....QQ....",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.6,
+    "rarity": "rare",
+    "number": 93,
+    "attack": 14,
+    "hp": 72
+  },
+  {
+    "id": "furnace_ox",
+    "name": "Furnace Ox",
+    "element": "Fire",
+    "description": "The furnace in its chest glows brighter when its herd needs warmth.",
+    "maxHp": 94,
+    "baseDmg": 18,
+    "grid": [
+      ".X............X.",
+      ".XX..........XX.",
+      "..XX..XXXX..XX..",
+      "...XXXMXXMXXX...",
+      "....XWXXXXWX....",
+      "....XBXXXXBX....",
+      "...XXXXMMXXXX...",
+      "..XXXXXMMXXXXX..",
+      ".XXXXRRRRRRXXXX.",
+      ".XXXRROOOORRXXX.",
+      ".XXXROYYYYORXXX.",
+      ".XXXRROOOORRXXX.",
+      "..XXXRRRRRRXXX..",
+      "...XX......XX...",
+      "...XX......XX...",
+      "..FFF......FFF.."
+    ],
+    "source": false,
+    "catchRate": 0.47777777777777775,
+    "rarity": "rare",
+    "number": 94,
+    "attack": 18,
+    "hp": 94
+  },
+  {
+    "id": "volcano_hermit",
+    "name": "Volcano Hermit",
+    "element": "Fire",
+    "description": "It carries a sleepy volcano for a shell and bakes stones for supper.",
+    "maxHp": 78,
+    "baseDmg": 15,
+    "grid": [
+      ".......R........",
+      "......ROR.......",
+      ".....ROOOR......",
+      ".....XRRRX......",
+      "....XAXXAXX.....",
+      "...XAXAXXAXX....",
+      "..XAXXAXAXXAX...",
+      ".XXAXAXXAXAXXX..",
+      ".XXXXXXXXXXXXXX.",
+      "..XXXXXXXXXXXX..",
+      "....OWOOWO......",
+      "...OBOOOOBO.....",
+      "..OOOOOOOOOOO...",
+      ".O..OOO..OOO.O..",
+      "O..OO......OO.O.",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.5666666666666667,
+    "rarity": "rare",
+    "number": 95,
+    "attack": 15,
+    "hp": 78
+  },
+  {
+    "id": "thunder_yak",
+    "name": "Thunder Yak",
+    "element": "Fire",
+    "description": "Storm sparks gather in its shaggy coat until a mighty stomp releases them.",
+    "maxHp": 90,
+    "baseDmg": 17,
+    "grid": [
+      "..S..........S..",
+      "..SY........YS..",
+      "...SY......YS...",
+      "....YYYYYYYY....",
+      "...QWWQQWWQQQ...",
+      "...QBBQQBBQQQ...",
+      "..QQQQQQQQQQQQ..",
+      ".QNQQSQQQQNQQNQ.",
+      ".QNQSSYQQQNQQNQ.",
+      ".QNQQSYQQQNQQNQ.",
+      ".QNQQQSYQQNQQNQ.",
+      "..NQQSYQQQNQQN..",
+      "...NNNNNNNNNN...",
+      "...NNN....NNN...",
+      "...XXX....XXX...",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.5,
+    "rarity": "rare",
+    "number": 96,
+    "attack": 17,
+    "hp": 90
+  },
+  {
+    "id": "star_sentinel",
+    "name": "Star Sentinel",
+    "element": "Earth",
+    "description": "A patient guardian whose star core wakes when travelers lose their way.",
+    "maxHp": 116,
+    "baseDmg": 24,
+    "grid": [
+      ".......S.....I..",
+      "......SYS....I..",
+      ".....SYYY.S..I..",
+      "......SYS...III.",
+      "......AXA....I..",
+      ".....AWBWA...I..",
+      "...AAAXXXAAA.I..",
+      "..A.XAIIAX.AAI..",
+      "..A.XIYYIX.A.I..",
+      "..A.AYSSYA.A.I..",
+      "....XIYYIX...I..",
+      ".....XIIX....I..",
+      "....AAXXAA...I..",
+      "...AA....AA.....",
+      "..AA......AA....",
+      "................"
+    ],
+    "source": false,
+    "catchRate": 0.3555555555555555,
+    "rarity": "epic",
+    "number": 97,
+    "attack": 24,
+    "hp": 116
+  },
+  {
+    "id": "eclipse_leviathan",
+    "name": "Eclipse Leviathan",
+    "element": "Water",
+    "description": "Its crescent body shelters a dark pearl that reflects distant stars.",
+    "maxHp": 160,
+    "baseDmg": 29,
+    "grid": [
+      "......VVVV......",
+      "....VVWWVVV.....",
+      "...VVBBVVVVV....",
+      "..VVVVV...VVV...",
+      ".VVZVV.....VVV..",
+      ".VZVV.......VV..",
+      "VZVV...SS....VV.",
+      "VZVV..SXXS...VV.",
+      "VZVV..SXXS...VV.",
+      ".VZVV..SS...VV..",
+      ".VVZVV.....VVV..",
+      "..VVZVV...VVV...",
+      "...VVZVVVVVV....",
+      "....VVZVVVV.....",
+      "......VVVV......",
+      ".....VV..VV....."
+    ],
+    "source": false,
+    "catchRate": 0.11111111111111116,
+    "rarity": "megarare",
+    "number": 98,
+    "attack": 29,
+    "hp": 160
+  },
+  {
+    "id": "crown_phoenix",
+    "name": "Crown Phoenix",
+    "element": "Fire",
+    "description": "Its royal crest scatters warm embers that bloom into new dawns.",
+    "maxHp": 150,
+    "baseDmg": 31,
+    "grid": [
+      ".....S.S.S......",
+      ".....YSYSY......",
+      "......YRY.......",
+      ".....YWBWY......",
+      ".Y...YBBBY...Y..",
+      ".YY..YYYYY..YY..",
+      "YORYYORRROYYORY.",
+      "YOORYOYYYOROORY.",
+      ".YOOROYYYOROOY..",
+      "..YOORRYRROOY...",
+      "...YYRYYYRYY....",
+      ".....RYYYR......",
+      "....ROYYYOR.....",
+      "...ROYY.YYOR....",
+      "..RYOY...YOYR...",
+      "...SS.....SS...."
+    ],
+    "source": false,
+    "catchRate": 0.16666666666666663,
+    "rarity": "epic",
+    "number": 99,
+    "attack": 31,
+    "hp": 150
+  },
+  {
+    "id": "meridian_guardian",
+    "name": "Meridian Guardian",
+    "element": "Earth",
+    "description": "It keeps the balance between sea, stone, and flame with three ancient sigils.",
+    "maxHp": 172,
+    "baseDmg": 32,
+    "grid": [
+      ".....IIIIII.....",
+      "...II......II...",
+      "..I....S.....I..",
+      ".I....SYS.....I.",
+      ".I.....A......I.",
+      "I....AAWAA.....I",
+      "I....ABBAA.....I",
+      "I..AAAIIAAA....I",
+      "I.AAACTYOAAA...I",
+      "I.AAACTYOAAA...I",
+      ".I.AAXIIXAA...I.",
+      ".I...AXXA.....I.",
+      "..I.AA..AA...I..",
+      "...AA....AAII...",
+      "...AX....XA.....",
+      "..XXX....XXX...."
+    ],
+    "source": false,
+    "catchRate": 0.1,
+    "rarity": "epic",
+    "number": 100,
+    "attack": 32,
+    "hp": 172
+  }
+];
+  const rarities = ['common','uncommon','rare','epic','megarare'];
+  const rarityInfo = {
+    common:{label:'Common',color:'#94a3b8',symbol:'●'},
+    uncommon:{label:'Uncommon',color:'#4ade80',symbol:'◆'},
+    rare:{label:'Rare',color:'#38bdf8',symbol:'✦'},
+    epic:{label:'Epic',color:'#c084fc',symbol:'✧'},
+    megarare:{label:'Megarare',color:'#facc15',symbol:'★'}
+  };
+  function baseSvg(card) {
+    const size=card.grid.length, offset=(20-size)/2;
+    let body='';
+    card.grid.forEach((row,y)=>[...row].forEach((pixel,x)=>{if(palette[pixel])body+='<rect x="'+(x+offset)+'" y="'+(y+offset)+'" width="1" height="1" fill="'+palette[pixel]+'"/>';}));
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="160" height="160" shape-rendering="crispEdges" role="img" aria-label="'+card.name+'">'+body+'</svg>';
+  }
+  const byId=Object.create(null), rarityCounts={};
+  cards.forEach(card=>{card.svg=baseSvg(card);Object.freeze(card.grid);Object.freeze(card);byId[card.id]=card;rarityCounts[card.rarity]=(rarityCounts[card.rarity]||0)+1;});
+  return Object.freeze({cards:Object.freeze(cards),byId:Object.freeze(byId),get:id=>byId[id],rarities:Object.freeze(rarities),rarityInfo:Object.freeze(rarityInfo),rarityCounts:Object.freeze(rarityCounts),palette:Object.freeze(palette),sourceCount:60,newCount:40,total:100,sourceAttachment:{"file":"seagomon-original.html","bytes":149656,"sha256":"28ef248159a27871b1990ee0c73840554528e8aa6a9e2ce44b33477237ca5248"}});
+})();
+if(typeof module!=='undefined'&&module.exports)module.exports=SEAGO_CATALOG;
+
+
+/* Local pixel art renderer. No image requests, scripts, external fonts, or assets. */
+const SEAGO_ART = (() => {
+  'use strict';
+  const catalog = typeof SEAGO_CATALOG !== 'undefined' ? SEAGO_CATALOG : require('./catalog.js');
+  const escape = value => String(value).replace(/[&<>"']/g, character => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
+  // Deliberately change every body color while keeping eyes crisp and readable.
+  const foilPalette = {
+    B:'#132039',W:'#fff8dd',R:'#facc15',U:'#c084fc',G:'#2dd4bf',Y:'#f9a8d4',
+    N:'#a855f7',A:'#67e8f9',P:'#a3e635',V:'#fbbf24',T:'#f472b6',O:'#fde047',
+    D:'#0e7490',L:'#5eead4',E:'#164e63',C:'#ddd6fe',F:'#581c87',M:'#fb923c',
+    S:'#e9d5ff',X:'#818cf8',I:'#fef08a',Q:'#ec4899',Z:'#fda4af',K:'#f0abfc',
+    H:'#bef264',J:'#fef08a',p:'#d8b4fe',Skins:'#d8b4fe'
+  };
+  const cache = new Map();
+  function resolve(cardOrId) {
+    const card=typeof cardOrId==='string'?catalog.byId[cardOrId]:cardOrId;
+    if(!card||!Array.isArray(card.grid))throw new TypeError('Unknown Seagomon card: '+cardOrId);
+    return card;
+  }
+  function monster(cardOrId,options={}) {
+    const card=resolve(cardOrId), shiny=!!options.shiny;
+    if(!shiny&&card.svg)return card.svg;
+    const key=card.id+(shiny?':shiny':':base');
+    if(cache.has(key))return cache.get(key);
+    const palette=shiny?foilPalette:catalog.palette,size=card.grid.length,offset=(20-size)/2;
+    let body='';
+    card.grid.forEach((row,y)=>[...row].forEach((pixel,x)=>{if(palette[pixel])body+='<rect x="'+(x+offset)+'" y="'+(y+offset)+'" width="1" height="1" fill="'+palette[pixel]+'"/>';}));
+    // Frame sparkles sit outside the creature and keep the actual silhouette intact.
+    if(shiny)body+='<g fill="#fff1a8" aria-hidden="true"><path d="M2 1h1v1h1v1H3v1H2V3H1V2h1zM17 15h1v1h1v1h-1v1h-1v-1h-1v-1h1z"/><rect x="17" y="2" width="1" height="1"/><rect x="2" y="17" width="1" height="1"/></g>';
+    const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="160" height="160" shape-rendering="crispEdges" role="img" aria-label="'+escape((shiny?'Shiny ':'')+card.name)+'" data-shiny="'+shiny+'">'+body+'</svg>';
+    cache.set(key,svg);return svg;
+  }
+  function card(cardOrId,options={}) {
+    const item=resolve(cardOrId), shiny=!!options.shiny,info=catalog.rarityInfo[item.rarity];
+    return '<article class="seago-card rarity-'+item.rarity+(shiny?' is-shiny':'')+(options.compact?' is-compact':'')+'" data-card-id="'+escape(item.id)+'" data-shiny="'+shiny+'">'+
+      '<div class="seago-card-top"><span>'+escape(item.element)+'</span><span>#'+String(item.number).padStart(3,'0')+'</span></div>'+
+      '<div class="seago-card-art">'+monster(item,{shiny})+'</div><h3>'+escape(item.name)+'</h3>'+
+      '<div class="seago-card-rarity">'+info.symbol+' '+info.label+(shiny?' · Shiny':'')+'</div>'+
+      (options.compact?'':'<p>'+escape(item.description)+'</p>')+
+      (Number.isFinite(options.count)?'<span class="seago-card-count">×'+Math.max(0,Math.floor(options.count))+'</span>':'')+'</article>';
+  }
+  return Object.freeze({monster,card,foilPalette:Object.freeze(foilPalette)});
+})();
+if(typeof module!=='undefined'&&module.exports)module.exports=SEAGO_ART;
+
+
+/* Seagomon Trading: deterministic, DOM-free game rules and save handling. */
+(function (root, factory) {
+  'use strict';
+  const api = factory();
+  if (typeof module === 'object' && module.exports) module.exports = api;
+  root.SEAGO_CORE = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this, function () {
+  'use strict';
+
+  const RARITIES = Object.freeze(['common', 'uncommon', 'rare', 'epic', 'megarare']);
+  const TABLE_TIERS = Object.freeze({ 2: 1, 3: 2, 4: 2, 5: 1, 6: 3, 7: 3, 8: 3, 9: 2, 10: 1, 11: 2, 12: 3 });
+  const MODE_MULTIPLIERS = Object.freeze({ ordered: 1, shuffled: 2 });
+  const SELL_VALUES = Object.freeze({ common: 2, uncommon: 5, rare: 12, epic: 35, megarare: 100 });
+  const PACKS = Object.freeze({
+    normal: Object.freeze({ name: 'Normal', cost: 60, size: 5, weights: Object.freeze([60, 25, 11, 3.5, 0.5]), shinyRate: 0.02, guaranteedShiny: false }),
+    lucky: Object.freeze({ name: 'Lucky', cost: 120, size: 5, weights: Object.freeze([35, 32, 24, 8, 1]), shinyRate: 0.04, guaranteedShiny: false }),
+    shiny: Object.freeze({ name: 'Shiny', cost: 900, size: 5, weights: Object.freeze([45, 30, 18, 6, 1]), shinyRate: 0.04, guaranteedShiny: true })
+  });
+  const MAX_INTEGER = Number.MAX_SAFE_INTEGER;
+  const MAX_COUNT = 1000000000;
+  const STAT_KEYS = ['challengesCompleted', 'packsOpened', 'cardsSold', 'coinsEarned', 'coinsSpent'];
+  const own = (object, key) => Object.prototype.hasOwnProperty.call(object, key);
+  const objectLike = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+  const clone = value => JSON.parse(JSON.stringify(value));
+  const integer = (value, maximum = MAX_INTEGER) => typeof value === 'number' && Number.isFinite(value) ? Math.min(maximum, Math.max(0, Math.floor(value))) : 0;
+  const safeAdd = (left, right) => Math.min(MAX_INTEGER, left + right);
+  const bestKey = (table, mode) => `${table}:${mode}`;
+  const variantKey = (id, variant) => `${id}|${variant}`;
+  const roundTime = ms => Math.ceil(ms / 10) * 10;
+
+  function displayTime(ms) {
+    return Number.isFinite(ms) && ms >= 0 ? (roundTime(ms) / 1000).toFixed(2) : '—';
+  }
+
+  function catalogCards(catalog) {
+    const source = Array.isArray(catalog) ? catalog : catalog && catalog.cards;
+    if (!Array.isArray(source)) throw new TypeError('A card catalog is required.');
+    const seen = new Set();
+    const cards = source.filter(card => {
+      if (!objectLike(card) || typeof card.id !== 'string' || !card.id || card.id.includes('|') || !RARITIES.includes(card.rarity) || seen.has(card.id)) return false;
+      seen.add(card.id);
+      return true;
+    });
+    if (RARITIES.some(rarity => !cards.some(card => card.rarity === rarity))) throw new TypeError('The catalog must contain every rarity.');
+    return cards;
+  }
+
+  function oddsForProbability(q, pack) {
+    return {
+      chance: q,
+      draw: q,
+      atLeastOne: 1 - Math.pow(1 - q, 5),
+      shinyAtLeastOne: pack.guaranteedShiny
+        ? 1 - (1 - q) * Math.pow(1 - q * pack.shinyRate, 4)
+        : 1 - Math.pow(1 - q * pack.shinyRate, 5),
+      normalAtLeastOne: pack.guaranteedShiny
+        ? 1 - Math.pow(1 - q * (1 - pack.shinyRate), 4)
+        : 1 - Math.pow(1 - q * (1 - pack.shinyRate), 5)
+    };
+  }
+
+  function getPackOdds(type, catalog) {
+    if (!own(PACKS, type)) throw new RangeError('Unknown pack type.');
+    const pack = PACKS[type];
+    const cards = catalogCards(catalog);
+    const rarities = RARITIES.map((rarity, index) => {
+      const count = cards.filter(card => card.rarity === rarity).length;
+      const q = pack.weights[index] / 100;
+      return Object.assign({ rarity, weight: pack.weights[index], count, perCard: q / count }, oddsForProbability(q, pack));
+    });
+    const byRarity = Object.fromEntries(rarities.map(row => [row.rarity, row]));
+    const cardOdds = cards.map(card => Object.assign({ id: card.id, rarity: card.rarity }, oddsForProbability(byRarity[card.rarity].perCard, pack)));
+    return {
+      type, cost: pack.cost, size: 5, guaranteedShiny: pack.guaranteedShiny,
+      shinyChance: pack.guaranteedShiny ? (1 + 4 * pack.shinyRate) / 5 : pack.shinyRate,
+      perDrawShinyChance: pack.shinyRate,
+      atLeastOneShiny: pack.guaranteedShiny ? 1 : 1 - Math.pow(1 - pack.shinyRate, 5),
+      rarities, cards: cardOdds, byRarity,
+      byCard: Object.fromEntries(cardOdds.map(row => [row.id, row]))
+    };
+  }
+
+  class Game {
+    constructor(catalog, saved = null, options = {}) {
+      this.cards = catalogCards(catalog);
+      this.byId = new Map(this.cards.map(card => [card.id, card]));
+      this.byRarity = Object.fromEntries(RARITIES.map(rarity => [rarity, this.cards.filter(card => card.rarity === rarity)]));
+      this.rng = typeof options.rng === 'function' ? options.rng : Math.random;
+      this.persist = typeof options.persist === 'function' ? options.persist : null;
+      this.challenge = null;
+      this._challengeSequence = 0;
+      this._committing = false;
+      this.state = this.sanitize(saved);
+    }
+
+    sanitize(saved) {
+      let source = saved;
+      if (typeof source === 'string') {
+        try { source = JSON.parse(source); } catch (_) { source = null; }
+      }
+      if (!objectLike(source) || source.version !== 1 || source.game !== 'seagomon-trading') source = {};
+      const state = {
+        version: 1, game: 'seagomon-trading', coins: integer(source.coins),
+        collection: {}, bests: {}, display: [null, null, null, null], pendingReveal: null,
+        stats: Object.fromEntries(STAT_KEYS.map(key => [key, integer(objectLike(source.stats) ? source.stats[key] : 0)]))
+      };
+      if (objectLike(source.collection)) {
+        for (const card of this.cards) {
+          const row = source.collection[card.id];
+          if (!objectLike(row)) continue;
+          const normal = integer(row.normal, MAX_COUNT);
+          const shiny = integer(row.shiny, MAX_COUNT);
+          if (normal || shiny) state.collection[card.id] = { normal, shiny };
+        }
+      }
+      if (objectLike(source.bests)) {
+        for (let table = 2; table <= 12; table++) {
+          for (const mode of Object.keys(MODE_MULTIPLIERS)) {
+            const key = bestKey(table, mode);
+            const value = source.bests[key];
+            if (typeof value === 'number' && Number.isFinite(value) && value >= 0 && value <= MAX_INTEGER - 100) state.bests[key] = roundTime(value);
+          }
+        }
+      }
+      const used = new Set();
+      if (Array.isArray(source.display)) source.display.slice(0, 4).forEach((key, slot) => {
+        if (this._ownedKey(key, state) && !used.has(key)) {
+          state.display[slot] = key;
+          used.add(key);
+        }
+      });
+      const pending = source.pendingReveal;
+      if (objectLike(pending) && typeof pending.id === 'string' && pending.id.length > 0 && pending.id.length <= 128 && own(PACKS, pending.type) && Array.isArray(pending.cards) && pending.cards.length === 5) {
+        const counts = {};
+        const validCards = pending.cards.map(record => {
+          if (!objectLike(record) || !this.byId.has(record.id) || !['normal', 'shiny'].includes(record.variant)) return null;
+          const card = this.byId.get(record.id);
+          const key = variantKey(card.id, record.variant);
+          counts[key] = (counts[key] || 0) + 1;
+          return { id: card.id, variant: record.variant, key, rarity: card.rarity };
+        });
+        const sufficient = Object.entries(counts).every(([key, count]) => this._countKey(key, state) >= count);
+        if (validCards.every(Boolean) && sufficient && (!PACKS[pending.type].guaranteedShiny || validCards.some(card => card.variant === 'shiny'))) {
+          state.pendingReveal = { id: pending.id, type: pending.type, cost: PACKS[pending.type].cost, cards: validCards };
+        }
+      }
+      return state;
+    }
+
+    serialize() { return clone(this.state); }
+    getPackOdds(type) { return getPackOdds(type, this.cards); }
+
+    _result(ok, extra = {}) { return Object.assign({ ok, coins: this.state.coins }, extra); }
+    _random() {
+      const value = this.rng();
+      if (typeof value !== 'number' || !Number.isFinite(value) || value < 0 || value >= 1) throw new RangeError('Random values must be between 0 inclusive and 1 exclusive.');
+      return value;
+    }
+    _countKey(key, state = this.state) {
+      if (typeof key !== 'string') return 0;
+      const split = key.lastIndexOf('|');
+      if (split < 1) return 0;
+      const id = key.slice(0, split), variant = key.slice(split + 1);
+      if (!this.byId.has(id) || !['normal', 'shiny'].includes(variant)) return 0;
+      const row = state.collection[id];
+      return row ? row[variant] || 0 : 0;
+    }
+    _ownedKey(key, state = this.state) { return this._countKey(key, state) > 0; }
+    _commit(next) {
+      if (this._committing) return false;
+      this._committing = true;
+      try {
+        if (this.persist) this.persist(clone(next));
+        this.state = next;
+        return true;
+      } catch (_) { return false; }
+      finally { this._committing = false; }
+    }
+    _validTime(now) { return typeof now === 'number' && Number.isFinite(now) && now >= 0 && now <= MAX_INTEGER - 100; }
+
+    startChallenge(table, mode, now) {
+      table = Number(table);
+      if (!Number.isInteger(table) || !own(TABLE_TIERS, table) || !own(MODE_MULTIPLIERS, mode)) return this._result(false, { reason: 'invalid_challenge' });
+      if (!this._validTime(now)) return this._result(false, { reason: 'invalid_time' });
+      if (this.challenge) return this._result(false, { reason: 'challenge_active' });
+      const facts = Array.from({ length: 12 }, (_, index) => ({ a: table, b: index + 1, answer: table * (index + 1) }));
+      if (mode === 'shuffled') {
+        try {
+          for (let index = facts.length - 1; index > 0; index--) {
+            const other = Math.floor(this._random() * (index + 1));
+            [facts[index], facts[other]] = [facts[other], facts[index]];
+          }
+        } catch (_) { return this._result(false, { reason: 'invalid_random' }); }
+        if (facts.every((fact, index) => fact.b === index + 1)) [facts[0], facts[1]] = [facts[1], facts[0]];
+      }
+      this.challenge = { id: ++this._challengeSequence, table, mode, facts, index: 0, startedAt: now, lastNow: now, wrongAnswers: 0 };
+      return this._result(true, { challenge: this.challenge });
+    }
+
+    submitAnswer(answer, now) {
+      const challenge = this.challenge;
+      if (!challenge) return this._result(false, { reason: 'no_challenge' });
+      if (!this._validTime(now) || now < challenge.lastNow || now < challenge.startedAt) return this._result(false, { reason: 'invalid_time' });
+      challenge.lastNow = now;
+      if (typeof answer === 'string' && answer.trim() !== '') answer = Number(answer);
+      if (typeof answer !== 'number' || !Number.isFinite(answer) || !Number.isInteger(answer)) return this._result(false, { reason: 'invalid_answer', challenge });
+      if (answer !== challenge.facts[challenge.index].answer) {
+        challenge.wrongAnswers++;
+        return this._result(true, { correct: false, complete: false, challenge });
+      }
+      if (challenge.index < 11) {
+        challenge.index++;
+        return this._result(true, { correct: true, complete: false, challenge });
+      }
+      const timeMs = roundTime(now - challenge.startedAt);
+      const key = bestKey(challenge.table, challenge.mode);
+      const previousBest = own(this.state.bests, key) ? this.state.bests[key] : null;
+      const firstClear = previousBest === null;
+      const newBest = firstClear || timeMs < previousBest;
+      const base = 30 * TABLE_TIERS[challenge.table] * MODE_MULTIPLIERS[challenge.mode];
+      const bonus = firstClear ? base : newBest ? base * 3 : 0;
+      const reward = { base, bonus, total: base + bonus, firstClear, newBest, previousBest, timeMs, table: challenge.table, mode: challenge.mode };
+      const next = this.serialize();
+      next.coins = safeAdd(next.coins, reward.total);
+      if (newBest) next.bests[key] = timeMs;
+      next.stats.challengesCompleted = safeAdd(next.stats.challengesCompleted, 1);
+      next.stats.coinsEarned = safeAdd(next.stats.coinsEarned, reward.total);
+      // Remove the active round before invoking persistence: synchronous callbacks
+      // cannot submit the last answer again and award it twice.
+      this.challenge = null;
+      if (!this._commit(next)) {
+        this.challenge = challenge;
+        return this._result(false, { reason: 'save_failed', challenge });
+      }
+      return this._result(true, { correct: true, complete: true, reward, completion: reward });
+    }
+
+    abandonChallenge() {
+      this.challenge = null;
+      return this._result(true);
+    }
+
+    _autoFill(next) {
+      const rank = key => {
+        const split = key.lastIndexOf('|');
+        const card = this.byId.get(key.slice(0, split));
+        return RARITIES.indexOf(card.rarity) * 2 + (key.slice(split + 1) === 'shiny' ? 1 : 0);
+      };
+      const choices = [];
+      for (const card of this.cards) {
+        for (const variant of ['normal', 'shiny']) {
+          const key = variantKey(card.id, variant);
+          if (this._ownedKey(key, next) && !next.display.includes(key)) choices.push(key);
+        }
+      }
+      choices.sort((a, b) => rank(b) - rank(a));
+      for (let slot = 0; slot < 4 && choices.length; slot++) if (!next.display[slot]) next.display[slot] = choices.shift();
+    }
+
+    buyPack(type) {
+      if (!own(PACKS, type)) return this._result(false, { reason: 'invalid_pack' });
+      if (this.state.pendingReveal) return this._result(false, { reason: 'pending_reveal' });
+      const pack = PACKS[type];
+      if (this.state.coins < pack.cost) return this._result(false, { reason: 'insufficient_coins' });
+      const cards = [];
+      try {
+        const guaranteedSlot = pack.guaranteedShiny ? Math.floor(this._random() * 5) : -1;
+        for (let slot = 0; slot < 5; slot++) {
+          const roll = this._random() * 100;
+          let cumulative = 0, rarity = RARITIES[4];
+          for (let index = 0; index < RARITIES.length; index++) {
+            cumulative += pack.weights[index];
+            if (roll < cumulative) { rarity = RARITIES[index]; break; }
+          }
+          const pool = this.byRarity[rarity];
+          const card = pool[Math.floor(this._random() * pool.length)];
+          const variant = slot === guaranteedSlot || this._random() < pack.shinyRate ? 'shiny' : 'normal';
+          cards.push({ id: card.id, rarity, variant, key: variantKey(card.id, variant) });
+        }
+      } catch (_) { return this._result(false, { reason: 'invalid_random' }); }
+      const next = this.serialize();
+      next.coins -= pack.cost;
+      for (const card of cards) {
+        if (!next.collection[card.id]) next.collection[card.id] = { normal: 0, shiny: 0 };
+        if (next.collection[card.id][card.variant] >= MAX_COUNT) return this._result(false, { reason: 'inventory_full' });
+        next.collection[card.id][card.variant]++;
+      }
+      next.stats.packsOpened = safeAdd(next.stats.packsOpened, 1);
+      next.stats.coinsSpent = safeAdd(next.stats.coinsSpent, pack.cost);
+      next.pendingReveal = { id: `pack-${next.stats.packsOpened}`, type, cost: pack.cost, cards };
+      if (next.stats.packsOpened === 1) this._autoFill(next);
+      if (!this._commit(next)) return this._result(false, { reason: 'save_failed' });
+      return this._result(true, { cards: clone(cards), pendingReveal: clone(next.pendingReveal), cost: pack.cost });
+    }
+
+    acknowledgeReveal() {
+      if (!this.state.pendingReveal) return this._result(false, { reason: 'no_pending_reveal' });
+      const next = this.serialize();
+      next.pendingReveal = null;
+      if (!this._commit(next)) return this._result(false, { reason: 'save_failed' });
+      return this._result(true);
+    }
+
+    sellVariant(key, quantity = 1) {
+      if (this.state.pendingReveal) return this._result(false, { reason: 'pending_reveal' });
+      if (!this._ownedKey(key)) return this._result(false, { reason: 'not_owned' });
+      if (!Number.isSafeInteger(quantity) || quantity < 1) return this._result(false, { reason: 'invalid_quantity' });
+      const count = this._countKey(key);
+      if (quantity > count - 1) return this._result(false, { reason: 'last_copy' });
+      const split = key.lastIndexOf('|'), id = key.slice(0, split), variant = key.slice(split + 1);
+      const value = SELL_VALUES[this.byId.get(id).rarity] * (variant === 'shiny' ? 5 : 1);
+      const gained = value * quantity;
+      const next = this.serialize();
+      next.collection[id][variant] -= quantity;
+      next.coins = safeAdd(next.coins, gained);
+      next.stats.cardsSold = safeAdd(next.stats.cardsSold, quantity);
+      next.stats.coinsEarned = safeAdd(next.stats.coinsEarned, gained);
+      if (!this._commit(next)) return this._result(false, { reason: 'save_failed' });
+      return this._result(true, { sold: quantity, gained, value, key });
+    }
+
+    bulkSellExtras() {
+      if (this.state.pendingReveal) return this._result(false, { reason: 'pending_reveal' });
+      const next = this.serialize();
+      let sold = 0, gained = 0;
+      for (const card of this.cards) {
+        const row = next.collection[card.id];
+        if (!row) continue;
+        for (const variant of ['normal', 'shiny']) {
+          const extras = Math.max(0, row[variant] - 1);
+          row[variant] -= extras;
+          sold += extras;
+          gained += extras * SELL_VALUES[card.rarity] * (variant === 'shiny' ? 5 : 1);
+        }
+      }
+      if (!sold) return this._result(false, { reason: 'no_extras', sold: 0, gained: 0 });
+      next.coins = safeAdd(next.coins, gained);
+      next.stats.cardsSold = safeAdd(next.stats.cardsSold, sold);
+      next.stats.coinsEarned = safeAdd(next.stats.coinsEarned, gained);
+      if (!this._commit(next)) return this._result(false, { reason: 'save_failed' });
+      return this._result(true, { sold, gained });
+    }
+
+    setDisplay(slot, key = null) {
+      if (!Number.isInteger(slot) || slot < 0 || slot > 3) return this._result(false, { reason: 'invalid_slot' });
+      if (key !== null && !this._ownedKey(key)) return this._result(false, { reason: 'not_owned' });
+      const next = this.serialize();
+      if (key !== null) next.display = next.display.map(value => value === key ? null : value);
+      next.display[slot] = key;
+      if (!this._commit(next)) return this._result(false, { reason: 'save_failed' });
+      return this._result(true, { display: next.display.slice() });
+    }
+
+    autoFillDisplay() {
+      const next = this.serialize();
+      this._autoFill(next);
+      if (!this._commit(next)) return this._result(false, { reason: 'save_failed' });
+      return this._result(true, { display: next.display.slice() });
+    }
+  }
+
+  return Object.freeze({ Game, RARITIES, TABLE_TIERS, MODE_MULTIPLIERS, PACKS, SELL_VALUES, bestKey, variantKey, displayTime, roundTime, getPackOdds });
+});
+
+
+const SEAGO_APP = (() => {
+'use strict';
+const $=id=>document.getElementById(id), C=SEAGO_CORE, D=SEAGO_CATALOG, A=SEAGO_ART;
+const saveKey='seagomon-trading-v1',prefKey='seagomon-trading-ui-v1';
+const dialog=$('game-dialog'),content=$('dialog-content');
+const escape=v=>String(v).replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const coins=n=>Math.max(0,Math.floor(n||0)).toLocaleString('en-GB'),time=ms=>C.displayTime(ms)+'s',pct=p=>(p*100).toLocaleString('en-GB',{maximumFractionDigits:p<.001?4:2})+'%';
+let storageAvailable=true,saved=null,mode='ordered',screen=null,pickerSlot=null,collectionPage=0,search='',rarityFilter='all',ownedFilter='all',revealStage='sealed',revealed=new Set(),revealPackId=null,lastFocus=null,toastTimer=null,lastCompletion=null;
+try{saved=JSON.parse(localStorage.getItem(saveKey)||'null');const p=JSON.parse(localStorage.getItem(prefKey)||'null');if(p?.mode==='shuffled')mode='shuffled';}catch{storageAvailable=false;}
+function persist(value){try{localStorage.setItem(saveKey,JSON.stringify(value));storageAvailable=true;}catch{storageAvailable=false;}renderSaveStatus();}
+const game=new C.Game(D,saved,{persist});
+const audio={enabled:false,context:null,tone(f=440,length=.16,volume=.045){if(!this.enabled)return;try{this.context??=new(window.AudioContext||window.webkitAudioContext)();this.context.resume();const t=this.context.currentTime,o=this.context.createOscillator(),g=this.context.createGain();o.type='triangle';o.frequency.setValueAtTime(f,t);g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(volume,t+.015);g.gain.exponentialRampToValueAtTime(.001,t+length);o.connect(g);g.connect(this.context.destination);o.start(t);o.stop(t+length+.02);}catch{}},card(card){const n=D.rarities.indexOf(card.rarity);this.tone(330+n*140,.22);if(card.variant==='shiny')setTimeout(()=>this.tone(990+n*80,.28,.035),100);}};
+try{audio.enabled=JSON.parse(localStorage.getItem(prefKey)||'null')?.sound===true;}catch{}
+function preferences(){try{localStorage.setItem(prefKey,JSON.stringify({mode,sound:audio.enabled}));}catch{}}
+function count(id,variant){return game.state.collection[id]?.[variant]||0;}
+function parseKey(key){if(!key)return null;const [id,variant]=key.split('|');return D.byId[id]&&['normal','shiny'].includes(variant)?{id,variant,key,card:D.byId[id]}:null;}
+function ownedSpecies(){return D.cards.filter(c=>count(c.id,'normal')+count(c.id,'shiny')>0).length;}
+function shinySpecies(){return D.cards.filter(c=>count(c.id,'shiny')>0).length;}
+function resale(key){const x=parseKey(key);return x?C.SELL_VALUES[x.card.rarity]*(x.variant==='shiny'?5:1):0;}
+function extras(){let total=0,copies=0;for(const card of D.cards)for(const variant of ['normal','shiny']){const extra=Math.max(0,count(card.id,variant)-1);copies+=extra;total+=extra*resale(card.id+'|'+variant);}return {total,copies};}
+function bind(id,fn){const el=$(id);if(el)el.onclick=fn;}
+function toast(message){$('toast').textContent=message;$('toast').classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('visible'),3000);}
+function error(result){const messages={insufficient_coins:'Complete another table to earn more Seago Coins.',pending_reveal:'Finish opening your saved pack first.',last_copy:'Your last copy stays in your collection.',no_extras:'No spare copies to sell yet.',save_failed:'Your save could not be updated. Please try again.',invalid_time:'That run could not be timed. Start a fresh run.',challenge_active:'Finish or close your current speed run first.',not_owned:'Find this card in a pack to display it.',invalid_answer:'Type a whole-number answer.',invalid_quantity:'Choose a valid number of spare copies.'};toast(messages[result?.reason]||'That action is not available right now.');}
+function renderSaveStatus(){if(!$('save-status'))return;$('save-status').textContent=storageAvailable?'Saved on this device':'Saving unavailable · use a save backup';$('save-status').classList.toggle('warn',!storageAvailable);}
+function refresh(){
+ $('coin-balance').textContent=coins(game.state.coins);$('collection-count').textContent=ownedSpecies()+'/100';$('shiny-count').textContent=shinySpecies()+' shinies discovered';$('display-summary').textContent=ownedSpecies()?ownedSpecies()+' / 100 collected':'Choose your favourites';$('shop-label').textContent=game.state.pendingReveal?'Resume pack':'Pack shop';renderSaveStatus();renderCases();renderTables();
+}
+function renderCases(){const root=$('display-cases');root.innerHTML=game.state.display.map((key,index)=>{const owned=parseKey(key);return '<button class="case-slot" data-slot="'+index+'" aria-label="'+escape(owned?'Change case '+(index+1)+': '+(owned.variant==='shiny'?'Shiny ':'')+owned.card.name:'Choose a card for case '+(index+1))+'"><span class="case-position">CASE '+(index+1)+'</span>'+(owned?A.card(owned.card,{shiny:owned.variant==='shiny',compact:true}):'<span class="empty-case"><span class="empty-card" aria-hidden="true">+</span><span>Choose a card</span><small>Earn your first pack</small></span>')+'<span class="case-edit">Edit</span></button>';}).join('');root.querySelectorAll('[data-slot]').forEach(b=>b.onclick=()=>openCollection(Number(b.dataset.slot)));}
+function renderTables(){
+ $('ordered-button').setAttribute('aria-pressed',String(mode==='ordered'));$('shuffled-button').setAttribute('aria-pressed',String(mode==='shuffled'));
+ $('table-grid').innerHTML=Array.from({length:11},(_,i)=>i+2).map(table=>{const tier=C.TABLE_TIERS[table],best=game.state.bests[C.bestKey(table,mode)],hasBest=Number.isFinite(best),reward=30*tier*(mode==='shuffled'?2:1);return '<button class="table-tile tier-'+['','one','two','three'][tier]+'" data-table="'+table+'" aria-label="'+table+' times table, '+(mode==='shuffled'?'shuffled':'in order')+', '+reward+' base coins'+(hasBest?', best '+time(best):', no record yet')+'"><span class="table-number">'+table+'<small>×</small></span><span class="table-coins">+'+reward+'</span><span class="table-best">Best '+(hasBest?time(best):'—')+'</span></button>';}).join('')+'<div class="bonus-tile"><span>BEAT YOUR BEST</span><b>+3× base coins</b><span>First clear: +1× bonus</span></div>';
+ $('table-grid').querySelectorAll('[data-table]').forEach(b=>b.onclick=()=>openChallenge(Number(b.dataset.table)));
+}
+function chooseMode(value){if(!['ordered','shuffled'].includes(value)||game.challenge)return false;mode=value;preferences();renderTables();return true;}
+function openModal(type,html){if(game.challenge&&type!=='challenge')game.abandonChallenge();screen=type;if(!dialog.open){const active=document.activeElement;lastFocus={element:active,id:active?.id,slot:active?.dataset?.slot,table:active?.dataset?.table};}content.innerHTML=html;if(!dialog.open){if(typeof dialog.showModal==='function')dialog.showModal();else dialog.setAttribute('open','');}dialog.scrollTop=0;const title=$('dialog-title');if(title){title.tabIndex=-1;title.focus({preventScroll:true});}}
+function closeDialog(){if(game.challenge)game.abandonChallenge();screen=null;if(dialog.open){if(typeof dialog.close==='function')dialog.close();else dialog.removeAttribute('open');}refresh();const target=lastFocus?.element?.isConnected?lastFocus.element:lastFocus?.id?$(lastFocus.id):lastFocus?.slot!==undefined?document.querySelector('.case-slot[data-slot="'+lastFocus.slot+'"]'):lastFocus?.table!==undefined?document.querySelector('.table-tile[data-table="'+lastFocus.table+'"]'):null;if(target)target.focus({preventScroll:true});}
+function heading(title,note='',extra=''){return '<div class="dialog-heading"><div><h2 id="dialog-title">'+escape(title)+'</h2>'+(note?'<p>'+escape(note)+'</p>':'')+'</div>'+extra+'</div>';}
+function openChallenge(table){
+ const tier=C.TABLE_TIERS[table],mult=mode==='shuffled'?2:1,base=30*tier*mult,best=game.state.bests[C.bestKey(table,mode)],hasBest=Number.isFinite(best);
+ openModal('ready','<section class="challenge-ready"><p class="eyebrow">TIMES-TABLE SPEED RUN</p><h2 id="dialog-title">'+table+' times table</h2><div class="run-table" aria-hidden="true">'+table+' ×</div><div class="run-details"><span>12 facts</span><span>'+(mode==='shuffled'?'Shuffled · 2×':'In order · 1×')+'</span><span>Table bonus · '+tier+'×</span></div><p class="coin-preview">'+base+' base coins'+(!hasBest?' + '+base+' first-clear bonus':'')+'</p><p class="muted">'+(hasBest?'Best '+time(best)+' · beat it for +'+base*3+' bonus coins.':'Set your first saved time. Beat it next time for a bigger bonus.')+'</p><button class="primary-button" id="start-run">Start clock</button><p class="small muted">Type answers and press Enter. The clock keeps running after a mistake.</p></section>');
+ bind('start-run',()=>startChallenge(table));$('start-run').focus();
+}
+function startChallenge(table){const r=game.startChallenge(table,mode,performance.now());if(!r.ok){error(r);return false;}renderChallenge();return true;}
+function renderChallenge(){const run=game.challenge;if(!run)return;const best=game.state.bests[C.bestKey(run.table,run.mode)];openModal('challenge','<section class="challenge-live"><div class="run-topline"><div><h2 id="dialog-title">'+run.table+' times table</h2><p>'+(run.mode==='shuffled'?'Shuffled · 2× coins':'In order · 1× coins')+(Number.isFinite(best)?' · Best '+time(best):'')+'</p></div><span class="stopwatch" id="run-timer" role="timer" aria-live="off">0.00s</span></div><div class="run-track" role="progressbar" aria-label="Facts answered" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0" id="run-progress"><span id="run-fill"></span></div><div class="equation" id="equation"></div><form class="answer-form" id="answer-form" autocomplete="off"><label for="answer-input">Your answer</label><input id="answer-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" aria-describedby="answer-feedback" spellcheck="false" autocomplete="off"><button class="primary-button" type="submit">Answer</button></form><p class="answer-feedback" id="answer-feedback" role="status"></p><p class="run-bottom" id="run-count">Question 1 of 12 · Enter to answer</p></section>');
+ $('answer-form').onsubmit=e=>{e.preventDefault();submitAnswer();};$('answer-input').onkeydown=e=>{if(e.code==='Enter'&&e.repeat)e.preventDefault();};updateQuestion();$('answer-input').focus();
+}
+function updateQuestion(){const run=game.challenge;if(!run)return;const fact=run.facts[run.index];$('equation').innerHTML=fact.a+'<span class="eq-symbol">×</span>'+fact.b+'<span class="eq-symbol">=</span>?';$('run-progress').setAttribute('aria-valuenow',run.index);$('run-fill').style.width=run.index/12*100+'%';$('run-count').textContent='Question '+(run.index+1)+' of 12 · Enter to answer';}
+function submitAnswer(){if(screen!=='challenge'||!game.challenge)return;const input=$('answer-input'),raw=input.value.trim();if(!/^\d{1,3}$/.test(raw)){$('answer-feedback').textContent='Type a whole-number answer.';return;}const r=game.submitAnswer(Number(raw),performance.now());if(!r.ok){error(r);return;}if(!r.correct){$('answer-feedback').textContent='Not quite — try that one again.';input.select();$('equation').classList.remove('run-error');void $('equation').offsetWidth;$('equation').classList.add('run-error');audio.tone(160,.12,.025);return;}audio.tone(410+(game.challenge?.index||12)*18,.06,.018);if(r.complete){lastCompletion=r.reward;refresh();renderResult(r.reward);return;}input.value='';$('answer-feedback').textContent='';updateQuestion();input.focus();}
+function renderResult(reward){const headline=reward.firstClear?'First record set!':reward.newBest?'New personal best!':'Run complete.';openModal('result','<section class="challenge-result '+(reward.newBest?'new-record':'')+'"><p class="eyebrow">'+reward.table+' TIMES TABLE · '+(reward.mode==='shuffled'?'SHUFFLED':'IN ORDER')+'</p><h2 id="dialog-title">'+headline+'</h2><div class="finish-time">'+time(reward.timeMs)+'</div><p class="previous-best">'+(Number.isFinite(reward.previousBest)?'Previous best '+time(reward.previousBest):'Your first saved time for this challenge.')+'</p><div class="earned-coins"><span class="coin-icon" aria-hidden="true">S</span>+'+coins(reward.total)+'</div><div class="reward-breakdown"><span>Run <b>+'+reward.base+'</b></span>'+(reward.bonus?'<span>'+(reward.firstClear?'First-clear bonus':'Record bonus')+' <b>+'+reward.bonus+'</b></span>':'<span>Beat your best for +'+reward.base*3+' bonus</span>')+'</div><div class="button-row"><button class="primary-button" id="result-shop">Visit pack shop</button><button class="secondary-button" id="try-again">Run again</button><button class="quiet-button" id="result-done">Done</button></div></section>');bind('result-shop',openShop);bind('try-again',()=>openChallenge(reward.table));bind('result-done',closeDialog);$('result-shop').focus();const wallet=document.querySelector('.wallet');wallet.classList.remove('pop');void wallet.offsetWidth;wallet.classList.add('pop');audio.tone(reward.newBest?880:660,.35,.04);}
+function tick(now=performance.now()){if(screen==='challenge'&&game.challenge&&$('run-timer'))$('run-timer').textContent=time(Math.max(0,now-game.challenge.startedAt));}
+function frame(now){tick(now);requestAnimationFrame(frame);}
+function packPicture(type){return '<div class="pack-picture '+type+'" aria-hidden="true"><small>SEAGOMON</small><span class="pack-mark">'+(type==='shiny'?'✦':type==='lucky'?'✧':'S')+'</span><b>'+type.toUpperCase()+'</b><small>5 CARDS</small></div>';}
+function openShop(){if(game.state.pendingReveal){openReveal();return;}pickerSlot=null;openModal('shop',heading('Pack shop','Five cards in every pack. Every rarity can be shiny.','<div class="modal-stats"><span class="coin-icon" aria-hidden="true">S</span><strong>'+coins(game.state.coins)+'</strong></div>')+'<div class="pack-grid">'+['normal','lucky','shiny'].map(type=>{const pack=C.PACKS[type],afford=game.state.coins>=pack.cost;return '<article class="pack-offer"><h3>'+pack.name+'</h3><p class="pack-note">'+({normal:'A little of everything.',lucky:'Better chances of Rare, Epic and Mega Rare.',shiny:'At least one guaranteed shiny.'}[type])+'</p>'+packPicture(type)+'<div class="pack-price"><span class="coin-icon" aria-hidden="true">S</span>'+pack.cost+'</div><button class="primary-button" data-buy="'+type+'" '+(!afford?'disabled':'')+'>'+(!afford?'Need '+coins(pack.cost-game.state.coins)+' more':'Buy pack')+'</button><button class="odds-button" data-odds="'+type+'">View pull chances</button></article>';}).join('')+'</div><div class="pack-bottom"><span>Coins are earned by completing times tables.</span><span>Duplicates can be sold from your collection.</span></div>');content.querySelectorAll('[data-buy]').forEach(b=>b.onclick=()=>purchase(b.dataset.buy));content.querySelectorAll('[data-odds]').forEach(b=>b.onclick=()=>renderOdds(b.dataset.odds));}
+function renderOdds(type){const odds=C.getPackOdds(type,D),pack=C.PACKS[type];openModal('odds',heading(pack.name+' chances','Chances are per card. Species within each rarity have equal odds.')+'<table class="odds-table"><thead><tr><th>Rarity</th><th>Each card</th><th>In a five-card pack</th></tr></thead><tbody>'+odds.rarities.map(row=>'<tr><td><span class="rarity-chip rarity-'+row.rarity+'">'+D.rarityInfo[row.rarity].label+'</span></td><td>'+pct(row.draw)+'</td><td>'+pct(row.atLeastOne)+' at least one</td></tr>').join('')+'</tbody></table><p class="odds-note">'+(type==='shiny'?'One randomly chosen slot is guaranteed shiny; each other slot has a 4% shiny chance. The guaranteed shiny can be any rarity.':'Each card has a '+pct(pack.shinyRate)+' shiny chance. A five-card pack has a '+pct(odds.atLeastOneShiny)+' chance of at least one shiny.')+'<br>Duplicates are possible. Find a card’s individual chances on its collection page.</p><div class="button-row"><button class="secondary-button" id="odds-back">Back to packs</button></div>');bind('odds-back',openShop);}
+function purchase(type){const result=game.buyPack(type);if(!result.ok){error(result);return;}refresh();revealStage='sealed';revealed.clear();revealPackId=result.pendingReveal.id;openReveal();audio.tone(350,.22,.05);}
+function openReveal(){const pack=game.state.pendingReveal;if(!pack){openShop();return;}if(revealPackId!==pack.id){revealPackId=pack.id;revealed=new Set();revealStage='sealed';}renderReveal();}
+function renderReveal(){const pack=game.state.pendingReveal;if(!pack)return;const title=C.PACKS[pack.type].name;openModal('reveal','<section class="pack-opening"><p class="eyebrow">'+(revealStage==='sealed'?'YOUR PACK IS READY':'YOUR FIVE CARDS')+'</p><h2 id="dialog-title">'+title+'</h2>'+(revealStage==='sealed'?'<button id="tear-pack" aria-label="Open '+escape(title)+'" style="background:transparent;padding:0">'+packPicture(pack.type)+'</button><p class="muted">Tap the pack to open it.</p><div class="button-row"><button class="primary-button" id="open-pack">Open pack</button></div>':'<div class="reveal-grid">'+pack.cards.map((card,index)=>{const isShown=revealed.has(index),definition=D.byId[card.id],totalThisPack=pack.cards.filter(c=>c.key===card.key).length,before=Math.max(0,count(card.id,card.variant)-totalThisPack),newCard=before===0&&pack.cards.findIndex(c=>c.key===card.key)===index;return '<button class="reveal-button" data-reveal="'+index+'" aria-label="'+escape(isShown?(card.variant==='shiny'?'Shiny ':'')+definition.name:'Reveal card '+(index+1))+'">'+(isShown?A.card(definition,{shiny:card.variant==='shiny',compact:true}):'<span class="card-back"><b>✦</b><span>SEAGOMON</span><span>Tap to reveal</span></span>')+'<span class="reveal-tag">'+(isShown?(newCard?'NEW!':'Extra copy'):'')+'</span></button>';}).join('')+'</div><div class="button-row"><button class="'+(revealed.size===5?'primary-button':'secondary-button')+'" id="reveal-all">'+(revealed.size===5?'Add to collection':'Reveal all')+'</button></div>')+'</section>');
+ if(revealStage==='sealed'){const open=()=>{revealStage='cards';audio.tone(510,.17,.045);renderReveal();};bind('open-pack',open);bind('tear-pack',open);$('open-pack').focus();}else{content.querySelectorAll('[data-reveal]').forEach(b=>b.onclick=()=>revealCard(Number(b.dataset.reveal)));bind('reveal-all',()=>{if(revealed.size===5){finishReveal();return;}for(let i=0;i<5;i++)revealed.add(i);audio.card(pack.cards.slice().sort((a,b)=>D.rarities.indexOf(b.rarity)-D.rarities.indexOf(a.rarity))[0]);renderReveal();});$('reveal-all').focus();}}
+function revealCard(index){const pack=game.state.pendingReveal;if(!pack||revealed.has(index))return;revealed.add(index);audio.card(pack.cards[index]);renderReveal();}
+function finishReveal(){const r=game.acknowledgeReveal();if(!r.ok){error(r);return;}revealPackId=null;revealed.clear();refresh();closeDialog();toast('Five cards added. Choose your favourites for the display case.');}
+function openCollection(slot=null){pickerSlot=Number.isInteger(slot)?slot:null;collectionPage=0;search='';rarityFilter='all';ownedFilter=pickerSlot===null?'all':'owned';renderCollection();}
+function collectionEntries(){let list=[];for(const card of D.cards){const normal=count(card.id,'normal'),shiny=count(card.id,'shiny'),owned=normal+shiny>0;if(rarityFilter!=='all'&&card.rarity!==rarityFilter)continue;if(search&&!card.name.toLowerCase().includes(search.toLowerCase()))continue;if(ownedFilter==='owned'&&!owned)continue;if(ownedFilter==='missing'&&owned)continue;if(ownedFilter==='extras'&&normal<2&&shiny<2)continue;if(pickerSlot!==null){for(const variant of ['normal','shiny'])if(count(card.id,variant)>0)list.push({card,id:card.id,variant,key:card.id+'|'+variant,normal,shiny,owned:true});}else{const variant=shiny?'shiny':'normal';list.push({card,id:card.id,variant,key:card.id+'|'+variant,normal,shiny,owned});}}return list;}
+function renderCollection(){const list=collectionEntries(),pages=Math.max(1,Math.ceil(list.length/12));collectionPage=Math.min(collectionPage,pages-1);const slice=list.slice(collectionPage*12,collectionPage*12+12),extra=extras(),picking=pickerSlot!==null;openModal('collection',heading(picking?'Choose a card for case '+(pickerSlot+1):'Your collection',picking?'Choose any owned normal or shiny card.':ownedSpecies()+' / 100 monsters · '+shinySpecies()+' shiny variants',picking?'<button class="quiet-button" id="clear-case" '+(!game.state.display[pickerSlot]?'disabled':'')+'>Clear case</button>':'<button class="secondary-button" id="sell-extras" '+(!extra.copies||game.state.pendingReveal?'disabled':'')+'>Sell extras · +'+coins(extra.total)+'</button>')+'<div class="collection-controls"><input id="collection-search" type="search" placeholder="Find a monster" value="'+escape(search)+'" aria-label="Search monsters"><select id="rarity-filter" aria-label="Filter rarity"><option value="all">All rarities</option>'+D.rarities.map(r=>'<option value="'+r+'" '+(rarityFilter===r?'selected':'')+'>'+D.rarityInfo[r].label+'</option>').join('')+'</select>'+(picking?'':'<select id="owned-filter" aria-label="Filter ownership"><option value="all">All 100 cards</option><option value="owned" '+(ownedFilter==='owned'?'selected':'')+'>Owned</option><option value="missing" '+(ownedFilter==='missing'?'selected':'')+'>Not found</option><option value="extras" '+(ownedFilter==='extras'?'selected':'')+'>Spare copies</option></select>')+'</div>'+(slice.length?'<div class="collection-grid">'+slice.map(x=>'<button class="collection-card '+(!x.owned?'is-unowned':'')+'" data-key="'+x.key+'" aria-label="'+escape((x.variant==='shiny'?'Shiny ':'')+x.card.name+(picking?', display in case '+(pickerSlot+1):', view card'))+'">'+A.card(x.card,{shiny:x.variant==='shiny',compact:true,count:picking?count(x.id,x.variant):undefined})+'<span class="owned-note">'+(x.owned?(picking?count(x.id,x.variant)+' owned':x.normal+' normal · '+x.shiny+' shiny'):'Not found yet')+'</span></button>').join('')+'</div>':'<p class="empty-message">'+(picking?'Open your first pack to find cards for this case.':'No cards match those filters.')+'</p>')+'<div class="collection-pagination"><span>'+list.length+' '+(picking?'owned variants':'cards')+' · page '+(collectionPage+1)+' of '+pages+'</span><div class="pager-buttons"><button class="quiet-button" id="previous-page" '+(collectionPage===0?'disabled':'')+'>Previous</button><button class="quiet-button" id="next-page" '+(collectionPage===pages-1?'disabled':'')+'>Next</button></div></div>');
+ content.querySelectorAll('[data-key]').forEach(b=>b.onclick=()=>{if(picking){const r=game.setDisplay(pickerSlot,b.dataset.key);if(!r.ok){error(r);return;}closeDialog();}else renderDetail(b.dataset.key);});
+ $('collection-search').oninput=e=>{search=e.target.value;const selection=e.target.selectionStart;collectionPage=0;renderCollection();$('collection-search').focus();try{$('collection-search').setSelectionRange(selection,selection)}catch{}};
+ $('rarity-filter').onchange=e=>{rarityFilter=e.target.value;collectionPage=0;renderCollection();};if($('owned-filter'))$('owned-filter').onchange=e=>{ownedFilter=e.target.value;collectionPage=0;renderCollection();};bind('previous-page',()=>{collectionPage--;renderCollection();});bind('next-page',()=>{collectionPage++;renderCollection();});bind('clear-case',()=>{const r=game.setDisplay(pickerSlot,null);if(!r.ok){error(r);return;}closeDialog();});bind('sell-extras',()=>{const r=game.bulkSellExtras();if(!r.ok){error(r);return;}refresh();renderCollection();toast('Sold '+r.sold+' spare copies for '+r.gained+' coins. Your last copies are safe.');});}
+function renderDetail(key){const x=parseKey(key);if(!x)return;const owned=count(x.id,x.variant),extra=Math.max(0,owned-1),card=x.card;openModal('detail','<div class="detail-layout">'+A.card(card,{shiny:x.variant==='shiny'})+'<section class="detail-copy"><p class="eyebrow">CARD #'+String(card.number).padStart(3,'0')+'</p><h2 id="dialog-title">'+escape(card.name)+'</h2><p>'+escape(card.description)+'</p><div class="detail-variants"><button id="normal-variant" class="'+(x.variant==='normal'?'active':'')+'">Normal · '+count(x.id,'normal')+'</button><button id="shiny-variant" class="'+(x.variant==='shiny'?'active':'')+'">Shiny · '+count(x.id,'shiny')+'</button></div><div class="detail-metadata"><span class="rarity-chip rarity-'+card.rarity+'">'+D.rarityInfo[card.rarity].label+'</span><span>'+escape(card.element)+'</span></div>'+(owned?'<p class="small muted">Display this '+(x.variant==='shiny'?'shiny ':'')+'card:</p><div class="detail-actions">'+game.state.display.map((current,i)=>'<button class="'+(current===key?'primary-button':'secondary-button')+'" data-case="'+i+'">Case '+(i+1)+(current===key?' ✓':'')+'</button>').join('')+'</div>':'<p>Find this variant in a pack to display it.</p>')+'<div class="detail-actions"><button id="sell-one" class="quiet-button" '+(!extra||game.state.pendingReveal?'disabled':'')+'>Sell one extra · +'+resale(key)+'</button>'+(extra>1?'<button id="sell-this-extras" class="quiet-button" '+(game.state.pendingReveal?'disabled':'')+'>Sell '+extra+' extras · +'+coins(extra*resale(key))+'</button>':'')+'</div><p class="small muted">'+(extra?extra+' spare '+(extra===1?'copy':'copies')+'. The last copy is kept.':'Your last copy of each variant is always kept.')+'</p><div class="card-chances"><b>Chance of finding this '+(x.variant==='shiny'?'shiny':'normal')+' variant in a five-card pack:</b><br>'+['normal','lucky','shiny'].map(type=>{const odds=C.getPackOdds(type,D).byCard[x.id];return C.PACKS[type].name+': '+pct(x.variant==='shiny'?odds.shinyAtLeastOne:odds.normalAtLeastOne);}).join(' · ')+'<br>Base species per draw in Normal packs: '+pct(C.getPackOdds('normal',D).byCard[x.id].draw)+'.</div><div class="button-row" style="justify-content:flex-start"><button id="detail-back" class="secondary-button">Back to collection</button></div></section></div>');
+ bind('normal-variant',()=>renderDetail(x.id+'|normal'));bind('shiny-variant',()=>renderDetail(x.id+'|shiny'));bind('detail-back',renderCollection);content.querySelectorAll('[data-case]').forEach(b=>b.onclick=()=>{const r=game.setDisplay(Number(b.dataset.case),key);if(!r.ok){error(r);return;}refresh();renderDetail(key);toast('Display case updated.');});const sell=quantity=>{const r=game.sellVariant(key,quantity);if(!r.ok){error(r);return;}refresh();renderDetail(key);toast('Sold '+r.sold+' spare '+(r.sold===1?'copy':'copies')+' for '+r.gained+' coins.');};bind('sell-one',()=>sell(1));bind('sell-this-extras',()=>sell(extra));}
+function openRules(){openModal('rules',heading('How it works')+'<div class="rules-grid"><article><h3>Race twelve facts</h3><p>Pick any table from 2 to 12. In order uses ×1 to ×12; shuffled asks the same twelve facts in a different order. Type your answer and press Enter. Mistakes keep the clock running until corrected.</p></article><article><h3>Earn more coins</h3><p>Each completed run starts at 30 coins. Table bonuses: 2/5/10 are 1×; 3/4/9/11 are 2×; 6/7/8/12 are 3×. Shuffled doubles it again. First clears add one base reward; beating an existing best adds three base rewards.</p></article><article><h3>Beat your own record</h3><p>Each table and order has its own saved best. A 23.00s record becomes 22.00s when you beat it, and pays a big bonus. Ties and slower runs still earn base coins. Time is compared to the same hundredth of a second shown on screen.</p></article><article><h3>Collect and display</h3><p>There are 100 monsters and a shiny version of each. Open five-card packs, choose your display cards, and sell spare normal or shiny copies. The last copy of each variant is kept. Pack odds are shown in the shop. Progress saves on this browser and device.</p></article></div>');}
+function downloadJSON(){const blob=new Blob([JSON.stringify(game.serialize(),null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='seagomon-save.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Save backup downloaded.');}
+function openOptions(){openModal('options',heading('Game options')+'<div class="settings-buttons"><button class="secondary-button" id="sound-toggle">Sound: '+(audio.enabled?'on':'off')+'</button><button class="secondary-button" id="fullscreen-toggle">'+(document.fullscreenElement?'Exit fullscreen':'Enter fullscreen')+'</button><button class="secondary-button" id="save-backup">Download save backup</button><button class="quiet-button" id="restore-save">Restore a save file</button><a class="quiet-button" id="offline-download" download="seagomon-trading-game.html" href="'+escape(location.protocol==='file:'?location.href:'./seagomon-trading-game.html')+'">Download offline game</a></div><p class="settings-note">'+(storageAvailable?'Your coins, records, cards and cases save in this browser.':'Browser saving is unavailable. Keep this page open, or download a save backup before leaving.')+' Use a save file to move your collection to another browser or device.</p>');bind('sound-toggle',()=>{audio.enabled=!audio.enabled;preferences();audio.tone(440);openOptions();});bind('fullscreen-toggle',async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();openOptions();}catch{toast('Your browser’s fullscreen shortcut is also available.');}});bind('save-backup',downloadJSON);bind('restore-save',()=>$('restore-input').click());}
+$('restore-input').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{if(file.size>2*1024*1024)throw Error('Large file');const value=JSON.parse(await file.text());if(value.game!=='seagomon-trading'||value.version!==1)throw Error('Wrong game');const restored=new C.Game(D,value);game.abandonChallenge();game.state=restored.serialize();persist(game.serialize());refresh();closeDialog();toast('Your save has been restored.');}catch{toast('That is not a valid Seagomon save file.');}finally{e.target.value='';}};
+bind('dialog-close',closeDialog);dialog.addEventListener('cancel',e=>{e.preventDefault();closeDialog();});bind('collection-button',()=>openCollection());bind('shop-button',openShop);bind('options-button',openOptions);bind('rules-button',openRules);bind('ordered-button',()=>chooseMode('ordered'));bind('shuffled-button',()=>chooseMode('shuffled'));$('home').onclick=e=>{e.preventDefault();closeDialog();};
+refresh();requestAnimationFrame(frame);
+return {openChallenge,startChallenge,submitAnswer,openShop,purchase,openReveal,revealCard,finishReveal,openCollection,renderCollection,renderDetail,openOptions,openRules,closeDialog,chooseMode,tick,refresh,get game(){return game},get mode(){return mode},get screen(){return screen},get lastCompletion(){return lastCompletion},get storageAvailable(){return storageAvailable}};
+})();
+</script>
+</body></html>
