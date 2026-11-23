@@ -1,12 +1,20 @@
 # Super Smash Seago
 
-Updated 20 November 2026. A self-contained laptop platform fighter with fifteen fighters, fifteen arenas, a fourteen-rival solo campaign, local two-player battles and nets-of-shapes comeback questions.
+Updated 23 November 2026. A self-contained laptop platform fighter with fifteen fighters, fifteen arenas, a fourteen-rival solo campaign, local two-player battles and nets-of-shapes comeback questions.
 
 ## Download and play
 
 Open **super-smash-seago.html** on GitHub and choose **Download raw file** (the down-arrow button). Open the saved HTML in a current desktop browser. It works offline with no installation, account, assets folder or server.
 
 For the editable source ZIP, download **download-backup.html** with the same down-arrow button, open that saved page, and click **Download source backup ZIP**. That downloader embeds the complete backup and also works offline.
+
+## Easier character unlocks
+
+Campaign rivals now give less experienced players more room to learn. They attack less often, choose fewer heavy/special attacks, and pause longer between attacks. Their hits deal40% less damage and28% less launch strength; your hits against them deal45% more damage and28% more launch strength. They also take4.5seconds to return after a knockout, giving you more recovery time. Later fights still get gradually tougher.
+
+These changes apply only to valid solo campaign matches. Two-player combat, five lives, nets questions, wrong-answer penalties, character/arena order and saved unlocks are preserved. You still earn each fighter and arena by winning their challenge. Replace the older download at the same file location in the same browser to retain local saved progress.
+
+The expanded game from before this change is preserved in the source ZIP as `previous-release/super-smash-seago-before-easier-campaign.html`, with its engine/campaign/UI source and hashes alongside the new editable modules.
 
 ## New fighters and worlds
 
@@ -56,7 +64,7 @@ All fifteen specials are offensive charged attacks with readable wind-ups, subst
 
 Sky crystals first fall at roughly ten active seconds, then every twenty. Three twelve-second forms cycle fairly: fire-breathing **Dragon**, charging **War elephant**, and a very fast armored **Gladiator lion**. Each replaces normal/heavy/special moves; charged specials still need a full bar. A form ends on expiry or knockout. The lion runs at480units/second before other status effects. Crystals wait for a returning support if Makeup Box is temporarily entirely gone.
 
-The computer uses ordinary movement/attack inputs and the same physics. Its own quiz comeback takes2.5seconds; it never answers a pupil’s question. It is a deterministic heuristic rather than a human or trained opponent.
+The computer uses ordinary movement/attack inputs and the same physics. Its own campaign quiz comeback takes4.5seconds; it never answers a pupil’s question. It is a deterministic heuristic rather than a human or trained opponent.
 
 ## Source and verification
 
@@ -64,6 +72,6 @@ The ZIP contains the current offline HTML, editable modules/build script, tests/
 
 Node.js tests use Playwright and Chromium for browser checks. Some scripts retain development paths such as `work/seago`; arrange that path or adjust it to reproduce them elsewhere. Companion `.cjs` fixtures are included.
 
-Reports distinguish automated physics/combat simulations, prepared knockout/attack fixtures and actual browser clicks/keys/wheel/fullscreen events. Unlock fixtures are not manually won campaigns. Offline HTML contents were tested with networking disabled; the managed browser blocks direct file-URL navigation. **No manual two-person playthrough, class trial or human balance assessment has been performed.** See TESTING.md, ROSTER.md, WORLDS.md and source validation notes.
+Reports distinguish automated physics/combat simulations, prepared knockout/attack fixtures and actual browser clicks/keys/wheel/fullscreen events. Unlock fixtures are not manually won campaigns. Offline HTML contents were tested with networking disabled; the managed browser blocks direct file-URL navigation. **No manual two-person playthrough, class trial or human balance assessment has been performed.** For this difficulty update, all9 accessibility checks,189 engine checks and17 campaign groups pass. Paired scripted-controller fights on every arena show a substantial improvement; those controllers are not pupils and their win counts are not a classroom success-rate estimate. The supported browser tool was unavailable for this update, so earlier browser reports belong to the previous release; no new browser or manual playthrough is claimed. See TESTING.md, ROSTER.md, WORLDS.md and source validation notes.
 
 Algorithm Gate, Slant Gate, Lockstep and the earlier Foldbreak Arena release remain unchanged. All rendering is procedural with no external image assets.
