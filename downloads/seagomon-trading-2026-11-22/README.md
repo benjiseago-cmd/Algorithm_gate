@@ -8,7 +8,15 @@ Direct hosted downloads: `seagomon-200-offline.zip` contains the ready-to-play H
 
 Open the hosted game, or download `seagomon-trading-game.html` and open it in a current desktop browser. On GitHub choose **Download raw file**. The HTML contains all illustrations, scenes, sounds and game code; playing offline needs no installation or network connection.
 
-Four editable display cases, all eleven tables and the pack shop remain on the laptop dashboard. It targets 1024×768 and 1366×768 at normal zoom; smaller screens use a scrolling fallback. Dialogs can scroll internally.
+Four editable display cases, all eleven tables and the pack shop remain on the laptop dashboard. The dashboard now fits the available browser height on laptop viewports from851×480 CSS pixels, including shorter windows caused by browser chrome or OS scaling. Smaller windows retain a scrolling fallback. Display names reserve two lines while their artwork adapts to the available space. Dialogs can scroll internally.
+
+## Screen fit and fullscreen
+
+The visible **Full screen** button is at the bottom right. A matching expand icon in popup windows and the Options control use the same toggle. They enter or exit fullscreen for the whole page; Escape updates their labels automatically. Switching fullscreen does not restart a question, abandon a run, reroll a pack or close a popup. Browsers without a working fullscreen API show a helpful F11 message.
+
+Display cards keep their full wrapped names and rarity visible. Artwork can shrink inside its own clipped scene; neighbouring atlas panels cannot bleed into empty margins. Field notes remain available on collection/detail cards.
+
+Always extract the game ZIP before opening its HTML. Opening directly inside a ZIP can use a temporary file location, as in the reported screenshot. Before moving copies, use **Options → Download save backup**, then restore that file in the new copy.
 
 ## The 200-card collection
 
