@@ -4,6 +4,8 @@ The same times-table speed game, now with 200 original illustrated creature scen
 
 ## Play
 
+Direct hosted downloads: `seagomon-200-offline.zip` contains the ready-to-play HTML; `seagomon-trading-source-backup.zip` contains the complete game and editable source. Extract either ZIP before opening its HTML.
+
 Open the hosted game, or download `seagomon-trading-game.html` and open it in a current desktop browser. On GitHub choose **Download raw file**. The HTML contains all illustrations, scenes, sounds and game code; playing offline needs no installation or network connection.
 
 Four editable display cases, all eleven tables and the pack shop remain on the laptop dashboard. It targets 1024×768 and 1366×768 at normal zoom; smaller screens use a scrolling fallback. Dialogs can scroll internally.
@@ -62,7 +64,7 @@ Existing saves migrate automatically, keeping coins, cards, records, cases and s
 
 `seagomon-trading-before-illustrated.html` preserves the last pixel-art trading edition unchanged, SHA-256 `b1e7f4f019a381349d2f3e5f56df450225d1cc6afdc6f5d9f6fdf55d4f1770f6`.
 
-Download/open `download-backup.html` and click its ZIP button for the self-contained game, all three preserved HTML files, editable modules, optimized illustration assets and test reports. In the extracted `source` folder, `python build.py` rebuilds the same HTML; `npm ci` then `npm test` runs the simulations. The Python build regenerates the embedded image module from the included WebP atlases using only the Python standard library; no image editor is needed. The generated `illustrations.js` is omitted from the ZIP to avoid duplicating all artwork, and is recreated automatically. `node build-catalog.mjs` regenerates the 200-card catalogue from the original catalogue data and all three new-monster data files. Full-resolution generated masters remain in the development checkout; the editable source backup includes all twenty optimized artwork atlases used by the game.
+Download/open `download-backup.html` and click its ZIP button for the self-contained game, all three preserved HTML files, editable modules, all artwork and test reports. In the extracted `source` folder, `python build.py` rebuilds the same HTML; `npm ci` then `npm test` runs the simulations. The Python build regenerates the embedded image module from the included WebP atlases using only the Python standard library; no image editor is needed. Artwork is stored once inside the supplied offline HTML. The first source build extracts all20 editable WebP atlases from that HTML and recreates `illustrations.js` automatically. Keep the extracted `source` folder beside the included game HTML. `node build-catalog.mjs` regenerates the 200-card catalogue from the original catalogue data and all three new-monster data files. Full-resolution generated masters remain in the development checkout; the editable source backup contains every optimized artwork atlas inside the self-contained game, with automatic extraction for editing.
 
 ## Verification
 
