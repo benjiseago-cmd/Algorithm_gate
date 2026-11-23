@@ -549,6 +549,7 @@ const FOLD_ENGINE = (() => {
       special:creatureMove('Colosseum roar','lionRoar',310,48,875,.32,.25,.45,{description:'Unleash a huge gladiator roar that launches nearby rivals. Requires a full special bar.'})}
   };
   const getMoveSpeed=p=>((p?.creature&&creatures[p.creature.type]?.speed)||p?.fighter?.speed||240)*(p?.overclock>0?1.35:1)*(p?.slow>0?.68:1);
+  const CAMPAIGN_BALANCE=Object.freeze({rivalDamage:.60,rivalKnockback:.72,rivalDamageTaken:1.45,rivalKnockbackTaken:1.28});
   const seedHash=value=>{let h=2166136261;for(const c of String(value)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;};
   function sweep(x,y,dx,dy,r,rect){
     const minX=rect.x-r,maxX=rect.x+rect.w+r,minY=rect.y-r,maxY=rect.y+rect.h+r;
@@ -574,6 +575,7 @@ const FOLD_ENGINE = (() => {
     }
     getMaxJumps(p){return getMaxJumps(p);}
     getMoveSpeed(p){return getMoveSpeed(p);}
+    _campaignRival(){const rival=this.players[1];return this.options.cpuPlayer===1&&typeof SEAGO_CAMPAIGN!=='undefined'&&SEAGO_CAMPAIGN.STAGES.some(stage=>stage.id===this.options.campaignStage&&stage.fighterId===rival?.fighterId&&stage.arenaId===this.arena?.id);}
     getMoves(p){return p.creature&&creatures[p.creature.type]||p.fighter;}
     _random(){this._rngState=(Math.imul(this._rngState,1664525)+1013904223)>>>0;return this._rngState/4294967296;}
     _issueQuestion(p,feedback=''){
@@ -658,8 +660,9 @@ const FOLD_ENGINE = (() => {
     }
     _hit(target,ownerId,move,sourceX,extra={}){
       const owner=this.players[ownerId];if(target.status!=='alive'||target.invuln>0||ownerId===target.id)return false;
-      const damage=move.damage||0;target.damage=clamp(target.damage+damage,0,350);const dir=extra.dir||Math.sign(target.x+target.w/2-sourceX)||owner?.dir||1;
-      const resist=(target.overclock>0?.56:1)*(target.rootGuard>0?.65:1)*(target.creature?.type==='elephant'?.72:1),strength=((move.knock||220)+target.damage*(extra.scale??2.15))*resist/target.fighter.weight;
+      const supported=this._campaignRival(),rivalAttacks=supported&&ownerId===1&&target.id===0,rivalHit=supported&&ownerId===0&&target.id===1;
+      const damage=(move.damage||0)*(rivalAttacks?CAMPAIGN_BALANCE.rivalDamage:rivalHit?CAMPAIGN_BALANCE.rivalDamageTaken:1);target.damage=clamp(target.damage+damage,0,350);const dir=extra.dir||Math.sign(target.x+target.w/2-sourceX)||owner?.dir||1;
+      const resist=(target.overclock>0?.56:1)*(target.rootGuard>0?.65:1)*(target.creature?.type==='elephant'?.72:1),strength=((move.knock||220)+target.damage*(extra.scale??2.15))*resist/target.fighter.weight*(rivalAttacks?CAMPAIGN_BALANCE.rivalKnockback:rivalHit?CAMPAIGN_BALANCE.rivalKnockbackTaken:1);
       target.vx=clamp(dir*strength,-1450,1450);target.vy=clamp(-strength*(extra.vertical??move.vertical??.68),-1550,400);target.grounded=false;target.standingOn=null;target.stun=Math.max(target.stun,extra.stun??clamp(.11+strength/2200,.13,.58));target.controlLock=0;target.flight=0;target._pendingInterrupt=true;target.diveQuake=null;target.lastHitBy=ownerId;target.lastHitTime=this.time;target.slow=Math.max(target.slow,move.slow||0);
       if(owner){owner.stats.hits++;owner.stats.damageDealt+=damage;if(!extra.special)owner.meter=clamp(owner.meter+7+damage*.7,0,100);}target.meter=clamp(target.meter+4+damage*.65,0,100);
       this.shake=Math.max(this.shake,Math.min(9,3+damage*.3));this.effect('hit',target.x+target.w/2,target.y+target.h*.45,owner?.fighter.color||'#fff',{r:20+damage,life:.25,maxLife:.25});this.emit('hit',{player:target.id,owner:ownerId,damage});return true;
@@ -807,7 +810,7 @@ const FOLD_ENGINE = (() => {
       }
     }
   }
-  return {Game,sweep,getMaxJumps,getMoveSpeed,creatures};
+  return {Game,CAMPAIGN_BALANCE,sweep,getMaxJumps,getMoveSpeed,creatures};
 })();
 
 
@@ -817,20 +820,20 @@ const FOLD_ENGINE = (() => {
 const SEAGO_CAMPAIGN = (() => {
   'use strict';
   const STAGES = [
-    {id:'ram',fighterId:'ram',arenaId:'foundry',difficulty:.20,title:'The first bell',description:'Meet Ram at the waterfall foundry. Watch for the horn rush.'},
-    {id:'girlygirl',fighterId:'girlygirl',arenaId:'makeup',difficulty:.24,title:'A touch of sparkle',description:'Keep moving through Girly Girl’s Makeup Box: every platform can crumble.'},
-    {id:'kit',fighterId:'kit',arenaId:'rooftops',difficulty:.28,title:'Rooftop mischief',description:'Catch Kit between the travelling roof bridges and spark bombs.'},
-    {id:'napoleon',fighterId:'napoleon',arenaId:'waterloo',difficulty:.32,title:'The Waterloo challenge',description:'Cross the battlefield and watch for Napoleon’s cannon fire.'},
-    {id:'moss',fighterId:'moss',arenaId:'grove',difficulty:.36,title:'Lessons in the leaves',description:'Follow Moss through the grove’s growing, swaying branches.'},
-    {id:'rook',fighterId:'rook',arenaId:'skyrail',difficulty:.40,title:'The raven express',description:'Rook takes the high route. Keep an eye on the next carriage.'},
-    {id:'edmund',fighterId:'edmund',arenaId:'lanternwood',difficulty:.45,title:'Into the lanternwood',description:'Follow Edmund through the lantern-lit woodland and give his enchanted blade room.'},
-    {id:'glint',fighterId:'glint',arenaId:'cavern',difficulty:.49,title:'Crystal clear',description:'Glint’s mirror can send chalk straight back. Try a close ruler tap.'},
-    {id:'nova',fighterId:'nova',arenaId:'observatory',difficulty:.53,title:'A little space',description:'Take the orbiting platforms and step out of Nova’s gravity well.'},
-    {id:'bond',fighterId:'bond',arenaId:'spybase',difficulty:.58,title:'Licence to challenge',description:'Find 007 in the spy base. Close the distance between his precise shots.'},
-    {id:'stag',fighterId:'stag',arenaId:'docks',difficulty:.62,title:'Across the tide',description:'Stag’s long branch controls the docks. Approach from a different height.'},
-    {id:'kane',fighterId:'kane',arenaId:'stadium',difficulty:.66,title:'The final whistle',description:'Face Harry Kane in the stadium and avoid the full-power finish.'},
-    {id:'bolt',fighterId:'bolt',arenaId:'crucible',difficulty:.71,title:'The furnace exam',description:'Bolt is heavy, but an unstable perch can change the whole contest.'},
-    {id:'ember',fighterId:'ember',arenaId:'eclipse',difficulty:.75,title:'One final spark',description:'Meet Ember at the summit. Win the last challenge to open the whole roster.'}
+    {id:'ram',fighterId:'ram',arenaId:'foundry',difficulty:.10,title:'The first bell',description:'Meet Ram at the waterfall foundry. Watch for the horn rush.'},
+    {id:'girlygirl',fighterId:'girlygirl',arenaId:'makeup',difficulty:.12,title:'A touch of sparkle',description:'Keep moving through Girly Girl’s Makeup Box: every platform can crumble.'},
+    {id:'kit',fighterId:'kit',arenaId:'rooftops',difficulty:.14,title:'Rooftop mischief',description:'Catch Kit between the travelling roof bridges and spark bombs.'},
+    {id:'napoleon',fighterId:'napoleon',arenaId:'waterloo',difficulty:.16,title:'The Waterloo challenge',description:'Cross the battlefield and watch for Napoleon’s cannon fire.'},
+    {id:'moss',fighterId:'moss',arenaId:'grove',difficulty:.18,title:'Lessons in the leaves',description:'Follow Moss through the grove’s growing, swaying branches.'},
+    {id:'rook',fighterId:'rook',arenaId:'skyrail',difficulty:.20,title:'The raven express',description:'Rook takes the high route. Keep an eye on the next carriage.'},
+    {id:'edmund',fighterId:'edmund',arenaId:'lanternwood',difficulty:.22,title:'Into the lanternwood',description:'Follow Edmund through the lantern-lit woodland and give his enchanted blade room.'},
+    {id:'glint',fighterId:'glint',arenaId:'cavern',difficulty:.24,title:'Crystal clear',description:'Glint’s mirror can send chalk straight back. Try a close ruler tap.'},
+    {id:'nova',fighterId:'nova',arenaId:'observatory',difficulty:.26,title:'A little space',description:'Take the orbiting platforms and step out of Nova’s gravity well.'},
+    {id:'bond',fighterId:'bond',arenaId:'spybase',difficulty:.28,title:'Licence to challenge',description:'Find 007 in the spy base. Close the distance between his precise shots.'},
+    {id:'stag',fighterId:'stag',arenaId:'docks',difficulty:.30,title:'Across the tide',description:'Stag’s long branch controls the docks. Approach from a different height.'},
+    {id:'kane',fighterId:'kane',arenaId:'stadium',difficulty:.32,title:'The final whistle',description:'Face Harry Kane in the stadium and avoid the full-power finish.'},
+    {id:'bolt',fighterId:'bolt',arenaId:'crucible',difficulty:.34,title:'The furnace exam',description:'Bolt is heavy, but an unstable perch can change the whole contest.'},
+    {id:'ember',fighterId:'ember',arenaId:'eclipse',difficulty:.36,title:'One final spark',description:'Meet Ember at the summit. Win the last challenge to open the whole roster.'}
   ];
   for (const stage of STAGES) Object.freeze(stage);
   Object.freeze(STAGES);
@@ -954,7 +957,9 @@ const SEAGO_CAMPAIGN = (() => {
   }
   function createAI(game,{playerId=1,difficulty=.4}={}){
     const id=playerId===0?0:1,d=clamp(Number.isFinite(Number(difficulty))?Number(difficulty):.4,.1,1);
-    let elapsed=0,nextThink=0,nextAttack=.8,nextJump=0,quizToken=null,quizElapsed=0,airTargetId=null,lastFloor=null;
+    const supported=game.options?.cpuPlayer===1&&id===1&&STAGES.some(stage=>stage.id===game.options?.campaignStage&&stage.fighterId===game.players[1]?.fighterId&&stage.arenaId===game.arena?.id);
+    const returnDelay=supported?4.5:2.5;
+    let elapsed=0,nextThink=0,nextAttack=supported?2:.8,nextJump=0,quizToken=null,quizElapsed=0,airTargetId=null,lastFloor=null;
     let seed=((Number(game.options?.seed)||241)+(id+1)*7919)>>>0;
     const random=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed/4294967296;};
     const stats={decisions:0,jumps:0,attacks:0,recoveries:0,returns:0,routeChanges:0};
@@ -995,8 +1000,8 @@ const SEAGO_CAMPAIGN = (() => {
       if(p.status==='quiz'){
         const q=p.quiz?.question;if(!q)return {};
         if(quizToken!==q.token){quizToken=q.token;quizElapsed=0;}
-        quizElapsed+=dt;returningIn=Math.max(0,2.5-quizElapsed);
-        if(quizElapsed>=2.5-1e-9){if(game.submitAnswer(id,q.correctIndex,q.token))stats.returns++;quizElapsed=0;returningIn=0;nextThink=elapsed;cached={};}
+        quizElapsed+=dt;returningIn=Math.max(0,returnDelay-quizElapsed);
+        if(quizElapsed>=returnDelay-1e-9){if(game.submitAnswer(id,q.correctIndex,q.token))stats.returns++;quizElapsed=0;returningIn=0;nextThink=elapsed;if(supported)nextAttack=elapsed+.8;cached={};}
         return {};
       }
       returningIn=0;quizToken=null;quizElapsed=0;
@@ -1100,23 +1105,26 @@ const SEAGO_CAMPAIGN = (() => {
         }
       }
       if(enemyAlive&&elapsed>=nextAttack&&p.stun<=0&&!p.attack&&p.cooldown<=0&&foe.invuln<=0&&!input.jump&&!input.down&&p.grounded&&remainingFooting(game,p.standingOn)>.65){
+        // Keep safe navigation responsive, but let pupils approach and recover
+        // between combat decisions. A missed roll also has a real pause.
+        if(supported)nextAttack=elapsed+.75+(1-d)*.35;
         const dx=foeX-cx,dy=(foe.y+foe.h/2)-(p.y+p.h/2),distance=Math.abs(dx);
         const facing=Math.sign(dx)||p.dir;
         const rangedNormal=normal.type==='projectile',normalReach=rangedNormal?Math.min(normal.range||650,(normal.speed||450)*(normal.life||1.5))*.88:(normal.range||70)+p.w*.35;
         const safeSpecial=offensiveSpecialSafe(p,special,facing,goalX);
         const safeHeavy=heavy.type!=='dash'||safeMotion(p,goalX,{vx:facing*(heavy.dashSpeed||550),lock:heavy.active||.28});
-        if(p.meter>=100&&Math.abs(dy)<(special.type==='rise'?215:150)&&distance<(special.range||180)+35&&safeSpecial&&random()<.42+d*.35){input.special=true;stats.attacks++;nextAttack=elapsed+.40+(1-d)*.5;}
-        else if(Math.abs(dy)<(heavy.type==='arc'?110:43)&&['projectile','bomb','dragonBreath'].includes(heavy.type)&&distance>normalReach*.75&&distance<(heavy.range||650)*.80&&random()<.42+d*.30){input.heavy=true;stats.attacks++;nextAttack=elapsed+.65+(1-d)*.5;}
-        else if(safeHeavy&&heavy.type==='dash'&&Math.abs(dy)<45&&distance>normalReach*.75&&distance<(heavy.range||90)+(heavy.dashSpeed||550)*(heavy.active||.28)*.65&&random()<.40+d*.20){input.heavy=true;stats.attacks++;nextAttack=elapsed+.65+(1-d)*.5;}
-        else if(Math.abs(dy)<(rangedNormal?38:45)&&distance<normalReach&&random()<.63+d*.27){input.normal=true;stats.attacks++;nextAttack=elapsed+.26+(1-d)*.47;}
-        else if(safeHeavy&&Math.abs(dy)<(heavy.type==='arc'?110:40)&&distance<(heavy.range||90)+p.w*.3&&random()<.20+d*.25){input.heavy=true;stats.attacks++;nextAttack=elapsed+.70+(1-d)*.45;}
+        if(p.meter>=100&&Math.abs(dy)<(special.type==='rise'?215:150)&&distance<(special.range||180)+35&&safeSpecial&&random()<(supported?.18+d*.12:.42+d*.35)){input.special=true;stats.attacks++;nextAttack=elapsed+(supported?1.5+(1-d)*.4:.40+(1-d)*.5);}
+        else if(Math.abs(dy)<(heavy.type==='arc'?110:43)&&['projectile','bomb','dragonBreath'].includes(heavy.type)&&distance>normalReach*.75&&distance<(heavy.range||650)*.80&&random()<(supported?.16+d*.12:.42+d*.30)){input.heavy=true;stats.attacks++;nextAttack=elapsed+(supported?1.3+(1-d)*.4:.65+(1-d)*.5);}
+        else if(safeHeavy&&heavy.type==='dash'&&Math.abs(dy)<45&&distance>normalReach*.75&&distance<(heavy.range||90)+(heavy.dashSpeed||550)*(heavy.active||.28)*.65&&random()<(supported?.16+d*.12:.40+d*.20)){input.heavy=true;stats.attacks++;nextAttack=elapsed+(supported?1.3+(1-d)*.4:.65+(1-d)*.5);}
+        else if(Math.abs(dy)<(rangedNormal?38:45)&&distance<normalReach&&random()<(supported?.50+d*.20:.63+d*.27)){input.normal=true;stats.attacks++;nextAttack=elapsed+(supported?1.05+(1-d)*.35:.26+(1-d)*.47);}
+        else if(safeHeavy&&Math.abs(dy)<(heavy.type==='arc'?110:40)&&distance<(heavy.range||90)+p.w*.3&&random()<(supported?.12+d*.10:.20+d*.25)){input.heavy=true;stats.attacks++;nextAttack=elapsed+(supported?1.3+(1-d)*.4:.70+(1-d)*.45);}
       }
       // Face the rival only when committing a move. Turning toward an attack
       // that was never selected would reverse routes and capsule collection.
       if((input.normal||input.heavy||input.special)&&enemyAlive&&!p.attack){const dir=Math.sign(foeX-cx)||p.dir;input.left=dir<0;input.right=dir>0;}
       cached={...input};return committedInput(p,input);
     }
-    return {step,get returningIn(){return returningIn;},get playerId(){return id;},get stats(){return {...stats};},get route(){return routeIds.slice();}};
+    return {step,get returningIn(){return returningIn;},get playerId(){return id;},get supportedCampaign(){return supported;},get stats(){return {...stats};},get route(){return routeIds.slice();}};
   }
   return {STAGES,initialProgress,sanitizeProgress,unlockedFighters,unlockedArenas,nextStage,availableStages,recordWin,createAI};
 })();
